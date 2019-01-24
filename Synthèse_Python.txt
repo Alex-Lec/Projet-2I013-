@@ -34,24 +34,29 @@ Mots-clés boucles :
 
     break -> interrompt une boucle
 
-        exemple :
+        Exemple :
 
         while 1: # 1 est toujours vrai -> boucle infinie
+
             lettre = input("Tapez 'Q' pour quitter : ")
+
             if lettre == "Q":
                 print("Fin de la boucle")
                 break
 
     continue -> continue une boucle 
 
-        exemple : 
+        Exemple : 
         
         i = 1
+
         while i < 20: # Tant que i est inférieure à 20
+
             if i % 3 == 0:
                 i += 4 # On ajoute 4 à i
                 print("On incrémente i de 4. i est maintenant égale à", i)
                 continue # On retourne au while sans exécuter les autres lignes
+
             print("La variable i =", i)
             i += 1 # Dans le cas classique on ajoute juste 1 à i
 
@@ -79,7 +84,7 @@ Fonctions :
 
             f = lambda arg1, arg2,… : instruction de retour
 
-            exemple :
+            Exemple :
 
                 f = lambda x, y : x + x
 
@@ -104,7 +109,7 @@ Modules :
 
             nomModule.fonctionModule(paramètres) 
 
-        exemple :
+        Exemple :
 
             import math as mathematiques
             mathematiques.sqrt(25) 
@@ -116,9 +121,268 @@ Modules :
 
             Il n'est alors plus nécessaire de placer le nom du module avant l'appel à la fonction.
 
-            exemple :
+            Exemple :
 
                 from math import fabs
                 fabs(5.3)
                 *retourne 5*
+
+Package :
+
+    Les packages sont des répertoires. Dedans peuvent se trouver d'autres répertoires 
+    (d'autres packages) ou des fichiers (des modules).
+
+    Pour accéder aux packages il suffit d'utiliser les mots-clés from et import en spécifiant le chemin.
+
+    Exemple :
+
+        from nomPackage.monModule import maFonction
+
+    Si vous voulez créer vos propres packages, commencez par créer, dans le même dossier que votre programme Python, 
+    un répertoire portant le nom du package.
+
+    Dans ce répertoire, vous pouvez soit :
+
+        - mettre vos modules, vos fichiers à l'extension.py;  
+        - créer des sous-packages de la même façon, en créant un répertoire dans votre package.
+
+Exceptions :
+
+    try:
+        # Test d'instruction(s)
+
+    except type_exception:
+        # Traitement en cas d'erreur
+    
+    # optionnel
+
+    else:
+        # instruction(s) exécutée(s) si aucune erreur ne survient dans le bloc 
+
+    finally:
+        # Instruction(s) exécutée(s) qu'il y ait eu des erreurs ou non
+
+    Types courants d'exceptions :
+
+        - NameError
+        - TypeError
+        - ZeroDivisionError
+
+    Exemple :
+
+        try:
+            resultat = numerateur / denominateur
+
+        except NameError:
+            print("La variable numerateur ou denominateur n'a pas été définie.")
+
+        except TypeError:
+            print("La variable numerateur ou denominateur possède un type incompatible avec la division.")
+
+        except ZeroDivisionError:
+            print("La variable denominateur est égale à 0.")
+
+        else:
+            print("Le résultat obtenu est", resultat)
+
+        finally:
+            print("S'affiche dans tous les cas")
+
+    Lever une exception :
+
+        Utilisation :
+
+            raise TypeException("Message à afficher")
+
+        Exemple :
+
+            annee = input() # L'utilisateur saisit l'année
+
+            try:
+                annee = int(annee) # On tente de convertir l'année
+
+                if annee<=0:
+                    raise ValueError("l'année saisie est négative ou nulle")
+
+            except ValueError:
+                print("La valeur saisie est invalide (l'année est peut-être négative).")
+
+Assertion :
+
+    Permet de s'assurer qu'une condition est respectée (souvent utilisée dans les bloc try ... except).
+
+    Utilisation : 
+    
+        assert test
+
+    Si le test renvoie True, l'exécution se poursuit normalement. Sinon une exception AssertionError est levée.
+
+    Exemple :
+
+        >>> var = 5
+        >>> assert var == 5
+        >>> assert var == 8
+            Traceback (most recent call last):
+            File "<stdin>", line 1, in <module>
+            AssertionError
+        >>>
+
+        --------------------------------------------------------
+
+        annee = input("Saisissez une année supérieure à 0 :")
+
+        try:
+            annee = int(annee) # Conversion de l'année
+            assert annee > 0
+
+        except ValueError:
+            print("Vous n'avez pas saisi un nombre.")
+
+        except AssertionError:
+            print("L'année saisie est inférieure ou égale à 0.")
+
+Listes / Tuples :
+
+    Une liste est une séquence mutable pouvant contenir plusieurs autres objets.
+
+    Une liste se construit ainsi : 
+    
+        liste = [element1, element2, elementN]
+        liste = list() # liste vide
+
+    On peut insérer des éléments dans une liste à l'aide des méthodes append, insert et extend.
+
+    On peut supprimer des éléments d'une liste grâce au mot-clé del ou à la méthode remove.
+
+    Un tuple est une séquence pouvant contenir des objets. À la différence de la liste, le tuple ne peut être modifié 
+    une fois créé.
+
+    Un tuple se construit ainsi :
+
+        tuple = (element1, element 2, elementN)
+        tuple = () # tuple vide
+
+Dictionnaires :
+
+    Un dictionnaire est un objet conteneur associant des clés à des valeurs.
+
+    Pour créer un dictionnaire, on utilise la syntaxe : 
+    
+        dictionnaire = {cle1 : valeur1, cle2 : valeur2, cleN : valeurN}.
+
+    On peut ajouter ou remplacer un élément dans un dictionnaire :
+
+        dictionnaire[cle] = valeur.
+
+    On peut supprimer une clé (et sa valeur correspondante) d'un dictionnaire en utilisant, au choix, le mot-clé del 
+    ou la méthode pop.
+
+    On peut parcourir un dictionnaire grâce aux méthodes keys(parcourt les clés), values(parcourt les valeurs) ou 
+    items (parcourt les couples clé-valeur).
+
+    On peut capturer les paramètres nommés passés à une fonction en utilisant cette syntaxe :
+
+        def fonction_inconnue(**parametres_nommes): (les paramètres nommés se retrouvent dans le dictionnaire parametres_nommes)
+
+Fichier :
+
+    On peut ouvrir un fichier en utilisant la fonction open prenant en paramètre le chemin vers le fichier et 
+    le mode d'ouverture ("r", "w", "a" respectivement read, write et append)
+
+    On peut lire dans un fichier en utilisant la méthode read.
+
+    On peut écrire dans un fichier en utilisant la méthode write.
+
+    Un fichier doit être refermé après usage en utilisant la méthode close.
+
+    Possibilité d'utiliser le mot-clé with pour s'émanciper du problème de fermeture de fichier.
+
+        Exemple :
+
+            with open("fichier.txt", "r") as fichier:
+                texte = fichier.read()
+
+    Le module pickle est utilisé pour enregistrer des objets Python dans des fichiers et les recharger ensuite.
+
+Classe :
+
+    On définit une classe en suivant la syntaxe :
+
+        class NomClasse:
+
+    Les méthodes se définissent comme des fonctions, sauf qu'elles se trouvent dans le corps de la classe.
+
+    Les méthodes d'instance prennent en premier paramètre self, l'instance de l'objet manipulé.
+
+    On construit une instance de classe en appelant son constructeur, une méthode d'instance appelée __init__
+
+    On définit les attributs d'une instance dans le constructeur de sa classe, en suivant cette syntaxe :
+
+        self.nom_attribut = valeur.
+
+    Exemple :
+
+        class Test:
+
+        """Une classe de test tout simplement"""
+
+        def __init__(self):
+
+            """On définit dans le constructeur un unique attribut"""
+            self.mon_attribut = "ok"
+        
+        def afficher_attribut(self):
+
+            """Méthode affichant l'attribut 'mon_attribut'"""
+            print("Mon attribut est {0}.".format(self.mon_attribut))
+
+Propriétés :
+
+    Les propriétés permettent de contrôler l'accès à certains attributs d'une instance.
+
+    Elles se définissent dans le corps de la classe en suivant cette syntaxe :
+    
+        nom_propriete = property(methode_accesseur, methode_mutateur, methode_suppression, methode_aide).
+
+    On y fait appel ensuite en écrivant objet.nom_proprietec omme pour n'importe quel attribut.
+
+    Si l'on souhaite juste lire l'attribut, c'est la méthode définie comme accesseur qui est appelée.
+
+    Si l'on souhaite modifier l'attribut, c'est la méthode mutateur, si elle est définie, qui est appelée.
+
+    Chacun des paramètres à passer à property est optionnel.
+
+    Exemple :
+
+        class Personne:
+        """Classe définissant une personne caractérisée par :
+        - son nom ;
+        - son prénom ;
+        - son âge ;
+        - son lieu de résidence"""
+
+        
+        def __init__(self, nom, prenom):
+            """Constructeur de notre classe"""
+            self.nom = nom
+            self.prenom = prenom
+            self.age = 33
+            self._lieu_residence = "Paris" # Notez le souligné _ devant le nom
+
+        def _get_lieu_residence(self):
+            """Méthode qui sera appelée quand on souhaitera accéder en lecture
+            à l'attribut 'lieu_residence'"""
+            
+            print("On accède à l'attribut lieu_residence !")
+            return self._lieu_residence
+
+        def _set_lieu_residence(self, nouvelle_residence):
+            """Méthode appelée quand on souhaite modifier le lieu de résidence"""
+
+            print("Attention, il semble que {} déménage à {}.".format(self.prenom, nouvelle_residence))
+            self._lieu_residence = nouvelle_residence
+
+        # On va dire à Python que notre attribut lieu_residence pointe vers une propriété
+
+        lieu_residence = property(_get_lieu_residence, _set_lieu_residence)
 

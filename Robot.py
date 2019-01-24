@@ -1,11 +1,13 @@
+# -*-coding:utf-8 -*
+
 class Robot:
     """
-        Classe Robot :
-        position (x, y)
-        Camera
-        Roue droite, gauche
-        Detecteur
-        Acceleremetre
+    Classe Robot :
+    position (x, y);
+    Camera;
+    Roue droite, gauche;
+    Detecteur;
+    Acceleremetre.
     """
 
     def __init__(self):
