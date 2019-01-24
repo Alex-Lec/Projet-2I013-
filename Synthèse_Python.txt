@@ -1,0 +1,124 @@
+Syntaxe variables / fonctions :
+
+    - Le nom de la variable / fonction ne peut être composé que de lettres, majuscules ou minuscules, de chiffres et du 
+      symbole souligné « _ »;
+    - Le nom de la variable / fonction ne peut pas commencer par un chiffre;
+    - Le langage Python est sensible à la casse, ce qui signifie que des lettres majuscules et 	minuscules ne constituent 
+      pas la même variable / fonction;
+    - Passer en majuscule le premier caractère de chaque mot, à l'exception du premier mot constituant la variable / fonction 
+      (ex : maVariable / maFonction).
+
+Structure conditionnelle :
+    
+    if:
+
+    elif:
+
+    else:
+
+Booléen :
+
+    True / False
+
+Mots-clés conditions :
+
+    and / or / not
+
+Boucles :
+
+    while "condition == True"
+
+    for element in sequence
+
+Mots-clés boucles :
+
+    break -> interrompt une boucle
+
+        exemple :
+
+        while 1: # 1 est toujours vrai -> boucle infinie
+            lettre = input("Tapez 'Q' pour quitter : ")
+            if lettre == "Q":
+                print("Fin de la boucle")
+                break
+
+    continue -> continue une boucle 
+
+        exemple : 
+        
+        i = 1
+        while i < 20: # Tant que i est inférieure à 20
+            if i % 3 == 0:
+                i += 4 # On ajoute 4 à i
+                print("On incrémente i de 4. i est maintenant égale à", i)
+                continue # On retourne au while sans exécuter les autres lignes
+            print("La variable i =", i)
+            i += 1 # Dans le cas classique on ajoute juste 1 à i
+
+Fonctions :
+
+    def nomFonction(paramètre1, paramètre2, ..., paramètreN):
+        # Bloc d'instructions
+        return "élément"
+
+    Possibilité de définir une valeur par défaut pour les paramètres.
+
+        def nomFonction(paramètre1, paramètre2 = 10):
+            # Bloc d'instructions
+            return "élément"
+
+        Si le paramètre2 n'est pas défini lors de l'appel de la fonction il prendra la valeur par défaut 10.
+
+    Fonctions lambda :
+
+        Fonction extrêmement courte, limitée à une seule instruction.
+
+        lambda arg1, arg2,… : instruction de retour
+
+        Pour appeler cette fonction on peut la stocker dans une variable :
+
+            f = lambda arg1, arg2,… : instruction de retour
+
+            exemple :
+
+                f = lambda x, y : x + x
+
+                f(5, 5) retourne 10
+
+Modules :
+
+    Un module est grossièrement un bout de code que l'on a enfermé dans un fichier. On emprisonne ainsi des fonctions et 
+    des variables ayant toutes un rapport entre elles. Ainsi, si l'on veut travailler avec les fonctionnalités prévues 
+    par le module (celles qui ont été enfermées dans le module), il n'y a qu'à importer le module et utiliser ensuite 
+    toutes les fonctions et variables prévues.
+
+    Méthode import :
+
+        import nomModule
+
+        Si on veut donner un surnom au module :
+
+            import nomModule as surnomModule
+
+        Pour utiliser  les fonctions contenues dans un module :
+
+            nomModule.fonctionModule(paramètres) 
+
+        exemple :
+
+            import math as mathematiques
+            mathematiques.sqrt(25) 
+            *retourne 5*
+
+        Pour importer une fonction spécifique d'un module :
+
+            from nomModule import nomFonction
+
+            Il n'est alors plus nécessaire de placer le nom du module avant l'appel à la fonction.
+
+            exemple :
+
+                from math import fabs
+                fabs(5.3)
+                *retourne 5*
+
