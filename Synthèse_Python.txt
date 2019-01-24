@@ -361,7 +361,6 @@ Propriétés :
         - son âge ;
         - son lieu de résidence"""
 
-        
         def __init__(self, nom, prenom):
             """Constructeur de notre classe"""
             self.nom = nom
@@ -386,3 +385,37 @@ Propriétés :
 
         lieu_residence = property(_get_lieu_residence, _set_lieu_residence)
 
+Méthodes spéciales :
+
+    Les méthodes spéciales permettent d'influencer la manière dont Python accède aux attributs d'une instance et 
+    réagit à certains opérateurs ou conversions.
+
+    Les méthodes spéciales sont toutes entourées de deux signes « souligné » (_).
+
+    Les méthodes __getattr__, __setattr__ et __delattr__ contrôlent l'accès aux attributs de l'instance.
+
+    Les méthodes __getitem__, __setitem__ et __delitem__ surchargent l'indexation ([]).
+
+    Les méthodes __add__, __sub__, __mul__ surchargent les opérateurs mathématiques.
+
+    Les méthodes __eq__, __ne__,__gt__ surchargent les opérateurs de comparaison.    
+
+Héritage :
+
+    L'héritage permet à une classe d'hériter du comportement d'une autre en reprenant ses méthodes.
+
+    La syntaxe de l'héritage est : 
+
+        class NouvelleClasse(ClasseMere):
+
+    On peut accéder aux méthodes de la classe mère directement via la syntaxe :
+    
+        ClasseMere.methode(self)
+
+    L'héritage multiple permet à une classe d'hériter de plusieurs classes mères.
+
+    La syntaxe de l'héritage multiple s'écrit donc de la manière suivante : 
+    
+        class NouvelleClasse(ClasseMere1, ClasseMere2, ClasseMereN):
+
+    Les exceptions définies par Python sont ordonnées selon une hiérarchie d'héritage.
