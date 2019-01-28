@@ -5,4 +5,6 @@ class Vecteur():
 	    self.z = z
     
     def produitScalaire(self, v):
-        return Vecteur(x + v.x, y + v.y, z + v.z)
+        pass
+	def produitVectoriel(self,v):
+		pass
