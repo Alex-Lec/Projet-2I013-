@@ -1,6 +1,6 @@
 # -*-coding:utf-8 -*
 
-class Robot:
+class Robot(ObjetPhysique):
     """
     Classe Robot :
     position (x, y);
@@ -10,9 +10,13 @@ class Robot:
     Acceleremetre.
     """
 
-    def __init__(self):
-        self.x = 0.0
-        self.y = 0.0
+    def __init__(self, x, y, z, dir, camera, rd, rg, detecteur, accelerometre):
+        ObjetPhysique(x, y, z, dir)
+        self.camera = camera
+        self.rd = rd
+        self.rg = rg
+        self.detecteur = detecteur
+        self.accelerometre = accelerometre
 
     def avancer(self, distance):
         pass
