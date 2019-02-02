@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from Vecteur import*
+=======
+import Vecteur from *
+>>>>>>> master
 
 class ObjetPhysique:
 
