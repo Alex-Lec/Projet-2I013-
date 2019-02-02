@@ -1,3 +1,5 @@
+import ObjetPhysique from *
+
 class Terrain():
 
     def __init__(self, dimx, dimy):
