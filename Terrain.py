@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from ObjetPhysique import*
+=======
+import ObjetPhysique from *
+>>>>>>> master
 
 class Terrain():
 
