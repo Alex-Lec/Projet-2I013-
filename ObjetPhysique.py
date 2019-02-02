@@ -4,8 +4,8 @@ class ObjetPhysique:
         self.x = x
         self.y = y
         self.z = z
-        self.cote = cote
-        self.dir = dir
+        self.cote = cote # C'est quoi cette valeur ?
+        self.dir = dir # C'est bien un vecteur, non ?
     
     def get_x(self):
         return self.x
