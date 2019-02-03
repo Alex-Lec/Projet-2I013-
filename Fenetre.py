@@ -36,13 +36,13 @@ class Fenetre():
         arene = Canvas(self.fenetre, width = 1000, height = 600)
         arene.pack()
         
-<<<<<<< HEAD
         #for(i in arenevirtuel.objet): #tous les objets de terrain sont transformés en forme
          #   arene.create_rectangle(i.x , i.y ,i.x + i.x.vdir.x, i.y + i.y.vdir.y)
-=======
+
+	"""
         for(i : arenevirtuel.objet): #tous les objets de terrain sont transformés en forme
             arene.create_rectangle(i.x , i.y ,i.x + i.x.vdir.x, i.y + i.y.vdir.y)
->>>>>>> master
+	"""
             
         self.fenetre.mainloop()
 
