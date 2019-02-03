@@ -32,7 +32,7 @@ class Fenetre():
         menubar.add_cascade(label = "Fichier", menu = menu1)
         menubar.add_cascade(label = "Options")
         self.fenetre.config(menu = menubar)
-        arene = Canvas(self.fenetre, width = 1000, height = 600, background = "grey")
+        arene = Canvas(self.fenetre, width = 1000, height = 600)
 
         for i in arene_virtuelle.objet: #tous les objets de terrain sont transformés en forme
             arene.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
