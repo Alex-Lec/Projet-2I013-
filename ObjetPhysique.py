@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from Vecteur import*
 
 class ObjetPhysique:
