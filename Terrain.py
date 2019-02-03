@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 from ObjetPhysique import*
-=======
-import ObjetPhysique from *
->>>>>>> master
 
 class Terrain():
 
@@ -12,8 +8,8 @@ class Terrain():
         self.objet = []
 
 
-# Problème de coohérence, soit on rajoute soit on créait
-""" 
+    # Problème de coohérence, soit on rajoute soit on créait
+    """
     def ajouter_robot(self, x, y, z):
         c = Camera()
         rg = Roue()
@@ -23,11 +19,11 @@ class Terrain():
         vdir = Vecteur(20, 0.0, 0.0)
         r = Robot(x, y, dir,)
         self.objet.append(r)
-"""
+    """
     def ajouter_objets(self, o): #prend une liste d'object en arguement
         for i in o:
             self.objet.append(i)
-
+            
     def afficher_terrain():
         pass
     
