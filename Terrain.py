@@ -1,29 +1,27 @@
-<<<<<<< HEAD
-from ObjetPhysique import*
-=======
-import ObjetPhysique from *
->>>>>>> master
+from ObjetPhysique import *
 
 class Terrain():
 
     def __init__(self, dimx = 1000, dimy = 600):
-        self.dimx = dimx;
-        self.dimy = dimy;
-        self.objet = []
+        
+        self.dimx = dimx
+        self.dimy = dimy
+        self.objet = list()
 
 
-# Problème de coohérence, soit on rajoute soit on créait
-""" 
-    def ajouter_robot(self, x, y, z):
-        c = Camera()
-        rg = Roue()
-        rd = Roue()
-        d = Detecteur()
-        a = Accelerometre()
-        vdir = Vecteur(20, 0.0, 0.0)
-        r = Robot(x, y, dir,)
-        self.objet.append(r)
-"""
+    # Problème de coohérence, soit on rajoute soit on créait
+    """ 
+        def ajouter_robot(self, x, y, z):
+            c = Camera()
+            rg = Roue()
+            rd = Roue()
+            d = Detecteur()
+            a = Accelerometre()
+            vdir = Vecteur(20, 0.0, 0.0)
+            r = Robot(x, y, dir,)
+            self.objet.append(r)
+    """
+
     def ajouter_objets(self, o): #prend une liste d'object en arguement
         for i in o:
             self.objet.append(i)
