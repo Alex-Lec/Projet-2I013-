@@ -5,15 +5,7 @@ from Terrain import *
 from tkinter import *
 from Robot import *
 
-def creerObjTerrain(root):
-    #vect = Vecteur(dimx.get(),dimy.get(),dimz.get())
-    #terrain.ajouter_objet(ObjectPhysique(posx.get(),posy.get(),posz.get(),vect))
-    root.destroy()
-    
-def creerRobotTerrain(root):
-    #vect = Vecteur(dimx.get(),dimy.get(),dimz.get())
-    #terrain.ajouter_objet(ObjectPhysique(posx.get(),posy.get(),posz.get(),vect))
-    root.destroy()
+#http://www.fil.univ-lille1.fr/~marvie/python/chapitre6.html
 
 class Fenetre():
     
@@ -102,7 +94,8 @@ class Fenetre():
             print(self.posx.get())
             #self.arene.robot.append(Robot(posx, posy, posz))
             #fen.destroy()
-
+            
+        fenetre.quit()
         self.fen = Tk()
         self.fen.title("Ajouter robot")
         self.fen.resizable(0, 0)
