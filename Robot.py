@@ -14,11 +14,7 @@ class Robot(ObjetPhysique):
     """
 
     def __init__(self, x, y, z, vdim): #dir, camera, rd, rg, detecteur, accelerometre):
-        # ObjetPhysique(x, y, z, dir)
-        self.x = x
-        self.y = y
-        self.z = z
-        self.vdim = vdim
+        ObjetPhysique.__init__(self, x, y, z, vdim)
         """self.camera = camera
         self.rd = rd
         self.rg = rg

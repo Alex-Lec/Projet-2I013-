@@ -25,7 +25,7 @@ class Terrain():
     def ajouter_objets(self, o): #prend une liste d'object en arguement
         for i in o:
             self.objet.append(i)
-
+            
     def afficher_terrain():
         pass
     

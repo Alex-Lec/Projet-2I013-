@@ -23,6 +23,11 @@ class Fenetre():
         self.fenetre.geometry("1000x600")
         self.fenetre.resizable(0, 0)
         
+        self.robot = []
+        self.obstacle = []
+        #if (arenevirtuel == None):
+        #    self.arenevirtuel = Terrain(1000,600)
+        
         menubar = Menu(self.fenetre)
         menu1 = Menu(menubar, tearoff = 0)
         menu1.add_command(label = "Créer robot", command = lambda : self.creerObject())
@@ -31,6 +36,7 @@ class Fenetre():
         menu1.add_command(label = "Quitter", command = self.fenetre.destroy)
         menubar.add_cascade(label = "Fichier", menu = menu1)
         menubar.add_cascade(label = "Options")
+        
         self.fenetre.config(menu = menubar)
         arene = Canvas(self.fenetre, width = 1000, height = 600)
 
@@ -42,7 +48,25 @@ class Fenetre():
             
         self.fenetre.mainloop()
 
-    def creerObject(self):
+
+    def actu_affichage(self):
+        for i in self.arenevirtuel.objet:
+            if type(i).__name__ == 'Robot' :
+                self.arene.create_rectangle(i.x , i.y ,i.x + i.vdim.x, i.y + i.vdim.y, fill = "red")
+            else :
+                self.arene.create_rectangle(i.x , i.y ,i.x + i.vdim.x, i.y + i.vdim.y, fill = "blue")
+
+
+    #@staticmethod
+    def creerObjet(self):
+    
+        def creerObjectTerrain():
+            vect = Vecteur(dimx.get(),dimy.get(),dimz.get())
+            self.arenevirtuel.ajouter_objets([ObjetPhysique(posx.get(),posy.get(),posz.get(),vect)])
+            #self.actu_affichage()
+            fen.destroy()
+
+
         fen = Tk()
         fen.title("Ajouter object")
 
@@ -64,34 +88,63 @@ class Fenetre():
         ok = Button(fen, text = "Ok",command = lambda: creerObjTerrain(fen))
         annuler = Button(fen,text ="Exit",command = fen.destroy)
         
-        ok.grid(row = 3, column=2)
-        annuler.grid(row=3,column = 3)
+        posx = DoubleVar()
+        posy = DoubleVar()
+        posz = DoubleVar()
+        dimx = DoubleVar()
+        dimy = DoubleVar()
+        dimz = DoubleVar()
         
+        Entry(fen,textvariable = posx, width = 3).grid(row=0, column=1)
+        Entry(fen,textvariable = posy, width = 3).grid(row=0, column=3)
+        Entry(fen,textvariable = posz, width = 3).grid(row=0, column=5)
+        Entry(fen,textvariable = dimx, width = 3).grid(row=1, column=1)
+        Entry(fen,textvariable = dimy, width = 3).grid(row=1, column=3)
+        Entry(fen,textvariable = dimz, width = 3).grid(row=1, column=5)
+        
+        ok = Button(fen, text = "Ok",command = creerObjectTerrain).grid(row = 3, column=2)
+        annuler = Button(fen,text ="Exit",command = fen.destroy).grid(row=3,column = 3)        
         fen.mainloop()
     
+    #@staticmethod
     def creerRobot(self):
+    
+        def creerRobotTerrain():
+            vect = Vecteur(dimx.get(),dimy.get(),dimz.get())
+            self.arenevirtuel.ajouter_objets([Robot(posx.get(),posy.get(),posz.get(),vect)])
+            #self.actu_affichage()
+            fen.destroy()
+            
         fen = Tk()
         fen.title("Ajouter robot")
 
-        l1 = Label(fen, text="x=").grid(row=0, column=0)
-        l2 = Label(fen, text="y=").grid(row=0, column=2)
-        l3 = Label(fen, text="z=").grid(row=0, column=4)
-        l4 = Label(fen, text="vx=").grid(row=1, column=0)
-        l5 = Label(fen, text="vy=").grid(row=1, column=2)
-        l6 = Label(fen, text="vz=").grid(row=1, column=4)
+        Label(fen, text="x=").grid(row=0, column=0) #Utilisation d''un tableau pour gérer l'espace
+        Label(fen, text="y=").grid(row=0, column=2)
+        Label(fen, text="z=").grid(row=0, column=4)
+        Label(fen, text="vx=").grid(row=1, column=0)
+        Label(fen, text="vy=").grid(row=1, column=2)
+        Label(fen, text="vz=").grid(row=1, column=4)
     
-        posx = Entry(fen,takefocus = 1,width = 3).grid(row=0, column=1)
-        posy = Entry(fen, takefocus = 2, width = 3).grid(row=0, column=3)
-        posz = Entry(fen, takefocus = 3, width = 3).grid(row=0, column=5)
+        posx = DoubleVar()
+        posy = DoubleVar()
+        posz = DoubleVar()
+        dimx = DoubleVar()
+        dimy = DoubleVar()
+        dimz = DoubleVar()
     
-        dimx = Entry(fen, width = 3).grid(row=1, column=1)
-        dimy = Entry(fen, width = 3).grid(row=1, column=3)
-        dimz = Entry(fen, width = 3).grid(row=1, column=5)
+        Entry(fen,textvariable = posx, width = 3).grid(row=0, column=1)
+        Entry(fen,textvariable = posy, width = 3).grid(row=0, column=3)
+        Entry(fen,textvariable = posz, width = 3).grid(row=0, column=5)
+        Entry(fen,textvariable = dimx, width = 3).grid(row=1, column=1)
+        Entry(fen,textvariable = dimy, width = 3).grid(row=1, column=3)
+        Entry(fen,textvariable = dimz, width = 3).grid(row=1, column=5)
     
-        ok = Button(fen, text = "Ok",command= lambda: creerRobotTerrain(fen))
+        ok = Button(fen, text = "Ok",command = creerRobotTerrain)
         annuler = Button(fen,text ="Exit",command = fen.destroy)
+        
         ok.grid(row = 3, column=2)
         annuler.grid(row=3,column = 3)
+        
         fen.mainloop()
 
 """
