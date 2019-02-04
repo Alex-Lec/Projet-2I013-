@@ -24,10 +24,15 @@ arene.ajouter_objets([ob1,ob2,ob3,ob4])
 arene.ajouter_robots([robot])
 fenetre = Fenetre(arene)
 fenetre.affichage_arene()
+arene.ajouter_objets([ObjetPhysique(200,300,0,50,70,70)])
+fenetre.affichage_arene()
+
 """
 for i in range(100):
     robot.avancer(0,1)
-    fenetre.actu_affichage()
-"""
+    print
+    fenetre.affichage_arene()
+
 
 #fenetre.mainloop()
+"""
