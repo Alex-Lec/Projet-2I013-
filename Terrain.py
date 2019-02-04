@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*
+
 from ObjetPhysique import *
 
 class Terrain():
@@ -7,7 +10,7 @@ class Terrain():
         self.dimx = dimx
         self.dimy = dimy
         self.objet = list()
-
+        self.robot = list()
 
     # Problème de coohérence, soit on rajoute soit on créait
     """ 
@@ -26,7 +29,7 @@ class Terrain():
         for i in o:
             self.objet.append(i)
             
-    def afficher_terrain():
+    def afficher_terrain(self):
         pass
     
     def testCollision(self, i1, i2):
@@ -44,6 +47,7 @@ class Terrain():
                         continue
                     if testCollision(i, j):
                         raise ValueError()
+                        
             except ValueError:
                 o1 = self.objet[i]
                 o2 = self.objet[j]
