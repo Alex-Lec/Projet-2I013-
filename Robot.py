@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
-from Vecteur import*
+
+from Vecteur import *
 from ObjetPhysique import*
 
 class Robot(ObjetPhysique):
@@ -13,8 +14,9 @@ class Robot(ObjetPhysique):
     Acceleremetre.
     """
 
-    def __init__(self, x, y, z, vdim): #dir, camera, rd, rg, detecteur, accelerometre):
-        ObjetPhysique.__init__(self, x, y, z, vdim)
+    def __init__(self, x, y, z): #dir, camera, rd, rg, detecteur, accelerometre):
+
+        ObjetPhysique.__init__(self, x, y, z, largeur = 25, longueur = 25, hauteur = 25)
         """self.camera = camera
         self.rd = rd
         self.rg = rg
