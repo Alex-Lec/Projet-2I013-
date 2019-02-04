@@ -19,8 +19,8 @@ class Fenetre():
         
         menubar = Menu(self.fenetre)
         menu1 = Menu(menubar, tearoff = 0)
-        menu1.add_command(label = "Créer robot", command = lambda : self.creerRobot())
-        menu1.add_command(label = "Créer objet", command = lambda : self.creerObjet())
+        menu1.add_command(label = "Créer robot", command = self.creerRobot)
+        menu1.add_command(label = "Créer objet", command = self.creerObjet)
         menu1.add_separator()
         menu1.add_command(label = "Quitter", command = self.fenetre.destroy)
         menubar.add_cascade(label = "Fichier", menu = menu1)
@@ -43,17 +43,14 @@ class Fenetre():
         self.arene_canvas.pack()
         self.fenetre.mainloop()
 
-
-    #@staticmethod
     def creerObjet(self):
     
         def ok_button():
-            print(self.posx)
-            print(self.posx.get())
-            #self.arene.robot.append(Robot(posx, posy, posz))
-            #fen.destroy()
-
-        fen = Tk()
+            obj =ObjetPhysique(posx.get(), posy.get(), posz.get(), dimx.get(), dimy.get(), dimz.get())
+            self.arene.objet.append(obj)
+            fen.destroy()
+            
+        fen = Toplevel(self.fenetre)
         fen.title("Ajouter object")
 
         l1 = Label(fen, text="x =").grid(row = 0, column = 0)
@@ -70,10 +67,15 @@ class Fenetre():
         dimy = Entry(fen, width = 3).grid(row=1, column=3)
         dimz = Entry(fen, width = 3).grid(row=1, column=5)
     
-        ok = Button(fen, text = "Ok",command = ok_button())
+        ok = Button(fen, text = "Ok",command = ok_button)
         annuler = Button(fen,text ="Exit",command = fen.destroy)
         
-        posx, posy, posz , dimx, dimy, dimz= DoubleVar()
+        posx= DoubleVar()
+        posy= DoubleVar()
+        posz= DoubleVar()
+        dimx= DoubleVar() 
+        dimy= DoubleVar()
+        dimz= DoubleVar()
         
         Entry(fen,textvariable = posx, width = 3).grid(row=0, column=1)
         Entry(fen,textvariable = posy, width = 3).grid(row=0, column=3)
@@ -82,43 +84,39 @@ class Fenetre():
         Entry(fen,textvariable = dimy, width = 3).grid(row=1, column=3)
         Entry(fen,textvariable = dimz, width = 3).grid(row=1, column=5)
         
-        ok = Button(fen, text = "Ok",command = creerObjectTerrain).grid(row = 3, column=2)
+        ok = Button(fen, text = "Ok",command = ok_button).grid(row = 3, column=2)
         annuler = Button(fen,text ="Exit",command = fen.destroy).grid(row=3,column = 3)        
         fen.mainloop()
 
-    #@staticmethod
+
     def creerRobot(self):
 
         def ok_button():
-            print(self.posx)
-            print(self.posx.get())
-            #self.arene.robot.append(Robot(posx, posy, posz))
-            #fen.destroy()
-            
-        fenetre.quit()
-        self.fen = Tk()
-        self.fen.title("Ajouter robot")
-        self.fen.resizable(0, 0)
-
-        self.posx = IntVar()
-        self.posy = IntVar()
-        self.posz = IntVar()
-
-        Label(self.fen, text = "x =").grid(row = 0, column = 0)
-        Label(self.fen, text = "y =").grid(row = 0, column = 2)
-        Label(self.fen, text = "z =").grid(row = 0, column = 4)
-
-        Entry(self.fen, textvariable = self.posx, width = 3).grid(row = 0, column = 1)
-        Entry(self.fen, textvariable = self.posy, width = 3).grid(row = 0, column = 3)
-        Entry(self.fen, textvariable = self.posz, width = 3).grid(row = 0, column = 5)
-
-        self.ok = Button(self.fen, text = "Ok", command = ok_button)
-        self.annuler = Button(self.fen, text = "Exit", command = self.fen.destroy)
+            robot = Robot(posx, posy, posz)
+            self.arene.robot.append(robot)
+            fen.destroy()
         
-        self.ok.grid(row = 3, column = 2)
-        self.annuler.grid(row = 3,column = 3)
+        fen = Toplevel()
+        fen.title("Ajouter robot")
+        fen.resizable(0, 0)
 
-        self.fen.mainloop()
+        posx = IntVar()
+        posy = IntVar()
+        posz = IntVar()
+
+        Label(fen, text = "x =").grid(row = 0, column = 0)
+        Label(fen, text = "y =").grid(row = 0, column = 2)
+        Label(fen, text = "z =").grid(row = 0, column = 4)
+
+        Entry(fen, textvariable = posx, width = 3).grid(row = 0, column = 1)
+        Entry(fen, textvariable = posy, width = 3).grid(row = 0, column = 3)
+        Entry(fen, textvariable = posz, width = 3).grid(row = 0, column = 5)
+
+        ok = Button(fen, text = "Ok", command = ok_button)
+        annuler = Button(fen, text = "Exit", command = fen.destroy)
+        ok.grid(row = 3, column = 2)
+        annuler.grid(row = 3,column = 3)
+        fen.mainloop()
 
 
 """
