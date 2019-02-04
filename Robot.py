@@ -16,7 +16,7 @@ class Robot(ObjetPhysique):
 
     def __init__(self, x, y, z): #dir, camera, rd, rg, detecteur, accelerometre):
 
-        ObjetPhysique.__init__(self, x, y, z, largeur = 25, longueur = 25, hauteur = 25)
+        ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
         """self.camera = camera
         self.rd = rd
         self.rg = rg

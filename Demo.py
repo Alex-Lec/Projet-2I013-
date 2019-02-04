@@ -13,20 +13,21 @@ v2 = Vecteur(70, 350, 30)
 v3 = Vecteur(100, 100, 30)
 vrob = Vecteur(50,100,10)
 
-ob1 = ObjetPhysique(20, 60, 0, v1)
-ob2 = ObjetPhysique(900, 200, 0, v2)
-ob3 = ObjetPhysique(600, 100, 0, v3)
-ob4 = ObjetPhysique(230,500,0,v3)
-
-robot = Robot(0, 300, 0, vrob)
+ob1 = ObjetPhysique(20, 60, 0, 200, 60, 30)
+ob2 = ObjetPhysique(900, 200, 0, 70, 350, 30)
+ob3 = ObjetPhysique(600, 100, 0, 100, 100, 30)
+ob4 = ObjetPhysique(230,500,0, 100, 100, 30)
+robot = Robot(0, 300, 0)
 
 arene = Terrain(1000,600)
-arene.ajouter_objets([ob1,ob2,ob3,ob4,robot])
+arene.ajouter_objets([ob1,ob2,ob3,ob4])
+arene.ajouter_robots([robot])
 fenetre = Fenetre(arene)
-
+fenetre.affichage_arene()
+"""
 for i in range(100):
     robot.avancer(0,1)
     fenetre.actu_affichage()
-
+"""
 
 #fenetre.mainloop()

@@ -186,7 +186,7 @@ class Fenetre():
 
 """
 Test rendu graphique arène :
-"""
+
 arene = Terrain()
 arene.objet.append(ObjetPhysique(50, 40, 0, 40, 10))
 arene.objet.append(ObjetPhysique(400, 360, 0, 50, 30))
@@ -194,3 +194,5 @@ arene.objet.append(ObjetPhysique(780, 250, 0, 30, 30))
 arene.robot.append(ObjetPhysique(500, 200, 0, 30, 30))
 fenetre = Fenetre(arene)
 fenetre.affichage_arene()
+"""
+

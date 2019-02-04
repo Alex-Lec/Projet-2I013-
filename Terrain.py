@@ -29,8 +29,10 @@ class Terrain():
         for i in o:
             self.objet.append(i)
             
-    def afficher_terrain(self):
-        pass
+    def ajouter_robots(self,o):
+        for i in o:
+            self.robot.append(i)
+            
     
     def testCollision(self, i1, i2):
         o1 = self.objet[i1]
