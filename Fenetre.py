@@ -9,14 +9,14 @@ def creerObjTerrain(root):
     #vect = Vecteur(dimx.get(),dimy.get(),dimz.get())
     #terrain.ajouter_objet(ObjectPhysique(posx.get(),posy.get(),posz.get(),vect))
     root.destroy()
-    
+
 def creerRobotTerrain(root):
     #vect = Vecteur(dimx.get(),dimy.get(),dimz.get())
     #terrain.ajouter_objet(ObjectPhysique(posx.get(),posy.get(),posz.get(),vect))
     root.destroy()
 
 class Fenetre():
-    
+
     def __init__(self, arene = Terrain()):
 
         self.fenetre = Tk()
@@ -24,7 +24,7 @@ class Fenetre():
         self.fenetre.geometry("1000x600")
         self.fenetre.resizable(0, 0)
         self.arene = arene
-        
+
         menubar = Menu(self.fenetre)
         menu1 = Menu(menubar, tearoff = 0)
         menu1.add_command(label = "Créer robot", command = lambda : self.creerRobot())
@@ -64,7 +64,7 @@ class Fenetre():
 
     #@staticmethod
     def creerObjet(self):
-    
+
         """
         def creerObjectTerrain():
             vect = Vecteur(dimx.get(),dimy.get(),dimz.get())
@@ -82,34 +82,34 @@ class Fenetre():
         l4 = Label(fen, text="vx=").grid(row = 1, column = 0)
         l5 = Label(fen, text="vy=").grid(row = 1, column = 2)
         l6 = Label(fen, text="vz=").grid(row = 1, column = 4)
-    
+
         posx = Entry(fen,takefocus = 1,width = 3).grid(row=0, column=1)
         posy = Entry(fen, takefocus = 2, width = 3).grid(row=0, column=3)
         posz = Entry(fen, takefocus = 3, width = 3).grid(row=0, column=5)
-    
+
         dimx = Entry(fen, width = 3).grid(row=1, column=1)
         dimy = Entry(fen, width = 3).grid(row=1, column=3)
         dimz = Entry(fen, width = 3).grid(row=1, column=5)
-    
+
         ok = Button(fen, text = "Ok",command = lambda: creerObjTerrain(fen))
         annuler = Button(fen,text ="Exit",command = fen.destroy)
-        
+
         posx = DoubleVar()
         posy = DoubleVar()
         posz = DoubleVar()
         dimx = DoubleVar()
         dimy = DoubleVar()
         dimz = DoubleVar()
-        
+
         Entry(fen,textvariable = posx, width = 3).grid(row=0, column=1)
         Entry(fen,textvariable = posy, width = 3).grid(row=0, column=3)
         Entry(fen,textvariable = posz, width = 3).grid(row=0, column=5)
         Entry(fen,textvariable = dimx, width = 3).grid(row=1, column=1)
         Entry(fen,textvariable = dimy, width = 3).grid(row=1, column=3)
         Entry(fen,textvariable = dimz, width = 3).grid(row=1, column=5)
-        
+
         ok = Button(fen, text = "Ok",command = creerObjectTerrain).grid(row = 3, column=2)
-        annuler = Button(fen,text ="Exit",command = fen.destroy).grid(row=3,column = 3)        
+        annuler = Button(fen,text ="Exit",command = fen.destroy).grid(row=3,column = 3)
         fen.mainloop()
 
     #@staticmethod
@@ -138,11 +138,13 @@ class Fenetre():
 
         ok = Button(fen, text = "Ok", command = lambda : ok_button(posx.get(), posy.get(), posz.get()))
         annuler = Button(fen, text = "Exit", command = fen.destroy)
-        
+
         ok.grid(row = 3, column = 2)
         annuler.grid(row = 3,column = 3)
 
         self.affichage_arene()
+        fen.destroy()
+
 
         """
         def creerRobotTerrain():
@@ -150,7 +152,7 @@ class Fenetre():
             self.arene.ajouter_objets([Robot(posx.get(),posy.get(),posz.get(),vect)])
             #self.actu_affichage()
             fen.destroy()
-            
+
         fen = Tk()
         fen.title("Ajouter robot")
         fen.geometry("200x100")
@@ -163,27 +165,27 @@ class Fenetre():
         Label(fen, text="vx=").grid(row=1, column=0)
         Label(fen, text="vy=").grid(row=1, column=2)
         Label(fen, text="vz=").grid(row=1, column=4)
-    
+
         posx = DoubleVar()
         posy = DoubleVar()
         posz = DoubleVar()
         dimx = DoubleVar()
         dimy = DoubleVar()
         dimz = DoubleVar()
-    
+
         Entry(fen,textvariable = posx, width = 3).grid(row=0, column=1)
         Entry(fen,textvariable = posy, width = 3).grid(row=0, column=3)
         Entry(fen,textvariable = posz, width = 3).grid(row=0, column=5)
         Entry(fen,textvariable = dimx, width = 3).grid(row=1, column=1)
         Entry(fen,textvariable = dimy, width = 3).grid(row=1, column=3)
         Entry(fen,textvariable = dimz, width = 3).grid(row=1, column=5)
-    
+
         ok = Button(fen, text = "Ok",command = creerRobotTerrain)
         annuler = Button(fen,text ="Exit",command = fen.destroy)
-        
+
         ok.grid(row = 3, column=2)
         annuler.grid(row=3,column = 3)
-        
+
         fen.mainloop()
         """
 
