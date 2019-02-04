@@ -113,13 +113,17 @@ class Fenetre():
     #@staticmethod
     def creerRobot(self):
 
+        def ok_button():
+            self.arene.robot.append(Robot(posx, posy, posz))
+            fen.destroy()
+
         fen = Tk()
         fen.title("Ajouter robot")
         fen.resizable(0, 0)
 
-        posx = 0
-        posy = 0
-        posz = 0
+        posx = IntVar()
+        posy = IntVar()
+        posz = IntVar()
 
         Label(fen, text = "x =").grid(row = 0, column = 0) #Utilisation d''un tableau pour gérer l'espace
         Label(fen, text = "y =").grid(row = 0, column = 2)
@@ -129,14 +133,13 @@ class Fenetre():
         Entry(fen, textvariable = posy, width = 3).grid(row = 0, column = 3)
         Entry(fen, textvariable = posz, width = 3).grid(row = 0, column = 5)
 
-        ok = Button(fen, text = "Ok", command = )
+        ok = Button(fen, text = "Ok", command = lambda : ok_button())
         annuler = Button(fen, text = "Exit", command = fen.destroy)
         
         ok.grid(row = 3, column = 2)
         annuler.grid(row = 3,column = 3)
 
         self.affichage_arene()
-        fen.destroy()
 
         """
         def creerRobotTerrain():
