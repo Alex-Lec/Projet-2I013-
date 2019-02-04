@@ -33,14 +33,17 @@ class Fenetre():
         menu1.add_command(label = "Quitter", command = self.fenetre.destroy)
         menubar.add_cascade(label = "Fichier", menu = menu1)
         menubar.add_cascade(label = "Options")
-
-        self.arene_canvas = Canvas(self.fenetre, width = 1000, height = 600)
         
         self.fenetre.config(menu = menubar)
 
+        self.arene_canvas = Canvas(self.fenetre, width = 1000, height = 600)
+        self.arene_canvas.pack()
+        self.affichage_arene()
+        self.fenetre.mainloop()
+
     def affichage_arene(self):
 
-        self.arene_canvas.configure(bg = "white")
+        self.arene_canvas.delete("ALL")
 
         for i in self.arene.objet:
             self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
@@ -51,7 +54,6 @@ class Fenetre():
                 i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "yellow")
 
         self.arene_canvas.pack()
-        self.fenetre.mainloop()
 
         """
         for i in self.arene.objet:
@@ -136,15 +138,13 @@ class Fenetre():
         Entry(fen, textvariable = posy, width = 3).grid(row = 0, column = 3)
         Entry(fen, textvariable = posz, width = 3).grid(row = 0, column = 5)
 
-        ok = Button(fen, text = "Ok", command = lambda : ok_button(posx.get(), posy.get(), posz.get()))
+        ok = Button(fen, text = "Ok", command = lambda : ok_button(posx, posy, posz))
         annuler = Button(fen, text = "Exit", command = fen.destroy)
 
         ok.grid(row = 3, column = 2)
         annuler.grid(row = 3,column = 3)
 
         self.affichage_arene()
-        fen.destroy()
-
 
         """
         def creerRobotTerrain():
@@ -191,12 +191,11 @@ class Fenetre():
 
 """
 Test rendu graphique arène :
-
+"""
 arene = Terrain()
 arene.objet.append(ObjetPhysique(50, 40, 0, 40, 10))
 arene.objet.append(ObjetPhysique(400, 360, 0, 50, 30))
 arene.objet.append(ObjetPhysique(780, 250, 0, 30, 30))
-arene.robot.append(ObjetPhysique(500, 200, 0, 30, 30))
+arene.robot.append(Robot(500, 200, 0))
 fenetre = Fenetre(arene)
 fenetre.affichage_arene()
-"""
