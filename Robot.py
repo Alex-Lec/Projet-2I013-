@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*
 
 from Vecteur import *
-from ObjetPhysique import*
+from ObjetPhysique import *
+from tkinter import *
 
 class Robot(ObjetPhysique):
     """
@@ -17,28 +18,29 @@ class Robot(ObjetPhysique):
     def __init__(self, x, y, z): #dir, camera, rd, rg, detecteur, accelerometre):
 
         ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
-        """self.camera = camera
+
+        self.x1 = x + 100 // 2
+        self.y1 = y + 50 // 2
+        self.z1 = z + 25 // 2
+
+        """
+        self.camera = camera
         self.rd = rd
         self.rg = rg
         self.detecteur = detecteur
-        self.accelerometre = accelerometre"""
+        self.accelerometre = accelerometre
+        """
         
     def printPos(self):
         print("position : x =", self.x ," et y =", self.y)
 
     def avancer(self, x, y):
-        self.printPos()
-        print("Avancer de x =", x, " et de y =", y)
         self.x += x
         self.y += y
-        self.printPos()
         
     def reculer(self, x, y):
-        self.printPos()
-        print("Reculer de x =", x, " et de y =", y)
         self.x -= x
         self.y -= x
-        self.printPos()
     
     def tourner(self, angle):
         pass

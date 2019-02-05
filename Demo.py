@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*
+
 from Fenetre import*
 from Terrain import*
 from ObjetPhysique import*
