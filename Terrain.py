@@ -9,8 +9,8 @@ class Terrain():
         
         self.dimx = dimx
         self.dimy = dimy
-        self.objet = list()
-        self.robot = list()
+        self.objet = []
+        self.robot = []
 
     # Problème de coohérence, soit on rajoute soit on créait
     """ 
