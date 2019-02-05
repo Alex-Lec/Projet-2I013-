@@ -6,6 +6,7 @@ from Robot import*
 
 """Le but ici, est de constuire quelques objets simples, un robot et de les afficher"""
 
+"""
 v1 = Vecteur(200, 60, 30)
 v2 = Vecteur(70, 350, 30)
 v3 = Vecteur(100, 100, 30)
@@ -24,7 +25,7 @@ fenetre = Fenetre(arene)
 fenetre.affichage_arene()
 arene.ajouter_objets([ObjetPhysique(200,300,0,50,70,70)])
 fenetre.affichage_arene()
-
+"""
 """
 for i in range(100):
     robot.avancer(0,1)
@@ -34,3 +35,14 @@ for i in range(100):
 
 #fenetre.mainloop()
 """
+
+
+"""Test rendu graphique arène :"""
+
+arene = Terrain()
+arene.objet.append(ObjetPhysique(50, 40, 0, 40, 10))
+arene.objet.append(ObjetPhysique(400, 360, 0, 50, 30))
+arene.objet.append(ObjetPhysique(780, 250, 0, 30, 30))
+arene.robot.append(Robot(500, 200, 0))
+fenetre = Fenetre(arene)
+

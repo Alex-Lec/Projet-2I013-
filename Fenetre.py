@@ -18,13 +18,19 @@ class Fenetre():
         self.arene = arene
 
         menubar = Menu(self.fenetre)
+
+        menu0 = Menu(menubar, tearoff= 0)
+        menu0.add_command(label = "Quitter", command = self.fenetre.destroy)
+        menubar.add_cascade(label = "Fichier", menu = menu0)
+
         menu1 = Menu(menubar, tearoff = 0)
         menu1.add_command(label = "Créer robot", command = self.creerRobot)
         menu1.add_command(label = "Créer objet", command = self.creerObjet)
-        menu1.add_separator()
-        menu1.add_command(label = "Quitter", command = self.fenetre.destroy)
-        menubar.add_cascade(label = "Fichier", menu = menu1)
-        menubar.add_cascade(label = "Options")
+        menubar.add_cascade(label = "Création", menu = menu1)
+
+        menu2 = Menu(menubar, tearoff = 0)
+        menu2.add_command(label = "Déplacer robot", command = self.deplacerRobot)
+        menubar.add_cascade(label = "Déplacement", menu = menu2)
         
         self.fenetre.config(menu = menubar)
 
@@ -78,16 +84,6 @@ class Fenetre():
         Entry(fen,textvariable = longueur, width = 3).grid(row=1, column=3)
         Entry(fen,textvariable = hauteur, width = 3).grid(row=1, column=5)
 
-        """
-        Entry(fen, takefocus = 1, width = 3).grid(row=0, column=1)
-        Entry(fen, takefocus = 2, width = 3).grid(row=0, column=3)
-        Entry(fen, takefocus = 3, width = 3).grid(row=0, column=5)
-
-        Entry(fen, width = 3).grid(row=1, column=1)
-        Entry(fen, width = 3).grid(row=1, column=3)
-        Entry(fen, width = 3).grid(row=1, column=5)
-        """
-
         ok = Button(fen, text = "Ok",command = ok_button)
         ok.grid(row = 3, column = 2)
         annuler = Button(fen,text ="Exit",command = fen.destroy)
@@ -121,13 +117,30 @@ class Fenetre():
         ok.grid(row = 3, column = 2)
         annuler.grid(row = 3,column = 3)
 
-"""
-Test rendu graphique arène :
+    def deplacerRobot(self):
 
-arene = Terrain()
-arene.objet.append(ObjetPhysique(50, 40, 0, 40, 10))
-arene.objet.append(ObjetPhysique(400, 360, 0, 50, 30))
-arene.objet.append(ObjetPhysique(780, 250, 0, 30, 30))
-arene.robot.append(Robot(500, 200, 0))
-fenetre = Fenetre(arene)
-"""
+        def ok_button():
+            self.arene.robot[id_robot.get()].avancer(x.get(), y.get())
+            self.affichage_arene()
+            fen.destroy()
+
+        fen = Toplevel(self.fenetre)
+        fen.title("Déplacer robot")
+        fen.resizable(0, 0)
+
+        id_robot = IntVar()
+        x = IntVar()
+        y = IntVar()
+
+        Label(fen, text = "id robot :").grid(row = 0, column = 0)
+        Label(fen, text = "Déplacement en x :").grid(row = 0, column = 2)
+        Label(fen, text = "Déplacement en y:").grid(row = 0, column = 4)
+
+        Entry(fen, textvariable = id_robot, width = 3).grid(row = 0, column = 1)
+        Entry(fen, textvariable = x, width = 3).grid(row = 0, column = 3)
+        Entry(fen, textvariable = y, width = 3).grid(row = 0, column = 5)
+
+        ok = Button(fen, text = "Ok", command = ok_button)
+        annuler = Button(fen, text = "Exit", command = fen.destroy)
+        ok.grid(row = 3, column = 2)
+        annuler.grid(row = 3,column = 3)
