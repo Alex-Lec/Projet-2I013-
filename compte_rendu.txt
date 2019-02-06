@@ -1,0 +1,35 @@
+Compte rendu de projet 2i013 groupe 5
+
+	Participants :
+	Luc Sterkers
+	Alexandre Try
+	Alexis Lecuyer
+	Cécile Bauduin
+	Johann Alaya
+
+Jeudi 24 Janvier TME 1
+Création du groupe.
+Bonne ambiance.
+Impossibilité d’accord commun sur le fond d’écran à appliquer au tréllo (Pas d’urgence immédiate sur la question).
+Mise en commun des premières idées.
+Pas de résultat visuel (autre que du code) à montrer au client.
+Ce n’est pas grave pour la semaine 1 mais sera nécessaire dés la semaine 2.
+
+	Luc
+
+Jeudi 31 Janvier TME 2
+Permier "meeting hebdomadaire" avec les profs : bon bilan, problèmes techniques mais l'équipe est efficace.
+Les profs semblent trouver qu'on commence à comprendre la méthodologie.
+
+Avancement des méthodes de déplacement du robot, création d'une première version d'une fenêtre (interface graphique).
+Objectif pour la semaine suivante : avoir un visuel du robot qui se déplace dans l'arène
+(sous la forme d'une petite fonction de demo).
+
+Même remarque que la semaine dernière par les profs : mieux se poser la question du découpage des tâches.
+Pas de tâches de plus d'une heure, une fonction = une tâche.
+
+Cécile
+
+
+
+Jeudi 07 Février TME 3
