@@ -46,11 +46,11 @@ class Fenetre():
     
         for i in self.arene.objet:
             self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
-                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "black")
+                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
 
         for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
             self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
-                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "yellow")
+                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "red")
 
             #self.arene_canvas.create_line(i.x, i.y, i.x + i.largeur // 2, i.y, fill = "black")
             #self.arene_canvas.create_line(i.x, i.y - i.longueur // 2, i.x, i.y + i.longueur // 2, fill = "black")
