@@ -52,7 +52,7 @@ class Fenetre():
             self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
                 i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "yellow")
 
-            #self.arene_canvas.create_line(i.x - i.largeur // 2, i.y, i.x + i.largeur // 2, i.y, fill = "black")
+            #self.arene_canvas.create_line(i.x, i.y, i.x + i.largeur // 2, i.y, fill = "black")
             #self.arene_canvas.create_line(i.x, i.y - i.longueur // 2, i.x, i.y + i.longueur // 2, fill = "black")
             self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i) + 1, fill = "black")
 
