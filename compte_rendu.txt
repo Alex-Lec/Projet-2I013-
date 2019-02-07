@@ -33,3 +33,18 @@ Cécile
 
 
 Jeudi 07 Février TME 3
+
+Problèmes rencontrés :
+	Communication peu équilibrée, il faut se mettre d'accord sur d'eventuels channels "persos" pour ne pas envahir le Whatsapp.
+	
+	Se mettre d'accord à l'avance sur le temps de travail dispo de chacun et la répartition des heures dans la semaine.
+	
+	Mieux réfléchir aux fonctionnalités pour l'élaboration du Sprint, découper les fonctions entre le modèle et l'affichage.
+	
+Conseils :
+	Privilégier les tests quand on a peu de temps, notamment pour ne pas bloquer le reste de l'équipe/ pour ne pas traîner des bugs trop longtemps et devoir tout changer après.
+	
+	Gérer le stress de Luc, et lui administrer des calmants.
+	
+
+Cécile
