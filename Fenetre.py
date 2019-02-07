@@ -145,7 +145,8 @@ class Fenetre():
 
         def ok_button():
             self.arene.robot[id_robot.get()].avancer(x.get(), y.get())
-            self.affichage_arene()
+            self.arene.coords(id_robot.get(),i.x-i.largeur // 2, i.y - i.longueur // 2, \
+                i.x + i.largeur // 2, i.y + i.longueur // 2)
             fen.destroy()
 
         fen = Toplevel(self.fenetre)
