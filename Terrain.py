@@ -3,10 +3,10 @@
 
 from ObjetPhysique import *
 from Vecteur import *
-from Camera import *
+#from Camera import *
 from Roue import *
-from Detecteur import *
-from Accelerometre import *
+#from Detecteur import *
+#from Accelerometre import *
 from Robot import *
 
 class Terrain():
