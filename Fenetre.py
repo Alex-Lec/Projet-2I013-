@@ -147,12 +147,11 @@ class Fenetre():
             for j in range(pas.get()):
                 self.arene.robot[id_robot.get()].avancer(x.get(), 0)
                 i = self.arene.robot[id_robot.get()]
-                self.arene_canvas.coords(self.listRobots[id_robot.get()],i.x-i.largeur // 2, \
-                i.y - i.longueur // 2, i.x + i.largeur // 2, i.y + i.longueur // 2)
-                print("sleep")
-                time.sleep(.2)
-                print("wake")
-                x = 
+                self.arene_canvas.move(self.listRobots[id_robot.get()],x.get(),0)
+                self.arene_canvas.update()
+                time.sleep(.02)
+
+
              
 
 
@@ -166,7 +165,7 @@ class Fenetre():
 
         Label(fen, text = "id robot :").grid(row = 0, column = 0)
         Label(fen, text = "X :").grid(row = 0, column = 2)
-        Label(fen, text = "Pas :").grid(row = 0, column = 4)
+        Label(fen, text = "pas :").grid(row = 0, column = 4)
 
         Entry(fen, textvariable = id_robot, width = 3).grid(row = 0, column = 1)
         Entry(fen, textvariable = x, width = 3).grid(row = 0, column = 3)
