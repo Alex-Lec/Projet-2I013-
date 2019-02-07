@@ -1,13 +1,12 @@
 class ObjetPhysique:
 
-    def __init__(self, x, y, z, length, width, height dir):
+    def __init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 20):
         self.x = x
         self.y = y
         self.z = z
-        self.length = length
-        self.width = width
-        self.height = height
-        self.dir = dir
+        self.largeur = largeur
+        self.longueur = longueur
+        self.hauteur = hauteur
     
     def get_x(self):
         return self.x

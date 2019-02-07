@@ -54,7 +54,6 @@ class Fenetre():
                 i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "red")
             self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i) + 1, fill = "black")
             self.listRobots += [rob]
-        
 
     def affichage_arene(self):
         
@@ -69,7 +68,7 @@ class Fenetre():
             self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
                 i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "red")
 
-            #self.arene_canvas.create_line(i.x, i.y, i.x + i.largeur // 2, i.y, fill = "black")
+            self.arene_canvas.create_line(i.x, i.y, i.x + i.largeur // 2, i.y, fill = "black")
             #self.arene_canvas.create_line(i.x, i.y - i.longueur // 2, i.x, i.y + i.longueur // 2, fill = "black")
             self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i) + 1, fill = "black")
 
@@ -100,12 +99,12 @@ class Fenetre():
         Label(fen, text="Longueur =").grid(row = 1, column = 2)
         Label(fen, text="Hauteur =").grid(row = 1, column = 4)
         
-        Entry(fen,textvariable = posx, width = 3).grid(row=0, column=1)
-        Entry(fen,textvariable = posy, width = 3).grid(row=0, column=3)
-        Entry(fen,textvariable = posz, width = 3).grid(row=0, column=5)
-        Entry(fen,textvariable = largeur, width = 3).grid(row=1, column=1)
-        Entry(fen,textvariable = longueur, width = 3).grid(row=1, column=3)
-        Entry(fen,textvariable = hauteur, width = 3).grid(row=1, column=5)
+        Entry(fen,textvariable = posx, width = 3).grid(row = 0, column = 1)
+        Entry(fen,textvariable = posy, width = 3).grid(row = 0, column = 3)
+        Entry(fen,textvariable = posz, width = 3).grid(row = 0, column = 5)
+        Entry(fen,textvariable = largeur, width = 3).grid(row = 1, column = 1)
+        Entry(fen,textvariable = longueur, width = 3).grid(row = 1, column = 3)
+        Entry(fen,textvariable = hauteur, width = 3).grid(row = 1, column = 5)
 
         ok = Button(fen, text = "Ok",command = ok_button)
         ok.grid(row = 3, column = 2)

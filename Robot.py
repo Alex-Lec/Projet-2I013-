@@ -17,7 +17,7 @@ class Robot(ObjetPhysique):
 
     def __init__(self, x, y, z): #dir, camera, rd, rg, detecteur, accelerometre):
 
-        ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
+        ObjetPhysique.__init__(self, x, y, z)
 
         self.vecteur_direction = Vecteur(x, y, z, x + 100 // 2, y + 50 // 2, z + 25 // 2)
 

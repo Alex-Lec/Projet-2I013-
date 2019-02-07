@@ -10,10 +10,15 @@ class Vecteur():
         self.y2 = y2
         self.z2 = z2
 	
-    def produitScalaire(self, v):
-            return np.inner(self, v)
+    def produitScalaire(self, s):
+            self.x1 *= s
+            self.y1 *= s
+            self.z1 *= s
+            self.x2 *= s
+            self.y2 *= s
+            self.z2 *= s
 	
-    def produitVectoriel(self,v):
+    def produitVectoriel(self, v):
         return np.cross(self, v)
         	
     def add(self, v):
