@@ -4,7 +4,7 @@
 from Terrain import *
 from tkinter import *
 from Robot import *
-
+import time
 #http://www.fil.univ-lille1.fr/~marvie/python/chapitre6.html
 
 class Fenetre():
@@ -141,14 +141,16 @@ class Fenetre():
     def deplacerRobot(self):
 
         def ok_button():
-        
+            fen.destroy()
+            
             for j in range(pas.get()):
                 self.arene.robot[id_robot.get()].avancer(x.get(), 0)
                 i = self.arene.robot[id_robot.get()]
                 self.arene_canvas.coords(self.listRobots[id_robot.get()],i.x-i.largeur // 2, \
                 i.y - i.longueur // 2, i.x + i.largeur // 2, i.y + i.longueur // 2)
+                time.sleep(.2)
              
-            fen.destroy()
+
 
         fen = Toplevel(self.fenetre)
         fen.title("Déplacer robot")
