@@ -3,10 +3,10 @@
 
 from ObjetPhysique import *
 from Vecteur import *
-#from Camera import *
+from Camera import *
 from Roue import *
-#from Detecteur import *
-#from Accelerometre import *
+from Detecteur import *
+from Accelerometre import *
 from Robot import *
 
 class Terrain():
@@ -17,7 +17,9 @@ class Terrain():
         self.dimy = dimy
         self.objet = []
         self.robot = []
-
+        ajouter_objets([ObjetPhysique(-1, 0, 0, 1, 600, 1), ObjetPhysique(0, -1, 0, 1000, 1, 1), ObjetPhysique(1001, 0, 0, 1, 600, 1), ObjetPhysique(0, 601, 0, 1000, 1, 1)]
+        #On ajoute des obstacles autour du terrain à sa création pour éviter que des objets n'en sortent.
+        
     # Problème de coohérence, soit on rajoute soit on créait
     """ 
         def ajouter_robot(self, x, y, z):
