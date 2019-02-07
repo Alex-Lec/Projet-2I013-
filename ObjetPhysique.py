@@ -1,6 +1,6 @@
 class ObjetPhysique:
 
-    def __init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 20):
+    def __init__(self, x = 0, y = 0, z = 0, longueur = 50, largeur = 100, hauteur = 20):
         self.x = x
         self.y = y
         self.z = z
@@ -27,7 +27,7 @@ class ObjetPhysique:
         self.z = z
     
     def get_dim(self):
-        return (self.length, self.width, self.height)
+        return (self.longueur, self.largeur, self.hauteur)
     
     def get_dir(self):
         return self.dir
