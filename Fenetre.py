@@ -5,6 +5,7 @@ from Terrain import *
 from tkinter import *
 from Robot import *
 import time
+#http://effbot.org/zone/tkinter-complex-canvas.htm
 #http://www.fil.univ-lille1.fr/~marvie/python/chapitre6.html
 
 class Fenetre():
@@ -148,7 +149,10 @@ class Fenetre():
                 i = self.arene.robot[id_robot.get()]
                 self.arene_canvas.coords(self.listRobots[id_robot.get()],i.x-i.largeur // 2, \
                 i.y - i.longueur // 2, i.x + i.largeur // 2, i.y + i.longueur // 2)
+                print("sleep")
                 time.sleep(.2)
+                print("wake")
+                x = 
              
 
 
