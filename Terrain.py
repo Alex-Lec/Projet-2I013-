@@ -43,8 +43,8 @@ class Terrain():
     def testCollision(self, i1, i2):
         o1 = self.objet[i1]
         o2 = self.objet[i2]
-        ovx = min(o1.get_x() + o1.get_cote(), o2.get_x() + o2.get_cote()) - max(o1.get_x() - o1.get_cote(), o2.get_x() - o2.get_cote()) > 0
-        ovy = min(o1.get_y() + o1.get_cote(), o2.get_y() + o2.get_cote()) - max(o1.get_y() - o1.get_cote(), o2.get_y() - o2.get_cote()) > 0
+        ovx = min(o1.get_x() + o1.get_dim()[0], o2.get_x() + o2.get_dim()[0]) - max(o1.get_x() - o1.get_dim()[0], o2.get_x() - o2.get_dim()[0]) > 0
+        ovy = min(o1.get_y() + o1.get_dim()[1], o2.get_y() + o2.get_dim()[1]) - max(o1.get_y() - o1.get_dim()[1], o2.get_y() - o2.get_dim()[1]) > 0
         return ovx & ovy
     
     def checkCollisions (self):
