@@ -34,7 +34,7 @@ class Fenetre():
         menu2 = Menu(menubar, tearoff = 0)
         menu2.add_command(label = "Déplacer robot", command = self.deplacerRobot)
         menubar.add_cascade(label = "Déplacement", menu = menu2)
-        
+
         self.fenetre.config(menu = menubar)
 
         self.arene_canvas = Canvas(self.fenetre, width = 1000, height = 600)
@@ -57,10 +57,10 @@ class Fenetre():
             self.listRobots += [rob]
 
     def affichage_arene(self):
-        
+
         self.arene_canvas.addtag_enclosed('del_items', 0, 0, 1000, 600)
         self.arene_canvas.delete('del_items')
-    
+
         for i in self.arene.objet:
             self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
                 i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
@@ -72,7 +72,7 @@ class Fenetre():
             self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
 
     def creerObjet(self):
-    
+
         def ok_button():
             obj = self.arene.objet.append(ObjetPhysique(posx.get(), posy.get(), posz.get(), \
             largeur.get(),longueur.get(), hauteur.get()))
@@ -80,14 +80,14 @@ class Fenetre():
             self.listObjets += [obj]
             self.affichage_arene()
             fen.destroy()
-            
+
         fen = Toplevel(self.fenetre)
         fen.title("Ajouter objet")
 
         posx = IntVar()
         posy = IntVar()
         posz = IntVar()
-        largeur = IntVar() 
+        largeur = IntVar()
         longueur = IntVar()
         hauteur = IntVar()
 
@@ -108,7 +108,7 @@ class Fenetre():
         ok = Button(fen, text = "Ok",command = ok_button)
         ok.grid(row = 3, column = 2)
         annuler = Button(fen,text ="Exit",command = fen.destroy)
-        annuler.grid(row = 3, column = 3)    
+        annuler.grid(row = 3, column = 3)
 
     def creerRobot(self):
 
@@ -117,7 +117,7 @@ class Fenetre():
             self.listRobots += [rob]
             self.affichage_arene()
             fen.destroy()
-        
+
         fen = Toplevel(self.fenetre)
         fen.title("Ajouter robot")
         fen.resizable(0, 0)
@@ -176,3 +176,31 @@ class Fenetre():
         annuler = Button(fen, text = "Exit", command = fen.destroy)
         ok.grid(row = 3, column = 2)
         annuler.grid(row = 3,column = 3)
+    """def tournerRobot(self):
+
+        def ok_button():
+            self.arene.robot[id_robot.get()].avancer(x.get(), y.get())
+            self.affichage_arene()
+            fen.destroy()
+
+        fen = Toplevel(self.fenetre)
+        fen.title("Déplacer robot")
+        fen.resizable(0, 0)
+
+        id_robot = IntVar()
+        x = IntVar()
+        y = IntVar()
+
+        Label(fen, text = "id robot :").grid(row = 0, column = 0)
+        Label(fen, text = "Déplacement en x :").grid(row = 0, column = 2)
+        Label(fen, text = "Déplacement en y:").grid(row = 0, column = 4)
+
+        Entry(fen, textvariable = id_robot, width = 3).grid(row = 0, column = 1)
+        Entry(fen, textvariable = x, width = 3).grid(row = 0, column = 3)
+        Entry(fen, textvariable = y, width = 3).grid(row = 0, column = 5)
+
+        ok = Button(fen, text = "Ok", command = ok_button)
+        annuler = Button(fen, text = "Exit", command = fen.destroy)
+        ok.grid(row = 3, column = 2)
+        annuler.grid(row = 3,column = 3)
+"""
