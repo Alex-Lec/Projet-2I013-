@@ -2,6 +2,12 @@
 # -*- coding: utf-8 -*
 
 from ObjetPhysique import *
+from Vecteur import *
+from Camera import *
+from Roue import *
+from Detecteur import *
+from Accelerometre import *
+from Robot import *
 
 class Terrain():
 
@@ -53,12 +59,12 @@ class Terrain():
             except ValueError:
                 o1 = self.objet[i]
                 o2 = self.objet[j]
-                if o1.get_x() + o1.get_cote() < o2.get_x() - o2.get_cote():
-                    o2.set_x(o2.get_x() + (o2.get_x() - o2.get_cote() - o1.get_x() - o1.get_cote()) + 1)
+                if o1.get_x() + o1.get_dim()[0] < o2.get_x() - o2.get_dim()[0]:
+                    o2.set_x(o2.get_x() + (o2.get_x() - o2.get_dim()[0] - o1.get_x() - o1.get_dim()[0]) + 1)
                 else:
-                    o2.set_x(o2.get_x() - (o1.get_x() + o1.get_cote() - o2.get_x() + o2.get_cote()) - 1)
-                if o1.get_y() + o1.get_cote() < o2.get_y() - o2.get_cote():
-                    o2.set_y(o2.get_y() + (o2.get_y() - o2.get_cote() - o1.get_y() - o1.get_cote()) + 1)
+                    o2.set_x(o2.get_x() - (o1.get_x() + o1.get_dim()[0] - o2.get_x() + o2.get_dim()[0]) - 1)
+                if o1.get_y() + o1.get_dim()[1] < o2.get_y() - o2.get_dim()[1]:
+                    o2.set_y(o2.get_y() + (o2.get_y() - o2.get_dim()[1] - o1.get_y() - o1.get_dim()[1]) + 1)
                 o1.set_dir(Vecteur(0.0,0.0,0.0).sub(o1.get_dir()))  
                 o2.set_dir(Vecteur(0.0,0.0,0.0).sub(o2.get_dir()))
             
