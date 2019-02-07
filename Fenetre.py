@@ -38,7 +38,7 @@ class Fenetre():
 
         self.arene_canvas = Canvas(self.fenetre, width = 1000, height = 600)
         self.arene_canvas.pack()
-        self.initialise_arene_arene()
+        self.initialise_arene()
         self.fenetre.mainloop()
         
     def initialise_arene(self):
@@ -46,14 +46,14 @@ class Fenetre():
         for i in self.arene.objet:
             obj = self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
                 i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
-            listObjets += [obj]
+            self.listObjets += [obj]
             
 
         for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
             rob = self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
                 i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "red")
             self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i) + 1, fill = "black")
-            listRobots += [rob]
+            self.listRobots += [rob]
         
 
     def affichage_arene(self):
@@ -79,7 +79,7 @@ class Fenetre():
             obj = self.arene.objet.append(ObjetPhysique(posx.get(), posy.get(), posz.get(), \
             largeur.get(),longueur.get(), hauteur.get()))
             
-            listObjets += [obj]
+            self.listObjets += [obj]
             self.affichage_arene()
             fen.destroy()
             
@@ -116,7 +116,7 @@ class Fenetre():
 
         def ok_button():
             rob = self.arene.robot.append(Robot(posx.get(), posy.get(), posz.get()))
-            listRobots += [rob]
+            self.listRobots += [rob]
             self.affichage_arene()
             fen.destroy()
         
@@ -145,8 +145,10 @@ class Fenetre():
 
         def ok_button():
             self.arene.robot[id_robot.get()].avancer(x.get(), y.get())
-            self.arene.coords(id_robot.get(),i.x-i.largeur // 2, i.y - i.longueur // 2, \
-                i.x + i.largeur // 2, i.y + i.longueur // 2)
+            i = self.arene.robot[id_robot.get()]
+            
+            self.arene_canvas.coords(self.listRobots[id_robot.get()],i.x-i.largeur // 2, \
+             i.y - i.longueur // 2, i.x + i.largeur // 2, i.y + i.longueur // 2)
             fen.destroy()
 
         fen = Toplevel(self.fenetre)
