@@ -5,8 +5,9 @@ from Terrain import *
 from tkinter import *
 from Robot import *
 import time
-#http://effbot.org/zone/tkinter-complex-canvas.htm
-#http://www.fil.univ-lille1.fr/~marvie/python/chapitre6.html
+
+# http://effbot.org/zone/tkinter-complex-canvas.htm
+# http://www.fil.univ-lille1.fr/~marvie/python/chapitre6.html
 
 class Fenetre():
 
@@ -23,6 +24,9 @@ class Fenetre():
         menubar = Menu(self.fenetre)
 
         menu0 = Menu(menubar, tearoff= 0)
+        menu0.add_command(label = "Ouvrir")
+        menu0.add_command(label = "Enregistrer")
+        menu0.add_separator()
         menu0.add_command(label = "Quitter", command = self.fenetre.destroy)
         menubar.add_cascade(label = "Fichier", menu = menu0)
 
@@ -37,49 +41,40 @@ class Fenetre():
         
         self.fenetre.config(menu = menubar)
 
-        self.arene_canvas = Canvas(self.fenetre, width = 1000, height = 600)
-        self.arene_canvas.pack()
         self.initialise_arene()
         self.fenetre.mainloop()
         
     def initialise_arene(self):
-    
-        for i in self.arene.objet:
-            obj = self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
-                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
-            self.listObjets += [obj]
-            
 
-        for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
-            rob = self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
-                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "red")
-            self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
-            self.listRobots += [rob]
+        for o in self.arene.objet:
 
-    def affichage_arene(self):
-        
-        self.arene_canvas.addtag_enclosed('del_items', 0, 0, 1000, 600)
-        self.arene_canvas.delete('del_items')
-    
-        for i in self.arene.objet:
-            self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
-                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
+            obj_canvas = Canvas(self.fenetre, width = o.largeur, height = o.longueur)
+            obj_canvas.create_rectangle(0, 0, o.largeur + 1, o.longueur + 1, fill = "blue")
+            obj_canvas.place(x = o.x, y = o.y)
+            self.listObjets.append(obj_canvas)
 
-        for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
-            self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
-                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "red")
-                
-            self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
+        for r in self.arene.robot:
+
+            rob_canvas = Canvas(self.fenetre, width = r.largeur, height = r.longueur)
+            rob_canvas.create_rectangle(0, 0, r.largeur + 1, r.longueur + 1, fill = "red")
+            rob_canvas.create_text(r.largeur // 2, r.longueur // 2, text = self.arene.robot.index(r) + 1, fill = "black")
+            rob_canvas.create_line(r.largeur // 2 + r.largeur // 4, r.longueur // 2, r.largeur , r.longueur // 2)
+            rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 - 10)
+            rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 + 10)  
+            rob_canvas.place(x = r.x, y = r.y)
+            self.listRobots.append(rob_canvas)
 
     def creerObjet(self):
     
         def ok_button():
-            obj = self.arene.objet.append(ObjetPhysique(posx.get(), posy.get(), posz.get(), \
-            largeur.get(),longueur.get(), hauteur.get()))
-            
-            self.listObjets += [obj]
-            self.affichage_arene()
             fen.destroy()
+            obj = ObjetPhysique(posx.get(), posy.get(), posz.get(), largeur.get(),longueur.get(), hauteur.get())
+            self.listObjets.append(obj)
+
+            obj_canvas = Canvas(self.fenetre, width = obj.largeur, height = obj.longueur)
+            obj_canvas.create_rectangle(0, 0, obj.largeur + 1, obj.longueur + 1, fill = "blue")
+            obj_canvas.place(x = obj.x, y = obj.y)
+            self.listObjets.append(obj_canvas)
             
         fen = Toplevel(self.fenetre)
         fen.title("Ajouter objet")
@@ -113,13 +108,18 @@ class Fenetre():
     def creerRobot(self):
 
         def ok_button():
-            i = Robot(posx.get(), posy.get(), posz.get())
-            self.arene.robot.append(i)
-            
-            rob = self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
-                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "red")
-            self.listRobots += [rob]
             fen.destroy()
+            r = Robot(posx.get(), posy.get(), posz.get())
+            self.arene.robot.append(r)
+
+            rob_canvas = Canvas(self.fenetre, width = r.largeur, height = r.longueur)
+            rob_canvas.create_rectangle(0, 0, r.largeur + 1, r.longueur + 1, fill = "red")
+            rob_canvas.create_text(r.largeur // 2, r.longueur // 2, text = self.arene.robot.index(r) + 1, fill = "black")
+            rob_canvas.create_line(r.largeur // 2 + r.largeur // 4, r.longueur // 2, r.largeur , r.longueur // 2)
+            rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 - 10)
+            rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 + 10)  
+            rob_canvas.place(x = r.x, y = r.y)
+            self.listRobots.append(rob_canvas)
         
         fen = Toplevel(self.fenetre)
         fen.title("Ajouter robot")
@@ -146,14 +146,15 @@ class Fenetre():
 
         def ok_button():
             fen.destroy()
-            
+
             for j in range(pas.get()):
-                self.arene.robot[id_robot.get()].avancer(x.get(), 0)
-                self.arene_canvas.move(self.listRobots[id_robot.get()],x.get(),0)
-                self.arene_canvas.update()
+                self.arene.robot[id_robot.get() - 1].avancer(x.get(), 0)
+                rob = self.arene.robot[id_robot.get() - 1]
+                self.listRobots[id_robot.get() - 1].place(x = rob.x, y = rob.y)
+                self.listRobots[id_robot.get() - 1].update()
+                self.fenetre.update()
                 time.sleep(.01)
-
-
+            
         fen = Toplevel(self.fenetre)
         fen.title("Déplacer robot")
         fen.resizable(0, 0)
