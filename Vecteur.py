@@ -2,21 +2,15 @@ import numpy as np
 
 class Vecteur():
     
-    def __init__(self, x1, y1, z1, x2, y2, z2):
-        self.x1 = x1
-        self.y1 = y1
-        self.z1 = z1    
-        self.x2 = x2
-        self.y2 = y2
-        self.z2 = z2
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z    
 	
     def produitScalaire(self, s):
-            self.x1 *= s
-            self.y1 *= s
-            self.z1 *= s
-            self.x2 *= s
-            self.y2 *= s
-            self.z2 *= s
+            self.x *= s
+            self.y *= s
+            self.z *= s
 	
     def produitVectoriel(self, v):
         return np.cross(self, v)

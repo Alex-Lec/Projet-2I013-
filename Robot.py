@@ -19,7 +19,7 @@ class Robot(ObjetPhysique):
 
         ObjetPhysique.__init__(self, x, y, z)
 
-        self.vecteur_direction = Vecteur(x, y, z, x + 100 // 2, y + 50 // 2, z + 25 // 2)
+        self.vecteur_direction = Vecteur(x, y, z)
 
         """
         self.camera = camera
