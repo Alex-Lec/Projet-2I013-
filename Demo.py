@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
-
+from test import*
 from Fenetre import*
 from Terrain import*
 from ObjetPhysique import*
@@ -48,4 +48,3 @@ arene.objet.append(ObjetPhysique(400, 360, 0, 50, 30))
 arene.objet.append(ObjetPhysique(780, 250, 0, 30, 30))
 arene.robot.append(Robot(500, 200, 0))
 fenetre = Fenetre(arene)
-

@@ -32,7 +32,6 @@ class Fenetre():
         menubar.add_cascade(label = "Création", menu = menu1)
 
         menu2 = Menu(menubar, tearoff = 0)
-        menu2.add_command(label="Tourner robot", command = self.tournerRobot)
         menu2.add_command(label = "Déplacer robot", command = self.deplacerRobot)
         menubar.add_cascade(label = "Déplacement", menu = menu2)
 
@@ -52,8 +51,8 @@ class Fenetre():
 
 
         for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
-
-            rob = self.arene_canvas.create_polygon(i.points, fill="yellow")
+            rob = self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
+                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "red")
             self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
             self.listRobots += [rob]
 
@@ -67,11 +66,8 @@ class Fenetre():
                 i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
 
         for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
-            points =   [ [posx - i.largeur//2 , posy -i.longueur//2 ],
-                    [posx + i.largeur//2, posy - i.longueur // 2],
-                    [posx + i.largeur//2, posy + i.longueur//2],
-                    [posx - i.largeur//2, posy + i.longueur//2]]
-            self.arene_canvas.create_polygon(points, fill="red")
+            self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
+                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "red")
 
             self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
 
@@ -120,14 +116,9 @@ class Fenetre():
             i = Robot(posx.get(), posy.get(), posz.get())
             self.arene.robot.append(i)
 
-            points =   [ [posx - i.largeur//2 , posy -i.longueur//2 ],
-            [posx + i.largeur//2, posy - i.longueur // 2],
-            [posx + i.largeur//2, posy + i.longueur//2],
-            [posx - i.largeur//2, posy + i.longueur//2]]
-            rob = self.arene_canvas.create_polygon(points, fill="red")
-
+            rob = self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
+                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "red")
             self.listRobots += [rob]
-            self.affichage_arene()
             fen.destroy()
 
         fen = Toplevel(self.fenetre)
@@ -184,37 +175,35 @@ class Fenetre():
         ok.grid(row = 3, column = 2)
         annuler.grid(row = 3,column = 3)
 
+    """def tournerRobot(self):
+
+            def ok_button():
+                fen.destroy()
+
+                for j in range(pas.get()):
+                    self.arene.robot[id_robot.get()].avancer(x.get(), 0)
+                    self.arene_canvas.move(self.listRobots[id_robot.get()],x.get(),0)
+                    self.arene_canvas.update()
+                    time.sleep(.01)
 
 
-    def tournerRobot(self):
+            fen = Toplevel(self.fenetre)
+            fen.title("Déplacer robot")
+            fen.resizable(0, 0)
 
-        def ok_button():
-            fen.destroy()
+            id_robot = IntVar()
+            x = DoubleVar()
+            pas = IntVar()
 
-            for j in range(pas.get()):
-                self.arene.robot[id_robot.get()].tourner(angle.get())
-                self.arene_canvas.move(self.listRobots[id_robot.get()],x.get(),0)
-                self.arene_canvas.update()
-                time.sleep(.01)
+            Label(fen, text = "id robot :").grid(row = 0, column = 0)
+            Label(fen, text = "X :").grid(row = 0, column = 2)
+            Label(fen, text = "pas :").grid(row = 0, column = 4)
 
+            Entry(fen, textvariable = id_robot, width = 3).grid(row = 0, column = 1)
+            Entry(fen, textvariable = x, width = 3).grid(row = 0, column = 3)
+            Entry(fen, textvariable = pas, width = 3).grid(row = 0, column = 5)
 
-        fen = Toplevel(self.fenetre)
-        fen.title("Tourner robot")
-        fen.resizable(0, 0)
-
-        id_robot = IntVar()
-        angle = IntVar()
-
-
-        Label(fen, text = "id robot :").grid(row = 0, column = 0)
-        Label(fen, text = "Angle° :").grid(row = 0, column = 2)
-        #Label(fen, text = "pas :").grid(row = 0, column = 4)
-
-        Entry(fen, textvariable = id_robot, width = 3).grid(row = 0, column = 1)
-        Entry(fen, textvariable = angle, width = 3).grid(row = 0, column = 3)
-        #Entry(fen, textvariable = pas, width = 3).grid(row = 0, column = 5)
-
-        ok = Button(fen, text = "Ok", command = ok_button)
-        annuler = Button(fen, text = "Exit", command = fen.destroy)
-        ok.grid(row = 3, column = 1)
-        annuler.grid(row = 3,column = 2)
+            ok = Button(fen, text = "Ok", command = ok_button)
+            annuler = Button(fen, text = "Exit", command = fen.destroy)
+            ok.grid(row = 3, column = 2)
+            annuler.grid(row = 3,column = 3)"""
