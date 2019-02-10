@@ -53,7 +53,7 @@ class Fenetre():
 
         for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
 
-            rob = self.arene_canvas.create_polygon(i.points, fill="yellow")
+            rob = self.arene_canvas.create_polygon(i.points, fill="red")
             self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
             self.listRobots += [rob]
 
@@ -67,11 +67,8 @@ class Fenetre():
                 i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
 
         for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
-            points =   [ [posx - i.largeur//2 , posy -i.longueur//2 ],
-                    [posx + i.largeur//2, posy - i.longueur // 2],
-                    [posx + i.largeur//2, posy + i.longueur//2],
-                    [posx - i.largeur//2, posy + i.longueur//2]]
-            self.arene_canvas.create_polygon(points, fill="red")
+
+            self.arene_canvas.create_polygon(i.points, fill="red")
 
             self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
 
@@ -120,9 +117,9 @@ class Fenetre():
             i = Robot(posx.get(), posy.get(), posz.get())
             self.arene.robot.append(i)
 
-            points =   [ [posx - i.largeur//2 , posy -i.longueur//2 ],
+            points =   [ [posx + i.largeur//2 , posy +i.longueur//2 ],
             [posx + i.largeur//2, posy - i.longueur // 2],
-            [posx + i.largeur//2, posy + i.longueur//2],
+            [posx - i.largeur//2, posy - i.longueur//2],
             [posx - i.largeur//2, posy + i.longueur//2]]
             rob = self.arene_canvas.create_polygon(points, fill="red")
 
@@ -189,13 +186,16 @@ class Fenetre():
     def tournerRobot(self):
 
         def ok_button():
+
+            #for j in range(angle.get()):
+            self.arene.robot[id_robot.get()].tourner(angle.get(),self.arene.robot[id_robot.get()].points,self.arene.robot[id_robot.get()].center)
+            self.affichage_arene()
             fen.destroy()
 
-            for j in range(pas.get()):
-                self.arene.robot[id_robot.get()].tourner(angle.get())
-                self.arene_canvas.move(self.listRobots[id_robot.get()],x.get(),0)
-                self.arene_canvas.update()
-                time.sleep(.01)
+            self.arene_canvas.move(self.listRobots[id_robot.get()],x.get(),0)
+            self.arene_canvas.update()
+
+                #time.sleep(.01)
 
 
         fen = Toplevel(self.fenetre)

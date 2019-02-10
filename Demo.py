@@ -6,6 +6,7 @@ from Terrain import*
 from ObjetPhysique import*
 from Vecteur import*
 from Robot import*
+import math
 
 """Le but ici, est de constuire quelques objets simples, un robot et de les afficher"""
 

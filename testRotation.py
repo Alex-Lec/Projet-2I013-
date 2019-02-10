@@ -1,8 +1,8 @@
 from tkinter import *
 import math
 
-WIDTH = 400
-HEIGHT = 400
+WIDTH = 1000
+HEIGHT = 600
 CANVAS_MID_X = WIDTH/2
 CANVAS_MID_Y = HEIGHT/2
 SIDE = WIDTH/4
@@ -41,11 +41,16 @@ def test():
     print ("vertices: ", vertices, "should be: ", old_vertices)
     print (vertices == old_vertices)
 
-draw_square(vertices, "blue")
+points1=[[550,225],[550,175],[450,175],[450,225]]
+#points2=[[450,175],[450,225],[550,225],[550,175]]
+points2 = rotate(points1,90,[500,200])
+draw_square(points1, "blue")
+draw_square(points2, "red")
+print(points2)
 
-center = (CANVAS_MID_X, CANVAS_MID_Y)
+"""center = (CANVAS_MID_X, CANVAS_MID_Y)
 new_square = rotate(vertices, 30, center)
 test()
-draw_square(new_square)
+draw_square(new_square)"""
 
 mainloop()
