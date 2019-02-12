@@ -1,0 +1,52 @@
+Compte rendu de projet 2i013 groupe 5
+
+	Participants :
+	Luc Sterkers
+	Alexandre Try
+	Alexis Lecuyer
+	Cécile Bauduin
+	Johann Alaya
+
+Jeudi 24 Janvier TME 1
+Création du groupe.
+Bonne ambiance.
+Impossibilité d’accord commun sur le fond d’écran à appliquer au tréllo (Pas d’urgence immédiate sur la question).
+Mise en commun des premières idées.
+Pas de résultat visuel (autre que du code) à montrer au client.
+Ce n’est pas grave pour la semaine 1 mais sera nécessaire dés la semaine 2.
+
+	Luc
+
+Jeudi 31 Janvier TME 2
+Permier "meeting hebdomadaire" avec les profs : bon bilan, problèmes techniques mais l'équipe est efficace.
+Les profs semblent trouver qu'on commence à comprendre la méthodologie.
+
+Avancement des méthodes de déplacement du robot, création d'une première version d'une fenêtre (interface graphique).
+Objectif pour la semaine suivante : avoir un visuel du robot qui se déplace dans l'arène
+(sous la forme d'une petite fonction de demo).
+
+Même remarque que la semaine dernière par les profs : mieux se poser la question du découpage des tâches.
+Pas de tâches de plus d'une heure, une fonction = une tâche.
+
+Cécile
+
+
+
+Jeudi 07 Février TME 3
+
+Problèmes rencontrés :
+	Communication peu équilibrée, il faut se mettre d'accord sur d'eventuels channels "persos" pour ne pas envahir le Whatsapp.
+	
+	Se mettre d'accord à l'avance sur le temps de travail dispo de chacun et la répartition des heures dans la semaine.
+	
+	Mieux réfléchir aux fonctionnalités pour l'élaboration du Sprint, découper les fonctions entre le modèle et l'affichage.
+	
+Conseils :
+	Privilégier les tests quand on a peu de temps, notamment pour ne pas bloquer le reste de l'équipe/ pour ne pas traîner des bugs trop longtemps et devoir tout changer après.
+	
+	Gérer le stress de Luc, et lui administrer des calmants.
+	
+La prochaine fois : avoir un robot orienté et qui peut tourner :)
+	
+
+Cécile

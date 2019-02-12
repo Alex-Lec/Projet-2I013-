@@ -1,0 +1,20 @@
+Definition of Done : 
+
+1) Dans le cas d'une tâche "informatique"
+	
+	Pour pouvoir être décalée dans la colonne "Done", la tâche doit :
+	
+	- avoir été effectuée par un membre de l'équipe
+	- avoir été testé par un ou plusieurs membres de l'équipe et avoir fonctionné
+	  sans bugs
+	- posséder un "jeu de test" ou une "demo" pour montrer qu'elle marche
+	- Avoir été partagée avec succès sur le Github
+	
+2) Dans le cas d'une tâche "non-informatique"
+
+	Pour pouvoir être décalée dans la colonne "Done", la tâche doit :
+	
+	- Avoir été effectuée par un ou plusieurs membres de l'équipe
+	- Avoir été relue et approuvée par tous les membres de l'équipe
+	- Avoir été partagée avec succès sur le github
+	
