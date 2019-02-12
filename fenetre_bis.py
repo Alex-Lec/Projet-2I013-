@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*
+# -- coding: utf-8 -
 
 from Terrain import *
 from tkinter import *
 from Robot import *
 import time
-
-# http://effbot.org/zone/tkinter-complex-canvas.htm
-# http://www.fil.univ-lille1.fr/~marvie/python/chapitre6.html
+#http://effbot.org/zone/tkinter-complex-canvas.htm
+#http://www.fil.univ-lille1.fr/~marvie/python/chapitre6.html
 
 class Fenetre():
 
-    def __init__(self, arene = Terrain()):
+    def _init_(self, arene = Terrain()):
 
         self.fenetre = Tk()
         self.fenetre.title("Simulateur")
@@ -24,9 +23,6 @@ class Fenetre():
         menubar = Menu(self.fenetre)
 
         menu0 = Menu(menubar, tearoff= 0)
-        menu0.add_command(label = "Ouvrir")
-        menu0.add_command(label = "Enregistrer")
-        menu0.add_separator()
         menu0.add_command(label = "Quitter", command = self.fenetre.destroy)
         menubar.add_cascade(label = "Fichier", menu = menu0)
 
@@ -36,59 +32,63 @@ class Fenetre():
         menubar.add_cascade(label = "Création", menu = menu1)
 
         menu2 = Menu(menubar, tearoff = 0)
-        menu2.add_command(label = "Tourner robot", command = self.tournerRobot)
+        menu2.add_command(label="Tourner robot", command = self.tournerRobot)
         menu2.add_command(label = "Déplacer robot", command = self.deplacerRobot)
         menubar.add_cascade(label = "Déplacement", menu = menu2)
-        
+
         self.fenetre.config(menu = menubar)
 
+        self.arene_canvas = Canvas(self.fenetre, width = 1000, height = 600)
+        self.arene_canvas.pack()
         self.initialise_arene()
         self.fenetre.mainloop()
-        
+
     def initialise_arene(self):
 
-        for o in self.arene.objet:
+        for i in self.arene.objet:
+            obj = self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
+                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
+            self.listObjets += [obj]
 
-            obj_canvas = Canvas(self.fenetre, width = o.largeur, height = o.longueur)
-            obj_canvas.create_rectangle(0, 0, o.largeur + 1, o.longueur + 1, fill = "blue")
-            obj_canvas.place(x = o.x, y = o.y)
-            self.listObjets.append(obj_canvas)
 
-        for r in self.arene.robot:
-            rob_canvas = Canvas(self.fenetre, width = r.largeur, height = r.longueur, bg = "grey")
-            #rob_canvas.create_rectangle(0, 0, r.largeur + 1, r.longueur + 1, fill = "red")
-            rob_canvas.create_polygon(r.points, fill = "red", outline = "yellow")
-            rob_canvas.create_text(r.largeur // 2, r.longueur // 2, text = self.arene.robot.index(r) + 1, fill = "black")
-            rob_canvas.create_line(r.largeur // 2 + r.largeur // 4, r.longueur // 2, r.largeur , r.longueur // 2)
-            rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 - 10)
-            rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 + 10)  
-            rob_canvas.place(x = r.x, y = r.y)
-            self.listRobots.append(rob_canvas)
+        for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
 
-        polygon = Canvas(self.fenetre, width = 50, height = 50)
-        pts = [(0, 0), (50, 0), (50, 50), (0, 50)]
-        polygon.create_polygon(pts, fill = "yellow")
-        polygon.place(x = 100, y = 100)
+            rob = self.arene_canvas.create_polygon(i.points, fill="red")
+            self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
+            self.listRobots += [rob]
+
+    def affichage_arene(self):
+
+        self.arene_canvas.addtag_enclosed('del_items', 0, 0, 1000, 600)
+        self.arene_canvas.delete('del_items')
+
+        for i in self.arene.objet:
+            self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
+                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
+
+        for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
+
+            self.arene_canvas.create_polygon(i.points, fill="red")
+
+            self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
 
     def creerObjet(self):
-    
-        def ok_button():
-            fen.destroy()
-            obj = ObjetPhysique(posx.get(), posy.get(), posz.get(), largeur.get(),longueur.get(), hauteur.get())
-            self.listObjets.append(obj)
 
-            obj_canvas = Canvas(self.fenetre, width = obj.largeur, height = obj.longueur)
-            obj_canvas.create_rectangle(0, 0, obj.largeur + 1, obj.longueur + 1, fill = "blue")
-            obj_canvas.place(x = obj.x, y = obj.y)
-            self.listObjets.append(obj_canvas)
-            
+        def ok_button():
+            obj = self.arene.objet.append(ObjetPhysique(posx.get(), posy.get(), posz.get(), \
+            largeur.get(),longueur.get(), hauteur.get()))
+
+            self.listObjets += [obj]
+            self.affichage_arene()
+            fen.destroy()
+
         fen = Toplevel(self.fenetre)
         fen.title("Ajouter objet")
 
         posx = IntVar()
         posy = IntVar()
         posz = IntVar()
-        largeur = IntVar() 
+        largeur = IntVar()
         longueur = IntVar()
         hauteur = IntVar()
 
@@ -98,7 +98,7 @@ class Fenetre():
         Label(fen, text="Largeur =").grid(row = 1, column = 0)
         Label(fen, text="Longueur =").grid(row = 1, column = 2)
         Label(fen, text="Hauteur =").grid(row = 1, column = 4)
-        
+
         Entry(fen,textvariable = posx, width = 3).grid(row = 0, column = 1)
         Entry(fen,textvariable = posy, width = 3).grid(row = 0, column = 3)
         Entry(fen,textvariable = posz, width = 3).grid(row = 0, column = 5)
@@ -109,31 +109,24 @@ class Fenetre():
         ok = Button(fen, text = "Ok",command = ok_button)
         ok.grid(row = 3, column = 2)
         annuler = Button(fen,text ="Exit",command = fen.destroy)
-        annuler.grid(row = 3, column = 3)    
+        annuler.grid(row = 3, column = 3)
 
     def creerRobot(self):
 
         def ok_button():
+            i = Robot(posx.get(), posy.get(), posz.get())
+            self.arene.robot.append(i)
+
+            points =   [ [posx + i.largeur//2 , posy +i.longueur//2 ],
+            [posx + i.largeur//2, posy - i.longueur // 2],
+            [posx - i.largeur//2, posy - i.longueur//2],
+            [posx - i.largeur//2, posy + i.longueur//2]]
+            rob = self.arene_canvas.create_polygon(points, fill="red")
+
+            self.listRobots += [rob]
+            self.affichage_arene()
             fen.destroy()
-            r = Robot(posx.get(), posy.get(), posz.get())
-            self.arene.robot.append(r)
 
-            points = [
-                [posx.get() - r.largeur // 2, posy.get() - r.longueur // 2],
-                [posx.get() + r.largeur // 2, posy.get() + r.longueur // 2],
-                [posx.get() + r.largeur // 2, posy.get() - r.longueur // 2],
-                [posx.get() - r.largeur // 2, posy.get() + r.longueur // 2]]
-
-            rob_canvas = Canvas(self.fenetre, width = r.largeur, height = r.longueur)
-            #rob_canvas.create_rectangle(0, 0, r.largeur + 1, r.longueur + 1, fill = "red")
-            rob_canvas.create_polygon(points, fill = "red")
-            rob_canvas.create_text(r.largeur // 2, r.longueur // 2, text = self.arene.robot.index(r) + 1, fill = "black")
-            rob_canvas.create_line(r.largeur // 2 + r.largeur // 4, r.longueur // 2, r.largeur , r.longueur // 2)
-            rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 - 10)
-            rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 + 10)  
-            rob_canvas.place(x = r.x, y = r.y)
-            self.listRobots.append(rob_canvas)
-        
         fen = Toplevel(self.fenetre)
         fen.title("Ajouter robot")
         fen.resizable(0, 0)
@@ -161,13 +154,12 @@ class Fenetre():
             fen.destroy()
 
             for j in range(pas.get()):
-                self.arene.robot[id_robot.get() - 1].avancer(x.get(), 0)
-                rob = self.arene.robot[id_robot.get() - 1]
-                self.listRobots[id_robot.get() - 1].place(x = rob.x, y = rob.y)
-                self.listRobots[id_robot.get() - 1].update()
-                self.fenetre.update()
+                self.arene.robot[id_robot.get()].avancer(x.get(), 0)
+                self.arene_canvas.move(self.listRobots[id_robot.get()],x.get(),0)
+                self.arene_canvas.update()
                 time.sleep(.01)
-            
+
+
         fen = Toplevel(self.fenetre)
         fen.title("Déplacer robot")
         fen.resizable(0, 0)
@@ -189,23 +181,22 @@ class Fenetre():
         ok.grid(row = 3, column = 2)
         annuler.grid(row = 3,column = 3)
 
+
+
     def tournerRobot(self):
 
         def ok_button():
 
+            #for j in range(angle.get()):
+            self.arene.robot[id_robot.get()].tourner(angle.get(),self.arene.robot[id_robot.get()].points,self.arene.robot[id_robot.get()].center)
+            self.affichage_arene()
             fen.destroy()
-            
-            self.arene.robot[id_robot.get() - 1].tourner(angle.get(), \
-                self.arene.robot[id_robot.get() - 1].points, self.arene.robot[id_robot.get() - 1].center)
 
-            rob = self.arene.robot[id_robot.get() - 1]
-            #self.arene_canvas.move(self.listRobots[id_robot.get()],x.get(),0)
-            #self.arene_canvas.update()
+            self.arene_canvas.move(self.listRobots[id_robot.get()],x.get(),0)
+            self.arene_canvas.update()
 
-            self.listRobots[id_robot.get() - 1].place(x = rob.x, y = rob.y)
-            self.listRobots[id_robot.get() - 1].update()
-            self.fenetre.update()
-            time.sleep(.01)
+                #time.sleep(.01)
+
 
         fen = Toplevel(self.fenetre)
         fen.title("Tourner robot")
@@ -213,6 +204,7 @@ class Fenetre():
 
         id_robot = IntVar()
         angle = IntVar()
+
 
         Label(fen, text = "id robot :").grid(row = 0, column = 0)
         Label(fen, text = "Angle° :").grid(row = 0, column = 2)
