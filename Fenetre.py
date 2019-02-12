@@ -55,9 +55,9 @@ class Fenetre():
             self.listObjets.append(obj_canvas)
 
         for r in self.arene.robot:
-            rob_canvas = Canvas(self.fenetre, width = r.largeur, height = r.longueur, bg = "grey")
+            rob_canvas = Canvas(self.fenetre, bg = "purple")
             #rob_canvas.create_rectangle(0, 0, r.largeur + 1, r.longueur + 1, fill = "red")
-            rob_canvas.create_polygon(r.points2, fill = "yellow")
+            rob_canvas.create_polygon(r.points2, fill = "yellow" ,tags = "polygon" )
             rob_canvas.create_text(r.largeur // 2, r.longueur // 2, text = self.arene.robot.index(r) + 1, fill = "black")
             rob_canvas.create_line(r.largeur // 2 + r.largeur // 4, r.longueur // 2, r.largeur , r.longueur // 2)
             rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 - 10)
@@ -65,10 +65,7 @@ class Fenetre():
             rob_canvas.place(x = r.x, y = r.y)
             self.listRobots.append(rob_canvas)
 
-        polygon = Canvas(self.fenetre, width = 50, height = 50)
-        pts = [(0, 0), (50, 0), (50, 50), (0, 50)]
-        polygon.create_polygon(pts, fill = "yellow")
-        polygon.place(x = 100, y = 100)
+
 
     def creerObjet(self):
 
@@ -203,6 +200,9 @@ class Fenetre():
             #self.arene_canvas.update()
 
             #Déplace les quatre points
+            self.listRobots[id_robot.get() - 1].delete("polygon")
+            self.listRobots[id_robot.get() - 1].create_polygon(self.arene.robot[id_robot.get() - 1].points2,fill = "red",tags = "polygon")
+
             self.listRobots[id_robot.get() - 1].place(x = rob.x, y = rob.y)
 
             self.listRobots[id_robot.get() - 1].update()

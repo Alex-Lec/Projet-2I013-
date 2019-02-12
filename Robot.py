@@ -52,7 +52,7 @@ class Robot(ObjetPhysique):
         self.y -= x
 
     def tourner(self, angle, points, center):
-        self.printPosCoin()
+        #self.printPosCoin()
         angle = math.radians(angle)
         cos_val = math.cos(angle)
         sin_val = math.sin(angle)
@@ -66,7 +66,7 @@ class Robot(ObjetPhysique):
             y_new = x_old * sin_val + y_old * cos_val
             new_points.append([x_new + cx, y_new + cy])
         self.points = new_points
-        self.printPosCoin()
+        #self.printPosCoin()
 """
 Test des méthodes avancer / reculer :
 robot = Robot(10, 15, 0)
