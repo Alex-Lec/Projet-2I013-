@@ -41,6 +41,7 @@ class Robot(ObjetPhysique):
         print("Avancer de x =", x, " et de y =", y)
         self.x += x
         self.y += y
+        self.center = (x,y)
         self.printPos()
 
     def reculer(self, x, y):
