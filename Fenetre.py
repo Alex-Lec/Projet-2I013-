@@ -67,7 +67,9 @@ class Fenetre():
                 i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
 
         for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
+
             self.arene_canvas.create_polygon(i.points, fill="red")
+
             self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
 
     def creerObjet(self):
@@ -156,7 +158,6 @@ class Fenetre():
                 rob.avancer()
                 x = rob.vecteur_direction.x
                 y = rob.vecteur_direction.y
-                
                 self.affichage_arene()
                 #self.arene_canvas.move(self.listRobots[id_robot.get()],x,y)
                 self.arene_canvas.update()
@@ -189,19 +190,14 @@ class Fenetre():
     def tournerRobot(self):
 
         def ok_button():
-
-            #for j in range(angle.get()):
-            rob = self.arene.robot[id_robot.get()]
-            rob.tourner(angle.get())
-
-            #self.arene.robot[id_robot.get()].delete("polygon")
-            #self.arene.robot[id_robot.get()].create_polygon(self.arene.robot[id_robot.get()].points, fill="red",tag="polygon")
-
-            self.arene_canvas.update()
-                #time.sleep(.01)
-            self.affichage_arene()
             fen.destroy()
-
+            for j in range(angle.get()):
+                rob = self.arene.robot[id_robot.get()]
+                rob.tourner()
+                
+                self.arene_canvas.update()
+                #time.sleep(.01)
+                self.affichage_arene()
 
 
         fen = Toplevel(self.fenetre)

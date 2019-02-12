@@ -22,7 +22,7 @@ class Robot(ObjetPhysique):
                     [x - 100//2, y - 50//2],
                     [x - 100//2, y + 50//2]]
         self.center = (x,y)
-        self.vecteur_direction = Vecteur(1,0,0)
+        self.vecteur_direction = Vecteur(1.,0.,0.)
         self.scalaire_rotation = 1
         self.scalaire_vitesse = 1
         
@@ -41,14 +41,14 @@ class Robot(ObjetPhysique):
             print ("position : x",i," = ", x ,"  y",i," = ",y)
             i+=1
     def avancer(self):
-        self.printPos()
+        #self.printPos()
         #print("Avancer de x =", x, " et de y =", y)
         vx = self.vecteur_direction.x * self.scalaire_vitesse
         vy = self.vecteur_direction.y * self.scalaire_vitesse
         
         self.x += vx
         self.y += vy
-        self.printPos()
+        #self.printPos()
 
         #déplacer le centre
         self.center = (self.x,self.y)
@@ -61,9 +61,9 @@ class Robot(ObjetPhysique):
         self.points = new_points
 
 
-    def tourner(self, angle):
+    def tourner(self):
         #self.printPosCoin()
-        angle = math.radians(angle)
+        angle = math.radians(1)
         cos_val = math.cos(angle)
         sin_val = math.sin(angle)
         cx, cy = self.center
@@ -72,8 +72,10 @@ class Robot(ObjetPhysique):
         x1 = self.vecteur_direction.x
         y1 = self.vecteur_direction.y
         
-        self.vecteur_direction.x = round(x1*cos_val - y1*sin_val,3) # On utilise round pour enlever
-        self.vecteur_direction.y = round(x1*sin_val - y1*cos_val,3) # les décimales inutiles
+        self.vecteur_direction.x = x1*cos_val - y1*sin_val # On utilise round pour enlever
+        self.vecteur_direction.y = x1*sin_val + y1*cos_val # les décimales inutiles
+        
+        
         
         for x_old, y_old in self.points:
             x_old -= cx
