@@ -22,6 +22,9 @@ class Robot(ObjetPhysique):
                     [x - 100//2, y - 50//2],
                     [x - 100//2, y + 50//2]]
         self.center = (x,y)
+        self.vecteur_direction = Vecteur(1,0,0)
+        self.scalaire_vitesse = 1
+        
         """self.camera = camera
         self.rd = rd
         self.rg = rg
@@ -36,31 +39,26 @@ class Robot(ObjetPhysique):
             x,y = point
             print ("position : x",i," = ", x ,"  y",i," = ",y)
             i+=1
-    def avancer(self, x, y):
+    def avancer(self):
         self.printPos()
-        print("Avancer de x =", x, " et de y =", y)
-        self.x += x
-        self.y += y
+        #print("Avancer de x =", x, " et de y =", y)
+        vx = self.vecteur_direction.x * self.scalaire_vitesse
+        vy = self.vecteur_direction.y * self.scalaire_vitesse
+        
+        self.x += vx
+        self.y += vy
         self.printPos()
 
         #déplacer le centre
-        (cx,cy) = self.center
-        cx += x
-        cy += y
-        self.center = (cx,cy)
+        self.center = (self.x,self.y)
 
         #déplacer les points
         new_points = []
+        
         for x_old, y_old in self.points:
-            new_points.append([x_old + x, y_old+y])
+            new_points.append([x_old + vx, y_old + vy])
         self.points = new_points
 
-    def reculer(self, x, y):
-        self.printPos()
-        print("Reculer de x =", x, " et de y =", y)
-        self.x -= x
-        self.y -= x
-        self.printPos()
 
     def tourner(self, angle,points,center):
         #self.printPosCoin()

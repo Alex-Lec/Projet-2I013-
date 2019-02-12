@@ -154,10 +154,11 @@ class Fenetre():
             fen.destroy()
 
             for j in range(pas.get()):
-                self.arene.robot[id_robot.get()].avancer(x.get(), 0)
-                self.arene_canvas.move(self.listRobots[id_robot.get()],x.get(),0)
+                self.arene.robot[id_robot.get()].avancer()
+                
+                self.arene_canvas.move(self.listRobots[id_robot.get()],1,0)
                 self.arene_canvas.update()
-                time.sleep(.01)
+                time.sleep(tps.get())
 
 
         fen = Toplevel(self.fenetre)
@@ -165,15 +166,15 @@ class Fenetre():
         fen.resizable(0, 0)
 
         id_robot = IntVar()
-        x = DoubleVar()
+        tps = DoubleVar()
         pas = IntVar()
 
         Label(fen, text = "id robot :").grid(row = 0, column = 0)
-        Label(fen, text = "X :").grid(row = 0, column = 2)
+        Label(fen, text = "Temps :").grid(row = 0, column = 2)
         Label(fen, text = "pas :").grid(row = 0, column = 4)
 
         Entry(fen, textvariable = id_robot, width = 3).grid(row = 0, column = 1)
-        Entry(fen, textvariable = x, width = 3).grid(row = 0, column = 3)
+        Entry(fen, textvariable = tps, width = 3).grid(row = 0, column = 3)
         Entry(fen, textvariable = pas, width = 3).grid(row = 0, column = 5)
 
         ok = Button(fen, text = "Ok", command = ok_button)
