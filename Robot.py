@@ -61,14 +61,24 @@ class Robot(ObjetPhysique):
         self.points = new_points
 
 
-    def tourner(self, angle,points,center):
+    def tourner(self, angle):
         #self.printPosCoin()
         angle = math.radians(angle)
         cos_val = math.cos(angle)
         sin_val = math.sin(angle)
         cx, cy = self.center
         new_points = []
-        for x_old, y_old in points:
+        
+        x1 = self.vecteur_direction.x
+        y1 = self.vecteur_direction.y
+        
+        self.vecteur_direction.x = x1*cos_val - y1*sin_val
+        print(self.vecteur_direction.x)
+        self.vecteur_direction.y = x1*sin_val - y1*cos_val
+        print(self.vecteur_direction.x)
+        
+        
+        for x_old, y_old in self.points:
             x_old -= cx
             y_old -= cy
             x_new = x_old * cos_val - y_old * sin_val

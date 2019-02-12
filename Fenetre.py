@@ -154,9 +154,12 @@ class Fenetre():
             fen.destroy()
 
             for j in range(pas.get()):
-                self.arene.robot[id_robot.get()].avancer()
+                rob = self.arene.robot[id_robot.get()]
+                rob.avancer()
+                x = rob.vecteur_direction.x
+                y = rob.vecteur_direction.y
                 
-                self.arene_canvas.move(self.listRobots[id_robot.get()],1,0)
+                self.arene_canvas.move(self.listRobots[id_robot.get()],x,y)
                 self.arene_canvas.update()
                 time.sleep(tps.get())
 
@@ -189,7 +192,8 @@ class Fenetre():
         def ok_button():
 
             #for j in range(angle.get()):
-            self.arene.robot[id_robot.get()].tourner(angle.get(),self.arene.robot[id_robot.get()].points,(self.arene.robot[id_robot.get()].center))
+            rob = self.arene.robot[id_robot.get()]
+            rob.tourner(angle.get())
 
             #self.arene.robot[id_robot.get()].delete("polygon")
             #self.arene.robot[id_robot.get()].create_polygon(self.arene.robot[id_robot.get()].points, fill="red",tag="polygon")
@@ -197,7 +201,7 @@ class Fenetre():
             self.arene_canvas.update()
 
                 #time.sleep(.01)
-            self.affichage_arene()
+            #self.affichage_arene()
             fen.destroy()
 
 
