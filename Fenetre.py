@@ -39,17 +39,17 @@ class Fenetre():
         menu2.add_command(label = "Tourner robot", command = self.tournerRobot)
         menu2.add_command(label = "Déplacer robot", command = self.deplacerRobot)
         menubar.add_cascade(label = "Déplacement", menu = menu2)
-        
+
         self.fenetre.config(menu = menubar)
 
         self.initialise_arene()
         self.fenetre.mainloop()
-        
+
     def initialise_arene(self):
 
         for o in self.arene.objet:
 
-            obj_canvas = Canvas(self.fenetre, width = o.largeur, height = o.longueur)
+            obj_canvas = Canvas(self.fenetre)
             obj_canvas.create_rectangle(0, 0, o.largeur + 1, o.longueur + 1, fill = "blue")
             obj_canvas.place(x = o.x, y = o.y)
             self.listObjets.append(obj_canvas)
@@ -57,11 +57,11 @@ class Fenetre():
         for r in self.arene.robot:
             rob_canvas = Canvas(self.fenetre, width = r.largeur, height = r.longueur, bg = "grey")
             #rob_canvas.create_rectangle(0, 0, r.largeur + 1, r.longueur + 1, fill = "red")
-            rob_canvas.create_polygon(r.points, fill = "red", outline = "yellow")
+            rob_canvas.create_polygon(r.points2, fill = "yellow")
             rob_canvas.create_text(r.largeur // 2, r.longueur // 2, text = self.arene.robot.index(r) + 1, fill = "black")
             rob_canvas.create_line(r.largeur // 2 + r.largeur // 4, r.longueur // 2, r.largeur , r.longueur // 2)
             rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 - 10)
-            rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 + 10)  
+            rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 + 10)
             rob_canvas.place(x = r.x, y = r.y)
             self.listRobots.append(rob_canvas)
 
@@ -71,7 +71,7 @@ class Fenetre():
         polygon.place(x = 100, y = 100)
 
     def creerObjet(self):
-    
+
         def ok_button():
             fen.destroy()
             obj = ObjetPhysique(posx.get(), posy.get(), posz.get(), largeur.get(),longueur.get(), hauteur.get())
@@ -81,14 +81,14 @@ class Fenetre():
             obj_canvas.create_rectangle(0, 0, obj.largeur + 1, obj.longueur + 1, fill = "blue")
             obj_canvas.place(x = obj.x, y = obj.y)
             self.listObjets.append(obj_canvas)
-            
+
         fen = Toplevel(self.fenetre)
         fen.title("Ajouter objet")
 
         posx = IntVar()
         posy = IntVar()
         posz = IntVar()
-        largeur = IntVar() 
+        largeur = IntVar()
         longueur = IntVar()
         hauteur = IntVar()
 
@@ -98,7 +98,7 @@ class Fenetre():
         Label(fen, text="Largeur =").grid(row = 1, column = 0)
         Label(fen, text="Longueur =").grid(row = 1, column = 2)
         Label(fen, text="Hauteur =").grid(row = 1, column = 4)
-        
+
         Entry(fen,textvariable = posx, width = 3).grid(row = 0, column = 1)
         Entry(fen,textvariable = posy, width = 3).grid(row = 0, column = 3)
         Entry(fen,textvariable = posz, width = 3).grid(row = 0, column = 5)
@@ -109,7 +109,7 @@ class Fenetre():
         ok = Button(fen, text = "Ok",command = ok_button)
         ok.grid(row = 3, column = 2)
         annuler = Button(fen,text ="Exit",command = fen.destroy)
-        annuler.grid(row = 3, column = 3)    
+        annuler.grid(row = 3, column = 3)
 
     def creerRobot(self):
 
@@ -130,10 +130,10 @@ class Fenetre():
             rob_canvas.create_text(r.largeur // 2, r.longueur // 2, text = self.arene.robot.index(r) + 1, fill = "black")
             rob_canvas.create_line(r.largeur // 2 + r.largeur // 4, r.longueur // 2, r.largeur , r.longueur // 2)
             rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 - 10)
-            rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 + 10)  
+            rob_canvas.create_line(r.largeur, r.longueur // 2, r.largeur - 10, r.longueur // 2 + 10)
             rob_canvas.place(x = r.x, y = r.y)
             self.listRobots.append(rob_canvas)
-        
+
         fen = Toplevel(self.fenetre)
         fen.title("Ajouter robot")
         fen.resizable(0, 0)
@@ -167,7 +167,7 @@ class Fenetre():
                 self.listRobots[id_robot.get() - 1].update()
                 self.fenetre.update()
                 time.sleep(.01)
-            
+
         fen = Toplevel(self.fenetre)
         fen.title("Déplacer robot")
         fen.resizable(0, 0)
@@ -194,7 +194,7 @@ class Fenetre():
         def ok_button():
 
             fen.destroy()
-            
+
             self.arene.robot[id_robot.get() - 1].tourner(angle.get(), \
                 self.arene.robot[id_robot.get() - 1].points, self.arene.robot[id_robot.get() - 1].center)
 
@@ -202,7 +202,9 @@ class Fenetre():
             #self.arene_canvas.move(self.listRobots[id_robot.get()],x.get(),0)
             #self.arene_canvas.update()
 
+            #Déplace les quatre points
             self.listRobots[id_robot.get() - 1].place(x = rob.x, y = rob.y)
+
             self.listRobots[id_robot.get() - 1].update()
             self.fenetre.update()
             time.sleep(.01)

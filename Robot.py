@@ -18,13 +18,13 @@ class Robot(ObjetPhysique):
     def __init__(self, x, y, z): #dir, camera, rd, rg, detecteur, accelerometre):
 
         ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
-        
-        self.points = [ 
+
+        self.points = [
             (x + self.largeur // 2, y + self.longueur // 2),
             (x + self.largeur // 2, y - self.longueur // 2),
             (x - self.largeur // 2, y - self.longueur // 2),
             (x - self.largeur // 2, y + self.longueur // 2)]
-
+        self.points2 = [(0,0),(0,self.longueur+1),(self.largeur+1,self.longueur+1),(self.largeur+1,0)]
         self.center = (x, y)
 
         """self.camera = camera
@@ -35,7 +35,7 @@ class Robot(ObjetPhysique):
 
     def printPos(self):
         print("position : x =", self.x ," et y =", self.y)
-    
+
     def printPosCoin(self):
         i=1
         for point in self.points :
@@ -52,7 +52,7 @@ class Robot(ObjetPhysique):
         self.y -= x
 
     def tourner(self, angle, points, center):
-
+        self.printPosCoin()
         angle = math.radians(angle)
         cos_val = math.cos(angle)
         sin_val = math.sin(angle)
@@ -66,7 +66,7 @@ class Robot(ObjetPhysique):
             y_new = x_old * sin_val + y_old * cos_val
             new_points.append([x_new + cx, y_new + cy])
         self.points = new_points
-
+        self.printPosCoin()
 """
 Test des méthodes avancer / reculer :
 robot = Robot(10, 15, 0)
