@@ -23,8 +23,10 @@ class Robot(ObjetPhysique):
             (x + self.largeur // 2, y + self.longueur // 2),
             (x + self.largeur // 2, y - self.longueur // 2),
             (x - self.largeur // 2, y - self.longueur // 2),
-            (x - self.largeur // 2, y + self.longueur // 2)]
-        self.points2 = [(0,0),(0,self.longueur+1),(self.largeur+1,self.longueur+1),(self.largeur+1,0)]
+            (x - self.largeur // 2, y + self.longueur // 2)
+        ]
+
+        #self.points2 = [(0,0),(0,self.longueur+1),(self.largeur+1,self.longueur+1), (self.largeur+1,0)]
         self.center = (x, y)
 
         """self.camera = camera

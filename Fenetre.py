@@ -65,8 +65,6 @@ class Fenetre():
             rob_canvas.place(x = r.x, y = r.y)
             self.listRobots.append(rob_canvas)
 
-
-
     def creerObjet(self):
 
         def ok_button():
@@ -201,7 +199,8 @@ class Fenetre():
 
             #Déplace les quatre points
             self.listRobots[id_robot.get() - 1].delete("polygon")
-            self.listRobots[id_robot.get() - 1].create_polygon(self.arene.robot[id_robot.get() - 1].points2,fill = "red",tags = "polygon")
+            self.listRobots[id_robot.get() - 1].create_polygon(self.arene.robot[id_robot.get() - 1].points2, \
+                fill = "red",tags = "polygon")
 
             self.listRobots[id_robot.get() - 1].place(x = rob.x, y = rob.y)
 
