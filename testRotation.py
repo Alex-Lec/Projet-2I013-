@@ -5,6 +5,7 @@ WIDTH = 1000
 HEIGHT = 600
 CANVAS_MID_X = WIDTH/2
 CANVAS_MID_Y = HEIGHT/2
+CANVAS_CENTER = (CANVAS_MID_X,CANVAS_MID_Y)
 SIDE = WIDTH/4
 
 root = Tk()
@@ -12,7 +13,7 @@ canvas = Canvas(root, bg="black", height=HEIGHT, width=WIDTH)
 canvas.pack()
 
 
-vertices = [
+points = [
     [CANVAS_MID_X - SIDE/2, CANVAS_MID_Y - SIDE/2],
     [CANVAS_MID_X + SIDE/2, CANVAS_MID_Y - SIDE/2],
     [CANVAS_MID_X + SIDE/2, CANVAS_MID_Y + SIDE/2],
@@ -36,21 +37,14 @@ def rotate(points, angle, center):
 def draw_square(points, color="red"):
     canvas.create_polygon(points, fill=color)
 
-def test():
-    old_vertices = [[150, 150], [250, 150], [250, 250], [150, 250]]
-    print ("vertices: ", vertices, "should be: ", old_vertices)
-    print (vertices == old_vertices)
 
-points1=[[550,225],[550,175],[450,175],[450,225]]
-#points2=[[450,175],[450,225],[550,225],[550,175]]
-points2 = rotate(points1,90,[500,200])
+
+#points1=[[550,225],[550,175],[450,175],[450,225]]
+
+points2 = rotate(points,90,)
 draw_square(points1, "blue")
 draw_square(points2, "red")
 print(points2)
 
-"""center = (CANVAS_MID_X, CANVAS_MID_Y)
-new_square = rotate(vertices, 30, center)
-test()
-draw_square(new_square)"""
 
 mainloop()
