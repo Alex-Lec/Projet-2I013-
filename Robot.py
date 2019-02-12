@@ -72,10 +72,10 @@ class Robot(ObjetPhysique):
         x1 = self.vecteur_direction.x
         y1 = self.vecteur_direction.y
         
-        self.vecteur_direction.x = x1*cos_val - y1*sin_val
+        self.vecteur_direction.x = round(x1*cos_val - y1*sin_val,3) # On utilise round pour enlever
+        self.vecteur_direction.y = round(x1*sin_val - y1*cos_val,3) # les décimales inutiles
         print(self.vecteur_direction.x)
-        self.vecteur_direction.y = x1*sin_val - y1*cos_val
-        print(self.vecteur_direction.x)
+        print(self.vecteur_direction.y)
         
         
         for x_old, y_old in self.points:
