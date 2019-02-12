@@ -188,7 +188,7 @@ class Fenetre():
         def ok_button():
 
             #for j in range(angle.get()):
-            self.arene.robot[id_robot.get()].tourner(angle.get(),self.arene.robot[id_robot.get()].points,self.arene.robot[id_robot.get()].center)
+            self.arene.robot[id_robot.get()].tourner(angle.get(),self.arene.robot[id_robot.get()].points,(self.arene.robot[id_robot.get()].center))
 
             #self.arene.robot[id_robot.get()].delete("polygon")
             #self.arene.robot[id_robot.get()].create_polygon(self.arene.robot[id_robot.get()].points, fill="red",tag="polygon")

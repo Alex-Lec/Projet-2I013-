@@ -43,6 +43,19 @@ class Robot(ObjetPhysique):
         self.y += y
         self.printPos()
 
+        #déplacer le centre
+        (cx,cy) = self.center
+        cx += x
+        cy += y
+
+        self.center = (cx,cy)
+
+
+        new_points = []
+        for x_old, y_old in self.points:
+            new_points.append([x_old + x, y_old+y])
+        self.points = new_points
+
     def reculer(self, x, y):
         self.printPos()
         print("Reculer de x =", x, " et de y =", y)
@@ -55,7 +68,7 @@ class Robot(ObjetPhysique):
         angle = math.radians(angle)
         cos_val = math.cos(angle)
         sin_val = math.sin(angle)
-        cx, cy = center
+        cx, cy = self.center
         new_points = []
         for x_old, y_old in points:
             x_old -= cx
