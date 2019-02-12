@@ -23,6 +23,7 @@ class Robot(ObjetPhysique):
                     [x - 100//2, y + 50//2]]
         self.center = (x,y)
         self.vecteur_direction = Vecteur(1,0,0)
+        self.scalaire_rotation = 1
         self.scalaire_vitesse = 1
         
         """self.camera = camera
