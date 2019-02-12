@@ -199,9 +199,8 @@ class Fenetre():
             #self.arene.robot[id_robot.get()].create_polygon(self.arene.robot[id_robot.get()].points, fill="red",tag="polygon")
 
             self.arene_canvas.update()
-
                 #time.sleep(.01)
-            #self.affichage_arene()
+            self.affichage_arene()
             fen.destroy()
 
 
