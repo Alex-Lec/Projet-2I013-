@@ -41,13 +41,9 @@ class Robot(ObjetPhysique):
         print("Avancer de x =", x, " et de y =", y)
         self.x += x
         self.y += y
+        self.center = (self.x,self.y)
         self.printPos()
 
-        #déplacer le centre
-        (cx,cy) = self.center
-        cx += x
-        cy += y
-        self.center = (cx,cy)
 
         #déplacer les points
         new_points = []
