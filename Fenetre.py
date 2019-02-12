@@ -17,8 +17,7 @@ class Fenetre():
         self.fenetre.geometry("1000x600")
         self.fenetre.resizable(0, 0)
         self.arene = arene
-        self.listRobots = [] #Ne doit contenir que des rectangles canevas
-        self.listObjets = [] #Ne doit contenir que des rectangles canevas
+        self.listRobots = []
 
         menubar = Menu(self.fenetre)
 
@@ -45,32 +44,34 @@ class Fenetre():
 
     def initialise_arene(self):
 
-        for i in self.arene.objet:
-            obj = self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
-                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
-            self.listObjets += [obj]
-
-
         for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
 
             rob = self.arene_canvas.create_polygon(i.points, fill="red",tag="polygon")
             self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
             self.listRobots += [rob]
+            
+        for i in self.arene.objet:
+            obj = self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
+                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
 
-    def affichage_arene(self):
+    def actualise_arene(self):
 
         self.arene_canvas.addtag_enclosed('del_items', 0, 0, 1000, 600)
         self.arene_canvas.delete('del_items')
-
+        self.listRobots = []
+        
+        for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
+            rob = self.arene_canvas.create_polygon(i.points, fill="red")
+            self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
+            self.listRobots += [rob]
+        
+        
         for i in self.arene.objet:
             self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
                 i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
 
-        for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
 
-            self.arene_canvas.create_polygon(i.points, fill="red")
-
-            self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
+        self.arene_canvas.update()
 
     def creerObjet(self):
 
@@ -79,7 +80,7 @@ class Fenetre():
             largeur.get(),longueur.get(), hauteur.get()))
 
             self.listObjets += [obj]
-            self.affichage_arene()
+            self.actualise_arene()
             fen.destroy()
 
         fen = Toplevel(self.fenetre)
@@ -124,7 +125,7 @@ class Fenetre():
             rob = self.arene_canvas.create_polygon(points, fill="red")
 
             self.listRobots += [rob]
-            self.affichage_arene()
+            self.actualise_arene()
             fen.destroy()
 
         fen = Toplevel(self.fenetre)
@@ -158,8 +159,8 @@ class Fenetre():
                 rob.avancer()
                 x = rob.vecteur_direction.x
                 y = rob.vecteur_direction.y
-                self.affichage_arene()
-                #self.arene_canvas.move(self.listRobots[id_robot.get()],x,y)
+                self.arene_canvas.move(self.listRobots[id_robot.get()],x,y)
+                #self.actualise_arene()
                 self.arene_canvas.update()
                 time.sleep(tps.get())
 
@@ -191,13 +192,14 @@ class Fenetre():
 
         def ok_button():
             fen.destroy()
+            self.fenetre.quit()
             for j in range(angle.get()):
                 rob = self.arene.robot[id_robot.get()]
                 rob.tourner()
-                
-                self.arene_canvas.update()
                 #time.sleep(.01)
-                self.affichage_arene()
+                self.actualise_arene()
+                
+            self.fenetre.mainloop()
 
 
         fen = Toplevel(self.fenetre)
