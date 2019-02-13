@@ -19,16 +19,6 @@ class Robot(ObjetPhysique):
 
         ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
 
-        self.points = [
-            (x + self.largeur // 2, y + self.longueur // 2),
-            (x + self.largeur // 2, y - self.longueur // 2),
-            (x - self.largeur // 2, y - self.longueur // 2),
-            (x - self.largeur // 2, y + self.longueur // 2)
-        ]
-
-        #self.points2 = [(0,0),(0,self.longueur+1),(self.largeur+1,self.longueur+1), (self.largeur+1,0)]
-        self.center = (x, y)
-
         """self.camera = camera
         self.rd = rd
         self.rg = rg
@@ -49,6 +39,18 @@ class Robot(ObjetPhysique):
         self.x += x
         self.y += y
 
+        #déplacer le centre
+        (cx,cy) = self.center
+        cx += x
+        cy += y
+        self.center = (cx,cy)
+
+        #déplacer les points
+        new_points = []
+        for x_old, y_old in self.points:
+            new_points.append([x_old + x, y_old + y])
+        self.points = new_points
+
     def reculer(self, x, y):
         self.x -= x
         self.y -= x
@@ -58,7 +60,7 @@ class Robot(ObjetPhysique):
         angle = math.radians(angle)
         cos_val = math.cos(angle)
         sin_val = math.sin(angle)
-        cx, cy = center
+        cx, cy = self.center
         new_points = []
 
         for x_old, y_old in points:
