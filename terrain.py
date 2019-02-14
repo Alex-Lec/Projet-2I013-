@@ -81,7 +81,7 @@ class Terrain():
                 o2.set_dir(Vecteur(0.0,0.0,0.0).sub(o2.get_dir()))
 
     def sauvegarder_arene(self):
-        with open('save', 'wb') as save:
+        with open('save.txt', 'wb') as save:
             arene = pickle.Pickler(save)
             arene.dump(self.dimx)
             arene.dump(self.dimy)
@@ -92,7 +92,7 @@ class Terrain():
 
         try:
 
-            with open('save', 'rb') as save:
+            with open('save.txt', 'rb') as save:
                 arene_pickle = pickle.Unpickler(save)
                 self.dimx = arene_pickle.load() 
                 self.dimy = arene_pickle.load() 

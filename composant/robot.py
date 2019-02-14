@@ -3,6 +3,7 @@
 
 from .objetphysique import ObjetPhysique
 from .vecteur import Vecteur
+from .detecteur import Detecteur
 
 import math
 class Robot(ObjetPhysique):
