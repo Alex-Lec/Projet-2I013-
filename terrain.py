@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
 
-from ObjetPhysique import *
-from Vecteur import *
+from composant import *
+#from Vecteur import *
 #from Camera import *
-from Roue import *
+#from Roue import *
 #from Detecteur import *
 #from Accelerometre import *
-from Robot import *
+#from Robot import *
 import pickle
 
 class Terrain():

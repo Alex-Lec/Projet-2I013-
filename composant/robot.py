@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
 
-from Vecteur import *
-from ObjetPhysique import*
+from .objetphysique import ObjetPhysique
+from .vecteur import Vecteur
+
 import math
 class Robot(ObjetPhysique):
     """
