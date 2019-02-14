@@ -11,8 +11,6 @@ import time
 
 class Fenetre():
 
-class Fenetre_test():
-
     def __init__(self, arene = Terrain()):
         
         self.fenetre = Tk()
@@ -21,11 +19,14 @@ class Fenetre_test():
         self.fenetre.resizable(0, 0)
         self.arene = arene
 
+        self.arene_canvas = Canvas(self.fenetre, width = 1000, height = 600)
+        self.arene_canvas.pack()
+
         menubar = Menu(self.fenetre)
 
         menu0 = Menu(menubar, tearoff= 0)
-        menu0.add_command(label = "Ouvrir", command = self.arene.ouvrir_arene())
-        menu0.add_command(label = "Enregistrer", command = self.arene.sauvegarder_arene())
+        menu0.add_command(label = "Ouvrir", command = lambda : self.ouvrir())
+        menu0.add_command(label = "Enregistrer", command = lambda : self.enregistrer())
         menu0.add_separator()
         menu0.add_command(label = "Quitter", command = self.fenetre.destroy)
         menubar.add_cascade(label = "Fichier", menu = menu0)
@@ -47,6 +48,15 @@ class Fenetre_test():
 
         self.initialise_arene()
         self.fenetre.mainloop()
+
+    def ouvrir(self):
+        self.arene.ouvrir_arene()
+        self.arene_canvas.addtag_enclosed("del", 0, 0, 1000, 600)
+        self.initialise_arene()
+
+    def enregistrer(self):
+        self.arene.sauvegarder_arene()
+        self.fenetre.destroy()
 
     def initialise_arene(self):
 

@@ -83,10 +83,21 @@ class Terrain():
     def sauvegarder_arene(self):
         with open('save', 'wb') as save:
             arene = pickle.Pickler(save)
-            arene.dump(self)
+            arene.dump(self.dimx)
+            arene.dump(self.dimy)
+            arene.dump(self.objet)
+            arene.dump(self.robot)
 
     def ouvrir_arene(self):
-        with open('save', 'rb') as save:
-            arene_pickle = pickle.Unpickler(save)
-            self = arene_pickle.load()
-            
+
+        try:
+
+            with open('save', 'rb') as save:
+                arene_pickle = pickle.Unpickler(save)
+                self.dimx = arene_pickle.load() 
+                self.dimy = arene_pickle.load() 
+                self.objet = arene_pickle.load() 
+                self.robot = arene_pickle.load()
+
+        except FileNotFoundError:
+            pass
