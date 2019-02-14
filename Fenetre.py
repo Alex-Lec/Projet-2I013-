@@ -19,14 +19,11 @@ class Fenetre():
         self.fenetre.resizable(0, 0)
         self.arene = arene
 
-        self.arene_canvas = Canvas(self.fenetre, width = 1000, height = 600)
-        self.arene_canvas.pack()
-
         menubar = Menu(self.fenetre)
 
         menu0 = Menu(menubar, tearoff= 0)
-        menu0.add_command(label = "Ouvrir", command = lambda : self.ouvrir())
-        menu0.add_command(label = "Enregistrer", command = lambda : self.enregistrer())
+        menu0.add_command(label = "Ouvrir", command = self.ouvrir)
+        menu0.add_command(label = "Enregistrer", command = self.enregistrer)
         menu0.add_separator()
         menu0.add_command(label = "Quitter", command = self.fenetre.destroy)
         menubar.add_cascade(label = "Fichier", menu = menu0)
@@ -52,11 +49,11 @@ class Fenetre():
     def ouvrir(self):
         self.arene.ouvrir_arene()
         self.arene_canvas.addtag_enclosed("del", 0, 0, 1000, 600)
+        self.arene_canvas.delete("del")
         self.initialise_arene()
 
     def enregistrer(self):
         self.arene.sauvegarder_arene()
-        self.fenetre.destroy()
 
     def initialise_arene(self):
 
@@ -64,7 +61,7 @@ class Fenetre():
 
             tag_objet = "objet_" + str(self.arene.objet.index(o))
             self.arene_canvas.create_polygon(o.points, fill = "blue", tags = tag_objet)
-            self.arene_canvas.create_text(o.center[0], o.center[1], text = self.arene.objet.index(o) - 3, \
+            self.arene_canvas.create_text(o.center[0], o.center[1], text = self.arene.objet.index(o) + 1, \
                 fill = "black", tags = tag_objet)
         
         for r in self.arene.robot:
@@ -88,7 +85,7 @@ class Fenetre():
 
             tag_objet = "objet_" + str(self.arene.objet.index(obj))
             self.arene_canvas.create_polygon(obj.points, fill = "blue", tags = tag_objet)
-            self.arene_canvas.create_text(obj.center[0], obj.center[1], text = self.arene.objet.index(obj) - 3, \
+            self.arene_canvas.create_text(obj.center[0], obj.center[1], text = self.arene.objet.index(obj) + 1, \
                 fill = "black", tags = tag_objet)
 
         fen = Toplevel(self.fenetre)
