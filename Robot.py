@@ -64,7 +64,8 @@ class Robot(ObjetPhysique):
         angle = math.radians(1)
         cos_val = math.cos(angle)
         sin_val = math.sin(angle)
-        cx, cy = self.center
+        cx, cy = self.x,self.y
+        #self.center
         new_points = []
         
         x1 = self.vecteur_direction.x
