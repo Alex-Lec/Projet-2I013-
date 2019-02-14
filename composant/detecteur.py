@@ -30,7 +30,7 @@ class Detecteur:
             
             res = sqrt(pow(p1.x-x,2)+pow(p1.y-y,2))
             
-            if (mini < res):
+            if (mini < res): #Attention pas fini, il regarde les objets derrière lui 
                 mini = res
             
        
