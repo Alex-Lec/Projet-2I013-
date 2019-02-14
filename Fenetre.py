@@ -22,8 +22,8 @@ class Fenetre():
         menubar = Menu(self.fenetre)
 
         menu0 = Menu(menubar, tearoff= 0)
-        menu0.add_command(label = "Ouvrir")
-        menu0.add_command(label = "Enregistrer")
+        menu0.add_command(label = "Ouvrir", command = self.arene.ouvrir_arene())
+        menu0.add_command(label = "Enregistrer", command = self.arene.sauvegarder_arene())
         menu0.add_separator()
         menu0.add_command(label = "Quitter", command = self.fenetre.destroy)
         menubar.add_cascade(label = "Fichier", menu = menu0)
@@ -157,7 +157,7 @@ class Fenetre():
             for j in range(pas.get()):
                 
                 self.arene.avancer_robot(r)
-                
+
                 x = r.vecteur_direction.x
                 y = r.vecteur_direction.y
                 self.arene_canvas.move(tag_robot, x, y)

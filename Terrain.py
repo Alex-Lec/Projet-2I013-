@@ -8,6 +8,7 @@ from Roue import *
 #from Detecteur import *
 #from Accelerometre import *
 from Robot import *
+import pickle
 
 class Terrain():
 
@@ -46,7 +47,6 @@ class Terrain():
     def ajouter_robots(self,o):
         for i in o:
             self.robot.append(i)
-            
     
     def testCollision(self, i1, i2):
         o1 = self.objet[i1]
@@ -75,4 +75,14 @@ class Terrain():
                     o2.set_y(o2.get_y() + (o2.get_y() - o2.get_dim()[1] - o1.get_y() - o1.get_dim()[1]) + 1)
                 o1.set_dir(Vecteur(0.0,0.0,0.0).sub(o1.get_dir()))  
                 o2.set_dir(Vecteur(0.0,0.0,0.0).sub(o2.get_dir()))
+
+    def sauvegarder_arene(self):
+        with open('save', 'wb') as save:
+            arene = pickle.Pickler(save)
+            arene.dump(self)
+
+    def ouvrir_arene(self):
+        with open('save', 'rb') as save:
+            arene_pickle = pickle.Unpickler(save)
+            self = arene_pickle.load()
             
