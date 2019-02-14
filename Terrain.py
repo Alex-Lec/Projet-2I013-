@@ -33,6 +33,12 @@ class Terrain():
             self.objet.append(r)
             """
 
+    def avancer_robot(self, robot):
+        robot.avancer()
+
+    def tourner_robot(self, robot):
+        robot.tourner()
+
     def ajouter_objets(self, o): #prend une liste d'object en arguement
         for i in o:
             self.objet.append(i)

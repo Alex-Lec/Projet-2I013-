@@ -17,12 +17,8 @@ class Robot(ObjetPhysique):
     def __init__(self, x, y, z): #dir, camera, rd, rg, detecteur, accelerometre):
 
         ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
-        self.points =   [ [x + 100//2 ,y  + 50//2 ],
-                    [x + 100//2, y - 50 // 2],
-                    [x - 100//2, y - 50//2],
-                    [x - 100//2, y + 50//2]]
-        self.center = (x,y)
-        self.vecteur_direction = Vecteur(1.,0.,0.)
+
+        self.vecteur_direction = Vecteur(1., 0., 0.)
         self.scalaire_rotation = 1
         self.scalaire_vitesse = 1
         
@@ -34,12 +30,14 @@ class Robot(ObjetPhysique):
 
     def printPos(self):
         print("position : x =", self.x ," et y =", self.y)
+        
     def printPosCoin(self):
         i=1
         for point in self.points :
             x,y = point
             print ("position : x",i," = ", x ,"  y",i," = ",y)
             i+=1
+
     def avancer(self):
         #self.printPos()
         #print("Avancer de x =", x, " et de y =", y)
@@ -74,8 +72,6 @@ class Robot(ObjetPhysique):
         
         self.vecteur_direction.x = x1*cos_val - y1*sin_val # On utilise round pour enlever
         self.vecteur_direction.y = x1*sin_val + y1*cos_val # les décimales inutiles
-        
-        
         
         for x_old, y_old in self.points:
             x_old -= cx
