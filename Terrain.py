@@ -17,8 +17,10 @@ class Terrain():
         self.dimy = dimy
         self.objet = []
         self.robot = []
+        """
         self.ajouter_objets([ObjetPhysique(-1, -1, 0, 1, 600, 1), ObjetPhysique(-1, -1, 0, 1000, 1, 1), \
             ObjetPhysique(998, -1, 0, 1, 600, 1), ObjetPhysique(-1, 598, 0, 1000, 1, 1)])
+        """
 
         # On ajoute des obstacles autour du terrain à sa création pour éviter que des objets n'en sortent.
         
