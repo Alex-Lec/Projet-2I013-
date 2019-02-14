@@ -5,26 +5,24 @@ from Terrain import *
 from tkinter import *
 from Robot import *
 import time
-
-# http://effbot.org/zone/tkinter-complex-canvas.htm
-# http://www.fil.univ-lille1.fr/~marvie/python/chapitre6.html
+#http://effbot.org/zone/tkinter-complex-canvas.htm
+#http://www.fil.univ-lille1.fr/~marvie/python/chapitre6.html
 
 class Fenetre():
 
-    def __init__(self, arene = Terrain()):
-        
+    def _init_(self, arene = Terrain()):
+
         self.fenetre = Tk()
         self.fenetre.title("Simulateur")
         self.fenetre.geometry("1000x600")
         self.fenetre.resizable(0, 0)
         self.arene = arene
+        self.listRobots = [] #Ne doit contenir que des rectangles canevas
+        self.listObjets = [] #Ne doit contenir que des rectangles canevas
 
         menubar = Menu(self.fenetre)
 
         menu0 = Menu(menubar, tearoff= 0)
-        menu0.add_command(label = "Ouvrir", command = self.ouvrir)
-        menu0.add_command(label = "Enregistrer", command = self.enregistrer)
-        menu0.add_separator()
         menu0.add_command(label = "Quitter", command = self.fenetre.destroy)
         menubar.add_cascade(label = "Fichier", menu = menu0)
 
@@ -42,51 +40,47 @@ class Fenetre():
 
         self.arene_canvas = Canvas(self.fenetre, width = 1000, height = 600)
         self.arene_canvas.pack()
-
         self.initialise_arene()
         self.fenetre.mainloop()
 
-    def ouvrir(self):
-        self.arene.ouvrir_arene()
-        self.arene_canvas.addtag_enclosed("del", 0, 0, 1000, 600)
-        self.arene_canvas.delete("del")
-        self.initialise_arene()
-
-    def enregistrer(self):
-        self.arene.sauvegarder_arene()
-
     def initialise_arene(self):
 
-        for o in self.arene.objet:
+        for i in self.arene.objet:
+            obj = self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
+                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
+            self.listObjets += [obj]
 
-            tag_objet = "objet_" + str(self.arene.objet.index(o))
-            self.arene_canvas.create_polygon(o.points, fill = "blue", tags = tag_objet)
-            self.arene_canvas.create_text(o.center[0], o.center[1], text = self.arene.objet.index(o) + 1, \
-                fill = "black", tags = tag_objet)
-        
-        for r in self.arene.robot:
 
-            tag_robot = "robot_" + str(self.arene.robot.index(r))
-            self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
-            self.arene_canvas.create_text(r.center[0], r.center[1], text = self.arene.robot.index(r) + 1, \
-                fill = "black", tags = tag_robot)
+        for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
 
-            self.arene_canvas.create_line(r.center[0] + r.vecteur_direction.x * 20, r.center[1] + \
-                    r.vecteur_direction.y * 20, r.center[0] + r.vecteur_direction.x * 40, r.center[1] + \
-                        r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
+            rob = self.arene_canvas.create_polygon(i.points, fill="red")
+            self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
+            self.listRobots += [rob]
+
+    def affichage_arene(self):
+
+        self.arene_canvas.addtag_enclosed('del_items', 0, 0, 1000, 600)
+        self.arene_canvas.delete('del_items')
+
+        for i in self.arene.objet:
+            self.arene_canvas.create_rectangle(i.x - i.largeur // 2, i.y - i.longueur // 2, \
+                i.x + i.largeur // 2, i.y + i.longueur // 2, fill = "blue")
+
+        for i in self.arene.robot: #tous les objets de terrain sont transformés en forme
+
+            self.arene_canvas.create_polygon(i.points, fill="red")
+
+            self.arene_canvas.create_text(i.x, i.y, text = self.arene.robot.index(i), fill = "black")
 
     def creerObjet(self):
 
         def ok_button():
+            obj = self.arene.objet.append(ObjetPhysique(posx.get(), posy.get(), posz.get(), \
+            largeur.get(),longueur.get(), hauteur.get()))
 
+            self.listObjets += [obj]
+            self.affichage_arene()
             fen.destroy()
-            obj = ObjetPhysique(posx.get(), posy.get(), posz.get(), largeur.get(),longueur.get(), hauteur.get())
-            self.arene.objet.append(obj)
-
-            tag_objet = "objet_" + str(self.arene.objet.index(obj))
-            self.arene_canvas.create_polygon(obj.points, fill = "blue", tags = tag_objet)
-            self.arene_canvas.create_text(obj.center[0], obj.center[1], text = self.arene.objet.index(obj) + 1, \
-                fill = "black", tags = tag_objet)
 
         fen = Toplevel(self.fenetre)
         fen.title("Ajouter objet")
@@ -98,7 +92,7 @@ class Fenetre():
         longueur = IntVar()
         hauteur = IntVar()
 
-        Label(fen, text="x =").grid(row = 0, column = 0)
+        Label(fen, text="x =").grid(row = 0, column = 0) #Utilisation d''un tableau pour gérer l'espace
         Label(fen, text="y =").grid(row = 0, column = 2)
         Label(fen, text="z =").grid(row = 0, column = 4)
         Label(fen, text="Largeur =").grid(row = 1, column = 0)
@@ -117,21 +111,21 @@ class Fenetre():
         annuler = Button(fen,text ="Exit",command = fen.destroy)
         annuler.grid(row = 3, column = 3)
 
-    def creerRobot(self):   
-        
+    def creerRobot(self):
+
         def ok_button():
+            i = Robot(posx.get(), posy.get(), posz.get())
+            self.arene.robot.append(i)
+
+            points =   [ [posx + i.largeur//2 , posy +i.longueur//2 ],
+            [posx + i.largeur//2, posy - i.longueur // 2],
+            [posx - i.largeur//2, posy - i.longueur//2],
+            [posx - i.largeur//2, posy + i.longueur//2]]
+            rob = self.arene_canvas.create_polygon(points, fill="red")
+
+            self.listRobots += [rob]
+            self.affichage_arene()
             fen.destroy()
-            r = Robot(posx.get(), posy.get(), posz.get())
-            self.arene.robot.append(r)
-
-            tag_robot = "robot_" + str(self.arene.robot.index(r))
-            self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
-            self.arene_canvas.create_text(r.center[0], r.center[1], text = self.arene.robot.index(r) + 1, \
-                fill = "black", tags = tag_robot)
-
-            self.arene_canvas.create_line(r.center[0] + r.vecteur_direction.x * 20, r.center[1] + \
-                    r.vecteur_direction.y * 20, r.center[0] + r.vecteur_direction.x * 40, r.center[1] + \
-                        r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
 
         fen = Toplevel(self.fenetre)
         fen.title("Ajouter robot")
@@ -157,36 +151,29 @@ class Fenetre():
     def deplacerRobot(self):
 
         def ok_button():
-
             fen.destroy()
-            tag_robot = "robot_" + str(id_robot.get() - 1)
-
-            r = self.arene.robot[id_robot.get() - 1]
 
             for j in range(pas.get()):
-                
-                self.arene.avancer_robot(r)
-
-                x = r.vecteur_direction.x
-                y = r.vecteur_direction.y
-                self.arene_canvas.move(tag_robot, x, y)
+                self.arene.robot[id_robot.get()].avancer(x.get(), 0)
+                self.arene_canvas.move(self.listRobots[id_robot.get()],x.get(),0)
                 self.arene_canvas.update()
-                time.sleep(tps.get())
+                time.sleep(.01)
+
 
         fen = Toplevel(self.fenetre)
         fen.title("Déplacer robot")
         fen.resizable(0, 0)
 
         id_robot = IntVar()
-        tps = DoubleVar()
+        x = DoubleVar()
         pas = IntVar()
 
         Label(fen, text = "id robot :").grid(row = 0, column = 0)
-        Label(fen, text = "Temps :").grid(row = 0, column = 2)
+        Label(fen, text = "X :").grid(row = 0, column = 2)
         Label(fen, text = "pas :").grid(row = 0, column = 4)
 
         Entry(fen, textvariable = id_robot, width = 3).grid(row = 0, column = 1)
-        Entry(fen, textvariable = tps, width = 3).grid(row = 0, column = 3)
+        Entry(fen, textvariable = x, width = 3).grid(row = 0, column = 3)
         Entry(fen, textvariable = pas, width = 3).grid(row = 0, column = 5)
 
         ok = Button(fen, text = "Ok", command = ok_button)
@@ -194,30 +181,22 @@ class Fenetre():
         ok.grid(row = 3, column = 2)
         annuler.grid(row = 3,column = 3)
 
+
+
     def tournerRobot(self):
 
         def ok_button():
 
+            #for j in range(angle.get()):
+            self.arene.robot[id_robot.get()].tourner(angle.get(),self.arene.robot[id_robot.get()].points,self.arene.robot[id_robot.get()].center)
+            self.affichage_arene()
             fen.destroy()
-            r = self.arene.robot[id_robot.get() - 1]
-            
-            for j in range(angle.get()):
-                self.arene.tourner_robot(r)
 
-                tag_robot = "robot_" + str(id_robot.get() - 1)
+            self.arene_canvas.move(self.listRobots[id_robot.get()],x.get(),0)
+            self.arene_canvas.update()
 
-                self.arene_canvas.delete(tag_robot)
+                #time.sleep(.01)
 
-                self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
-                self.arene_canvas.create_text(r.center[0], r.center[1], text = self.arene.robot.index(r) + 1, \
-                    fill = "black", tags = tag_robot)
-
-                self.arene_canvas.create_line(r.center[0] + r.vecteur_direction.x * 20, r.center[1] + \
-                    r.vecteur_direction.y * 20, r.center[0] + r.vecteur_direction.x * 40, r.center[1] + \
-                        r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
-
-                self.arene_canvas.update()
-                time.sleep(0.02)
 
         fen = Toplevel(self.fenetre)
         fen.title("Tourner robot")
@@ -226,11 +205,14 @@ class Fenetre():
         id_robot = IntVar()
         angle = IntVar()
 
+
         Label(fen, text = "id robot :").grid(row = 0, column = 0)
         Label(fen, text = "Angle° :").grid(row = 0, column = 2)
+        #Label(fen, text = "pas :").grid(row = 0, column = 4)
 
         Entry(fen, textvariable = id_robot, width = 3).grid(row = 0, column = 1)
         Entry(fen, textvariable = angle, width = 3).grid(row = 0, column = 3)
+        #Entry(fen, textvariable = pas, width = 3).grid(row = 0, column = 5)
 
         ok = Button(fen, text = "Ok", command = ok_button)
         annuler = Button(fen, text = "Exit", command = fen.destroy)

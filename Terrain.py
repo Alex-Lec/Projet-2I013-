@@ -18,8 +18,12 @@ class Terrain():
         self.dimy = dimy
         self.objet = []
         self.robot = []
-        self.ajouter_objets([ObjetPhysique(-1, 0, 0, 1, 600, 1), ObjetPhysique(0, -1, 0, 1000, 1, 1), ObjetPhysique(1001, 0, 0, 1, 600, 1), ObjetPhysique(0, 601, 0, 1000, 1, 1)])
-        #On ajoute des obstacles autour du terrain à sa création pour éviter que des objets n'en sortent.
+        """
+        self.ajouter_objets([ObjetPhysique(-1, -1, 0, 1, 600, 1), ObjetPhysique(-1, -1, 0, 1000, 1, 1), \
+            ObjetPhysique(998, -1, 0, 1, 600, 1), ObjetPhysique(-1, 598, 0, 1000, 1, 1)])
+        """
+
+        # On ajoute des obstacles autour du terrain à sa création pour éviter que des objets n'en sortent.
         
     # Problème de coohérence, soit on rajoute soit on créait
     """ 
@@ -32,7 +36,7 @@ class Terrain():
             vdir = Vecteur(20, 0.0, 0.0)
             r = Robot(x, y, dir,)
             self.objet.append(r)
-            """
+    """
 
     def avancer_robot(self, robot):
         robot.avancer()
@@ -79,10 +83,21 @@ class Terrain():
     def sauvegarder_arene(self):
         with open('save', 'wb') as save:
             arene = pickle.Pickler(save)
-            arene.dump(self)
+            arene.dump(self.dimx)
+            arene.dump(self.dimy)
+            arene.dump(self.objet)
+            arene.dump(self.robot)
 
     def ouvrir_arene(self):
-        with open('save', 'rb') as save:
-            arene_pickle = pickle.Unpickler(save)
-            self = arene_pickle.load()
-            
+
+        try:
+
+            with open('save', 'rb') as save:
+                arene_pickle = pickle.Unpickler(save)
+                self.dimx = arene_pickle.load() 
+                self.dimy = arene_pickle.load() 
+                self.objet = arene_pickle.load() 
+                self.robot = arene_pickle.load()
+
+        except FileNotFoundError:
+            pass

@@ -50,3 +50,8 @@ arene.objet.append(ObjetPhysique(780, 250, 0, 30, 30))
 robot = Robot(500, 200, 0)
 arene.robot.append(robot)
 fenetre = Fenetre(arene)
+
+"""
+arene = Terrain()
+fenetre = Fenetre(arene)
+"""
