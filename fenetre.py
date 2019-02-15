@@ -196,12 +196,26 @@ class Fenetre():
             r = self.arene.robot[id_robot.get() - 1]
 
             for j in range(pas.get()):
-                
-                self.arene.avancer_robot(r)
-
+"""
                 x = r.vecteur_direction.x
                 y = r.vecteur_direction.y
                 self.arene_canvas.move(tag_robot, x, y)
+                self.arene_canvas.update()
+"""             
+
+                self.arene.avancer_robot(r)
+                tag_robot = "robot_" + str(id_robot.get() - 1)
+
+                self.arene_canvas.delete(tag_robot)
+
+                self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
+                self.arene_canvas.create_text(r.center[0], r.center[1], text = self.arene.robot.index(r) + 1, \
+                    fill = "black", tags = tag_robot)
+
+                self.arene_canvas.create_line(r.center[0] + r.vecteur_direction.x * 20, r.center[1] + \
+                    r.vecteur_direction.y * 20, r.center[0] + r.vecteur_direction.x * 40, r.center[1] + \
+                        r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
+
                 self.arene_canvas.update()
                 time.sleep(tps.get())
 
