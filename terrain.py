@@ -39,9 +39,11 @@ class Terrain():
     """
 
     def avancer_robot(self, robot):
+        robot.detecte(self.objet)
         robot.avancer()
 
     def tourner_robot(self, robot):
+        robot.detecte(self.objet)
         robot.tourner()
 
     def ajouter_objets(self, o): #prend une liste d'object en arguement

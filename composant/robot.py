@@ -23,12 +23,16 @@ class Robot(ObjetPhysique):
         self.vecteur_direction = Vecteur(1., 0., 0.)
         self.scalaire_rotation = 1
         self.scalaire_vitesse = 1
-        
+        self.detecteur = Detecteur
         """self.camera = camera
         self.rd = rd
         self.rg = rg
         self.detecteur = detecteur
         self.accelerometre = accelerometre"""
+
+    def detecte(self,obj):
+        pass
+        #print(self.detecteur.detecter(self,obj))
 
     def printPos(self):
         print("position : x =", self.x ," et y =", self.y)
