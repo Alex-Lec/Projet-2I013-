@@ -31,8 +31,7 @@ class Robot(ObjetPhysique):
         self.accelerometre = accelerometre"""
 
     def detecte(self,obj):
-        #pass
-        print(self.detecteur.detecter(self,obj))
+        print(self.detecteur.detecter(self,self,obj))
 
     def printPos(self):
         print("position : x =", self.x ," et y =", self.y)
