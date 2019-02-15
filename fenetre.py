@@ -4,7 +4,6 @@
 from terrain import *
 from composant import Robot, ObjetPhysique
 from diver import *
-
 import time
 
 # http://effbot.org/zone/tkinter-complex-canvas.htm
@@ -48,13 +47,45 @@ class Fenetre():
         self.fenetre.mainloop()
 
     def ouvrir(self):
-        self.arene.ouvrir_arene()
-        self.arene_canvas.addtag_enclosed("del", 0, 0, 1000, 600)
-        self.arene_canvas.delete("del")
-        self.initialise_arene()
+
+        def ok_button():
+            fen.destroy()
+            self.arene.ouvrir_arene(nom_fichier.get())
+            self.arene_canvas.addtag_enclosed("del", 0, 0, 1000, 600)
+            self.arene_canvas.delete("del")
+            self.initialise_arene()
+        
+        fen = Toplevel(self.fenetre)
+        fen.title("Ouvrir une sauvegarde")
+
+        nom_fichier = StringVar()
+
+        Label(fen, text="Nom du fichier (sans extension) =").grid(row = 0, column = 0)
+        Entry(fen,textvariable = nom_fichier).grid(row = 0, column = 1)
+
+        ok = Button(fen, text = "Ok",command = ok_button)
+        ok.grid(row = 1, column = 0)
+        annuler = Button(fen,text ="Exit",command = fen.destroy)
+        annuler.grid(row = 1, column = 1)
 
     def enregistrer(self):
-        self.arene.sauvegarder_arene()
+
+        def ok_button():
+            fen.destroy()
+            self.arene.sauvegarder_arene(nom_fichier.get())
+
+        fen = Toplevel(self.fenetre)
+        fen.title("Ouvrir une sauvegarde")
+
+        nom_fichier = StringVar()
+
+        Label(fen, text="Nom du fichier (sans extension) =").grid(row = 0, column = 0)
+        Entry(fen,textvariable = nom_fichier).grid(row = 0, column = 1)
+
+        ok = Button(fen, text = "Ok",command = ok_button)
+        ok.grid(row = 1, column = 0)
+        annuler = Button(fen,text ="Exit",command = fen.destroy)
+        annuler.grid(row = 1, column = 1)
 
     def initialise_arene(self):
 
