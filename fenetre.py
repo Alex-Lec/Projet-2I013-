@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 -
 
-from Terrain import *
-from tkinter import *
-from Robot import *
+from terrain import *
+from composant import Robot, ObjetPhysique
+from diver import *
+
 import time
 
 # http://effbot.org/zone/tkinter-complex-canvas.htm

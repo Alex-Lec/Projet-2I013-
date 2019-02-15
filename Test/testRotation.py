@@ -1,6 +1,13 @@
 from tkinter import *
 import math
-
+"""position : x 1  =  550   y 1  =  225
+position : x 2  =  550   y 2  =  175
+position : x 3  =  450   y 3  =  175
+position : x 4  =  450   y 4  =  225
+position : x 1  =  475.0   y 1  =  250.0
+position : x 2  =  525.0   y 2  =  250.0
+position : x 3  =  525.0   y 3  =  150.0
+position : x 4  =  475.0   y 4  =  150.0"""
 WIDTH = 1000
 HEIGHT = 600
 CANVAS_MID_X = WIDTH/2
@@ -39,9 +46,9 @@ def draw_square(points, color="red"):
 
 
 
-#points1=[[550,225],[550,175],[450,175],[450,225]]
+points1=[[550,225],[550,175],[450,175],[450,225]]
 
-points2 = rotate(points,90,)
+points2 = rotate(points1,90,(500,200))
 draw_square(points1, "blue")
 draw_square(points2, "red")
 print(points2)
