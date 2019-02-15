@@ -36,12 +36,16 @@ class Terrain():
     """
 
     def avancer_robot(self, robot):
+        #print(self.testCollision(robot,self.objet))
         robot.detecte(self.objet)
-        robot.avancer()
+        if (self.testCollision(robot,self.objet)):
+            robot.avancer()
 
     def tourner_robot(self, robot):
+        #print(self.testCollision(robot,self.objet))
         robot.detecte(self.objet)
-        robot.tourner()
+        if (self.testCollision(robot,self.objet)):
+            robot.tourner()
 
     def ajouter_objets(self, o): #prend une liste d'object en arguement
         for i in o:
@@ -51,12 +55,55 @@ class Terrain():
         for i in o:
             self.robot.append(i)
     
-    def testCollision(self, i1, i2):
-        o1 = self.objet[i1]
-        o2 = self.objet[i2]
-        ovx = min(o1.get_x() + o1.get_dim()[0], o2.get_x() + o2.get_dim()[0]) - max(o1.get_x() - o1.get_dim()[0], o2.get_x() - o2.get_dim()[0]) > 0
-        ovy = min(o1.get_y() + o1.get_dim()[1], o2.get_y() + o2.get_dim()[1]) - max(o1.get_y() - o1.get_dim()[1], o2.get_y() - o2.get_dim()[1]) > 0
-        return ovx & ovy
+    def testCollision(self, rob, obj):
+
+        for i in range(len(rob.points)) :
+        
+            p1 = rob.points[i]
+            p2 = rob.points[(i+1)%len(rob.points)]
+            
+            if (p1[0]-p2[0] != 0): 
+                a1 = (p1[1] - p2[1]) /(p1[0]- p2[0])
+                b1 = p1[1] - a1*p1[0]
+            else :
+                a1 = None # Cas ou le robot est dans l'axe x
+                b1 = p1[0]
+                
+            for o in obj:
+                for j in range(len(o.points)):
+                    p3 = o.points[j]
+                    p4 = o.points[(j+1)%len(o.points)]#Marche avec un polygone à n cotées
+                    
+                    if (p3[0]-p4[0] !=0):
+                        a2 = (p3[1] - p4[1])/(p3[0]- p4[0]) 
+                        b2 = p3[1] - a2*p3[0]
+                    
+                    else :
+                        a2 = None # Cas ou le segment est dans l'axe x
+                        b2 = p4[0]
+                    
+                    if (a1 == a2) :
+                        continue
+                    
+                    if (a1 == None) :
+                        x = b1
+                        y = a2*x + b2
+                    
+                    elif (a2 == None):
+                        x = b2
+                        y = a1*x + b1
+                    
+                    else :
+                        x = (b2 - b1) / (a1 - a2)
+                        y = a1*x + b1
+                     
+                    if (min(p3[0],p4[0])<=x<=max(p3[0],p4[0]) and 
+                        min(p3[1],p4[1])<=y<=max(p3[1],p4[1]) and 
+                        min(p1[0],p2[0])<=x<=max(p1[0],p2[0]) and 
+                        min(p1[1],p2[1])<=y<=max(p1[1],p2[1])):
+                        
+                        return False
+        return True
     
     def checkCollisions (self):
         for i in range(len(self.objet)):
@@ -79,30 +126,24 @@ class Terrain():
                 o1.set_dir(Vecteur(0.0,0.0,0.0).sub(o1.get_dir()))  
                 o2.set_dir(Vecteur(0.0,0.0,0.0).sub(o2.get_dir()))
 
-    def sauvegarder_arene(self, fichier):
+    def sauvegarder_arene(self):
+        with open('save.txt', 'wb') as save:
+            arene = pickle.Pickler(save)
+            arene.dump(self.dimx)
+            arene.dump(self.dimy)
+            arene.dump(self.objet)
+            arene.dump(self.robot)
 
-        try :
-            with open(fichier, 'wb') as fichier:
-                arene = pickle.Pickler(fichier)
-                arene.dump(self.dimx)
-                arene.dump(self.dimy)
-                arene.dump(self.objet)
-                arene.dump(self.robot)
-
-        except IOError:
-            print("Le fichier n'a pas pu être ouvert !")
-            pass
-
-    def ouvrir_arene(self, fichier):
+    def ouvrir_arene(self):
 
         try:
-            with open(fichier, 'rb') as fichier:
-                arene_pickle = pickle.Unpickler(fichier)
+
+            with open('save.txt', 'rb') as save:
+                arene_pickle = pickle.Unpickler(save)
                 self.dimx = arene_pickle.load() 
                 self.dimy = arene_pickle.load() 
                 self.objet = arene_pickle.load() 
                 self.robot = arene_pickle.load()
 
         except FileNotFoundError:
-            print("Le fichier n'existe pas !")
             pass

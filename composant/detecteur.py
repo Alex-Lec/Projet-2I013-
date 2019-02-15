@@ -57,21 +57,8 @@ class Detecteur:
                 res = sqrt(pow(p2[0]-x,2)+pow(p2[1]-y,2))
                 
                 if mmsigne(p2[0] - p1[0],x - p1[0]) and mmsigne(p2[1] - p1[1],y - p1[1]):
-                    if (p3[0]<p4[0]):
-                        val1 = p3[0]
-                        val2 = p4[0]
-                    else :
-                        val1 = p4[0]
-                        val2 = p3[0]
-                    
-                    if (p3[1]<p4[1]):
-                        val3 = p3[1]    
-                        val4 = p4[1]
-                    else :
-                        val3 = p4[1]
-                        val4 = p3[1]
-                        
-                    if (val1 <=x<= val2 and val3 <=y<= val4):
+                    if (min(p3[0],p4[0])<=x<=max(p3[0],p4[0]) and 
+                        min(p3[1],p4[1])<=y<=max(p3[1],p4[1])):
                         if (mini > res):
                             mini = res
             
