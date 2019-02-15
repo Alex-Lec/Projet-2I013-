@@ -16,16 +16,13 @@ class Terrain():
         
         self.dimx = dimx
         self.dimy = dimy
-        self.objet = []
-        self.robot = []
-        """
-        self.ajouter_objets([ObjetPhysique(-1, -1, 0, 1, 600, 1), ObjetPhysique(-1, -1, 0, 1000, 1, 1), \
-            ObjetPhysique(998, -1, 0, 1, 600, 1), ObjetPhysique(-1, 598, 0, 1000, 1, 1)])
-        """
-
-        # On ajoute des obstacles autour du terrain à sa création pour éviter que des objets n'en sortent.
+        self.objet = [ObjetPhysique(-1, -1, 0, 1, dimy, 1),
+                      ObjetPhysique(-1, -1, 0, dimx, 1, 1),
+                      ObjetPhysique(dimx-2, -1, 0, 1, dimy, 1),
+                      ObjetPhysique(-1, dimy -2, 0, dimx, 1, 1)]
         
-    # Problème de coohérence, soit on rajoute soit on créait
+        self.robot = []
+        
     """ 
         def ajouter_robot(self, x, y, z):
             c = Camera()

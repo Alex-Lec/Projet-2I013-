@@ -5,14 +5,14 @@ class Detecteur:
     def __init__(self):
         pass
         
-    def detecter(rob, obj): #prend une liste d'objetphysique en arguement et un robot'
+    def detecter(self,rob, obj): #prend une liste d'objetphysique en arguement et un robot'
 
         def mmsigne(a,b):
             if (a<=0 and b<=0):
                 return True
             return (a>=0 and b>=0)
             
-        mini = 100000000000
+        mini = 1000000
         p1 = (rob.x,rob.y)
         p2 = (rob.vecteur_direction.x,rob.vecteur_direction.y)
         
@@ -24,7 +24,6 @@ class Detecteur:
             b1 = p1[0]
             
         for o in obj:
-        
             for j in range(len(o.points)):
                 p3 = o.points[j]
                 p4 = o.points[(j+1)%len(o.points)]
@@ -54,10 +53,10 @@ class Detecteur:
                     y = a1*x + b1
                 
                 res = sqrt(pow(p1[0]-x,2)+pow(p1[1]-y,2))
-                
+                #print (res)
                 if mmsigne(p2[0] - p1[0],x) and mmsigne(p2[1] - p1[1],y):
-                    if (mini < res):  
+                    if (mini > res):
                         mini = res
             
-        return 
+        return mini
              
