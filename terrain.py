@@ -16,10 +16,10 @@ class Terrain():
         
         self.dimx = dimx
         self.dimy = dimy
-        self.objet = [ObjetPhysique(-1, -1, 0, 1, dimy, 1),
-                      ObjetPhysique(-1, -1, 0, dimx, 1, 1),
-                      ObjetPhysique(dimx-2, -1, 0, 1, dimy, 1),
-                      ObjetPhysique(-1, dimy -2, 0, dimx, 1, 1)]
+        self.objet = [ObjetPhysique(dimx/2, -1, 0, 0, dimx, 0),# haut
+                      ObjetPhysique(-1, dimy/2, 0, dimy, 0, 0),# gauche
+                      ObjetPhysique(dimx/2, dimy+1, 0, 0, dimx, 0),#bas
+                      ObjetPhysique(dimx+1, dimy/2, 0, dimy, 0, 0)]#droite
         
         self.robot = []
         
