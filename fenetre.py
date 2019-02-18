@@ -56,6 +56,7 @@ class Fenetre():
             self.initialise_arene()
         
         fen = Toplevel(self.fenetre)
+        fen.resizable(0, 0)
         fen.title("Ouvrir une sauvegarde")
 
         nom_fichier = StringVar()
@@ -75,6 +76,7 @@ class Fenetre():
             self.arene.sauvegarder_arene(nom_fichier.get())
 
         fen = Toplevel(self.fenetre)
+        fen.resizable(0, 0)
         fen.title("Ouvrir une sauvegarde")
 
         nom_fichier = StringVar()
