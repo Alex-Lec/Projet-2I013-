@@ -196,12 +196,12 @@ class Fenetre():
             r = self.arene.robot[id_robot.get() - 1]
 
             for j in range(pas.get()):
-"""
+                """
                 x = r.vecteur_direction.x
                 y = r.vecteur_direction.y
                 self.arene_canvas.move(tag_robot, x, y)
                 self.arene_canvas.update()
-"""             
+                """             
 
                 self.arene.avancer_robot(r)
                 tag_robot = "robot_" + str(id_robot.get() - 1)

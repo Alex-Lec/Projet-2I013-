@@ -126,24 +126,30 @@ class Terrain():
                 o1.set_dir(Vecteur(0.0,0.0,0.0).sub(o1.get_dir()))  
                 o2.set_dir(Vecteur(0.0,0.0,0.0).sub(o2.get_dir()))
 
-    def sauvegarder_arene(self):
-        with open('save.txt', 'wb') as save:
-            arene = pickle.Pickler(save)
-            arene.dump(self.dimx)
-            arene.dump(self.dimy)
-            arene.dump(self.objet)
-            arene.dump(self.robot)
+    def sauvegarder_arene(self, fichier):
 
-    def ouvrir_arene(self):
+        try :
+            with open(fichier, 'wb') as fichier:
+                arene = pickle.Pickler(fichier)
+                arene.dump(self.dimx)
+                arene.dump(self.dimy)
+                arene.dump(self.objet)
+                arene.dump(self.robot)
+
+        except IOError:
+            print("Le fichier n'a pas pu être ouvert !")
+            pass
+
+    def ouvrir_arene(self, fichier):
 
         try:
-
-            with open('save.txt', 'rb') as save:
-                arene_pickle = pickle.Unpickler(save)
+            with open(fichier, 'rb') as fichier:
+                arene_pickle = pickle.Unpickler(fichier)
                 self.dimx = arene_pickle.load() 
                 self.dimy = arene_pickle.load() 
                 self.objet = arene_pickle.load() 
                 self.robot = arene_pickle.load()
 
         except FileNotFoundError:
+            print("Le fichier n'existe pas !")
             pass
