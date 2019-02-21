@@ -39,13 +39,26 @@ class Terrain():
         #print(self.testCollision(robot,self.objet))
         robot.detecte(self.objet)
         if (self.testCollision(robot,self.objet)):
-            robot.avancer()
+            robot.scalaire_vitesse = 1
+            robot.update();
+            robot.scalaire_vitesse = 0
 
-    def tourner_robot(self, robot):
+    def tourner_robot_g(self, robot):
         #print(self.testCollision(robot,self.objet))
         robot.detecte(self.objet)
         if (self.testCollision(robot,self.objet)):
-            robot.tourner()
+            robot.scalaire_rotation = 1
+            robot.update();
+            robot.scalaire_rotation =0
+            
+    def tourner_robot_d(self, robot):
+        #print(self.testCollision(robot,self.objet))
+        robot.detecte(self.objet)
+        if (self.testCollision(robot,self.objet)):
+            robot.scalaire_rotation = -1
+            robot.update();
+            robot.scalaire_rotation =0
+            
 
     def ajouter_objets(self, o): #prend une liste d'object en arguement
         for i in o:
@@ -65,6 +78,7 @@ class Terrain():
             if (p1[0]-p2[0] != 0): 
                 a1 = (p1[1] - p2[1]) /(p1[0]- p2[0])
                 b1 = p1[1] - a1*p1[0]
+                
             else :
                 a1 = None # Cas ou le robot est dans l'axe x
                 b1 = p1[0]
@@ -105,27 +119,6 @@ class Terrain():
                         return False
         return True
     
-    def checkCollisions (self):
-        for i in range(len(self.objet)):
-            try:
-                for j in range(len(self.objet)):
-                    if i == j:
-                        continue
-                    if testCollision(i, j):
-                        raise ValueError()
-                        
-            except ValueError:
-                o1 = self.objet[i]
-                o2 = self.objet[j]
-                if o1.get_x() + o1.get_dim()[0] < o2.get_x() - o2.get_dim()[0]:
-                    o2.set_x(o2.get_x() + (o2.get_x() - o2.get_dim()[0] - o1.get_x() - o1.get_dim()[0]) + 1)
-                else:
-                    o2.set_x(o2.get_x() - (o1.get_x() + o1.get_dim()[0] - o2.get_x() + o2.get_dim()[0]) - 1)
-                if o1.get_y() + o1.get_dim()[1] < o2.get_y() - o2.get_dim()[1]:
-                    o2.set_y(o2.get_y() + (o2.get_y() - o2.get_dim()[1] - o1.get_y() - o1.get_dim()[1]) + 1)
-                o1.set_dir(Vecteur(0.0,0.0,0.0).sub(o1.get_dir()))  
-                o2.set_dir(Vecteur(0.0,0.0,0.0).sub(o2.get_dir()))
-
     def sauvegarder_arene(self, fichier):
 
         try :
