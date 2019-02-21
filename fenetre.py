@@ -18,6 +18,7 @@ class Fenetre():
         self.fenetre.geometry("1000x600")
         self.fenetre.resizable(0, 0)
         self.arene = arene
+        self.robot_selectionne = IntVar()
 
         menubar = Menu(self.fenetre)
 
@@ -38,13 +39,69 @@ class Fenetre():
         menu2.add_command(label = "Déplacer robot", command = self.deplacerRobot)
         menubar.add_cascade(label = "Déplacement", menu = menu2)
 
+        self.menu3 = Menu(menubar, tearoff = 0)
+
+        for i in range(1, len(self.arene.robot) + 1):
+            self.menu3.add_radiobutton(label = i, variable = self.robot_selectionne, value = i, command = self.select_robot)
+
+            if (i != 1):
+                self.menu3.add_separator()
+
+        menubar.add_cascade(label = "Sélectionner robot", menu = self.menu3)
+
         self.fenetre.config(menu = menubar)
 
         self.arene_canvas = Canvas(self.fenetre, width = 1000, height = 600)
         self.arene_canvas.pack()
+        self.arene_canvas.bind('<Right>', self.deplacement)
 
         self.initialise_arene()
         self.fenetre.mainloop()
+
+    def deplacement(self, evt):
+        print("test")
+        if (evt.keycode == 114): #RIGHT
+            print("RIGHT")
+
+            tag_robot = "robot_" + str(self.robot_selectionne.get())
+
+            r = self.arene.robot[self.robot_selectionne.get() - 1]
+
+            for j in range(200):
+                """
+                x = r.vecteur_direction.x
+                y = r.vecteur_direction.y
+                self.arene_canvas.move(tag_robot, x, y)
+                self.arene_canvas.update()
+                """             
+
+                self.arene.avancer_robot(r)
+                tag_robot = "robot_" + str(self.robot_selectionne.get())
+
+                self.arene_canvas.delete(tag_robot)
+
+                self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
+                self.arene_canvas.create_text(r.center[0], r.center[1], text = self.arene.robot.index(r) + 1, \
+                    fill = "black", tags = tag_robot)
+
+                self.arene_canvas.create_line(r.center[0] + r.vecteur_direction.x * 20, r.center[1] + \
+                    r.vecteur_direction.y * 20, r.center[0] + r.vecteur_direction.x * 40, r.center[1] + \
+                        r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
+
+                self.arene_canvas.update()
+                time.sleep(0.02)
+
+        elif (evt.keycode == 83): #LEFT
+            pass
+
+        elif (evt.keycode == 80): #UP
+            pass
+
+        elif (evt.keycode == 88): #DOWN
+            pass
+
+    def select_robot(self):
+        print(self.robot_selectionne.get())
 
     def ouvrir(self):
 
@@ -88,6 +145,9 @@ class Fenetre():
         ok.grid(row = 1, column = 0)
         annuler = Button(fen,text ="Exit",command = fen.destroy)
         annuler.grid(row = 1, column = 1)
+
+    def robot_selectionner(self):
+        pass
 
     def initialise_arene(self):
 
@@ -166,6 +226,10 @@ class Fenetre():
             self.arene_canvas.create_line(r.center[0] + r.vecteur_direction.x * 20, r.center[1] + \
                     r.vecteur_direction.y * 20, r.center[0] + r.vecteur_direction.x * 40, r.center[1] + \
                         r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
+
+            self.menu3.add_separator()
+            self.menu3.add_radiobutton(label = len(self.arene.robot), variable = self.robot_selectionne, \
+                value = len(self.arene.robot), command = self.select_robot)
 
         fen = Toplevel(self.fenetre)
         fen.title("Ajouter robot")
