@@ -1,4 +1,5 @@
 Compte rendu de projet 2i013 groupe 5
+https://perso.liris.cnrs.fr/christophe.rigotti/python/source70_3D_vpython_intro.html
 
 	Participants :
 	Luc Sterkers
@@ -50,3 +51,23 @@ La prochaine fois : avoir un robot orienté et qui peut tourner :)
 	
 
 Cécile
+
+Jeudi 14 Février TME 4
+
+Problèmes rencontrés :
+	Collision entre les branches, pas assez de submit sur le dev, pas de hiérarchisation des fichiers.
+	
+Avancement :
+	Bonne répartition du travail
+	
+Conseils : 
+	Prendre en main git et gitkraken, faire des dossiers
+	
+La prochaine fois :
+	Detecter les collisions, avancer le robot avec les flêches du clavier, sauvegarder.
+	
+Luc
+
+
+
+
