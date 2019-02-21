@@ -63,7 +63,6 @@ class Robot(ObjetPhysique):
             new_points.append([x_old + vx, y_old + vy])
         self.points = new_points
 
-
     def tourner(self):
         #self.printPosCoin()
         angle = math.radians(1)
