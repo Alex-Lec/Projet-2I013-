@@ -197,8 +197,12 @@ class Fenetre():
 
             r = self.arene.robot[id_robot.get() - 1]
 
-            for j in range(pas.get()):
-                self.arene.avancer_robot(r)
+            for j in range(abs(pas.get())):
+                if (pas.get() < 0):
+                    self.arene.reculer_robot(r)
+                else :
+                    self.arene.avancer_robot(r)
+                
                 tag_robot = "robot_" + str(id_robot.get() - 1)
 
                 self.arene_canvas.delete(tag_robot)

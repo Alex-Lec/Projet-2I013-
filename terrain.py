@@ -30,7 +30,7 @@ class Terrain():
             rd = Roue()
             d = Detecteur()
             a = Accelerometre()
-            vdir = Vecteur(20, 0.0, 0.0)
+            vdir = Vecteur(20, 0.0, 0.0)2I013
             r = Robot(x, y, dir,)
             self.objet.append(r)
     """
@@ -40,6 +40,13 @@ class Terrain():
         robot.detecte(self.objet)
         if (self.testCollision(robot,self.objet)):
             robot.scalaire_vitesse = 1
+            robot.update();
+            robot.scalaire_vitesse = 0
+            
+    def reculer_robot(self, robot):
+        robot.detecte(self.objet)
+        if (self.testCollision(robot,self.objet)):
+            robot.scalaire_vitesse = -1
             robot.update();
             robot.scalaire_vitesse = 0
 
@@ -118,7 +125,7 @@ class Terrain():
                         
                         return False
         return True
-    
+        
     def sauvegarder_arene(self, fichier):
 
         try :
