@@ -2,12 +2,6 @@
 # -*- coding: utf-8 -*
 
 from composant import *
-#from Vecteur import *
-#from Camera import *
-#from Roue import *
-#from Detecteur import *
-#from Accelerometre import *
-#from Robot import *
 import pickle
 
 class Terrain():
@@ -22,29 +16,17 @@ class Terrain():
                       ObjetPhysique(dimx+1, dimy/2, 0, dimy, 0, 0)]#droite
         
         self.robot = []
-        
-    """ 
-        def ajouter_robot(self, x, y, z):
-            c = Camera()
-            rg = Roue()
-            rd = Roue()
-            d = Detecteur()
-            a = Accelerometre()
-            vdir = Vecteur(20, 0.0, 0.0)2I013
-            r = Robot(x, y, dir,)
-            self.objet.append(r)
-    """
 
     def avancer_robot(self, robot):
         #print(self.testCollision(robot,self.objet))
-        robot.detecte(self.objet)
+        #robot.detecte(self.objet)
         if (self.testCollision(robot,self.objet)):
             robot.scalaire_vitesse = 1
             robot.update();
             robot.scalaire_vitesse = 0
             
     def reculer_robot(self, robot):
-        robot.detecte(self.objet)
+        #robot.detecte(self.objet)
         if (self.testCollision(robot,self.objet)):
             robot.scalaire_vitesse = -1
             robot.update();
@@ -52,7 +34,7 @@ class Terrain():
 
     def tourner_robot_g(self, robot):
         #print(self.testCollision(robot,self.objet))
-        robot.detecte(self.objet)
+        #robot.detecte(self.objet)
         if (self.testCollision(robot,self.objet)):
             robot.scalaire_rotation = 1
             robot.update();
@@ -60,7 +42,7 @@ class Terrain():
             
     def tourner_robot_d(self, robot):
         #print(self.testCollision(robot,self.objet))
-        robot.detecte(self.objet)
+        #robot.detecte(self.objet)
         if (self.testCollision(robot,self.objet)):
             robot.scalaire_rotation = -1
             robot.update();

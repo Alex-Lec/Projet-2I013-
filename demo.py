@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
 from composant import*
-from fenetre import*
-from terrain import*
-#from ObjetPhysique import*
-#from Vecteur import*
-#from Robot import*
-#import math
+from principal import*
 
 """Le but ici, est de constuire quelques objets simples, un robot et de les afficher"""
 

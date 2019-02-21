@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 -
 
-from terrain import *
+from .terrain import *
 from composant import Robot, ObjetPhysique
 from diver import *
 import time

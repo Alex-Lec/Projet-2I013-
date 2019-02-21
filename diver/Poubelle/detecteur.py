@@ -1,4 +1,5 @@
 from math import sqrt
+from principal import Terrain as t
 
 class Detecteur:
     
