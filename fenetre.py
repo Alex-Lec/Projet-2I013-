@@ -208,6 +208,7 @@ class Fenetre():
                 self.arene_canvas.delete(tag_robot)
 
                 self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
+                
                 self.arene_canvas.create_text(r.x, r.y, text = self.arene.robot.index(r) + 1, \
                     fill = "black", tags = tag_robot)
 
@@ -288,3 +289,17 @@ class Fenetre():
         annuler = Button(fen, text = "Exit", command = fen.destroy)
         ok.grid(row = 3, column = 1)
         annuler.grid(row = 3,column = 2)
+        
+        
+        """
+        def clavier(self,event):
+            global coords
+            touche = event.keysym
+            if touche == "Up":                
+            elif touche == "Down":
+            elif touche == "Right":
+            elif touche == "Left":
+            
+        """
+        
+        

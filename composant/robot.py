@@ -40,6 +40,11 @@ class Robot(ObjetPhysique):
         self.x += vx
         self.y += vy
         
+        for i in range(len(self.points)):
+            j = self.points[i]
+            
+            self.points[i]= (j[0] + vx, j[1] + vy)
+        
         angle = math.radians(self.scalaire_rotation)
         cos_val = math.cos(angle)
         sin_val = math.sin(angle)
@@ -52,9 +57,6 @@ class Robot(ObjetPhysique):
         
         for i in range(len(self.points)):
             j = self.points[i]
-            
-            self.points[i]= (j[0] + vx, j[1] + vy)
-            
             x_new = (j[0] - self.x) * cos_val - (j[1] - self.y) * sin_val
             y_new = (j[0] - self.x) * sin_val + (j[1] - self.y) * cos_val
             
