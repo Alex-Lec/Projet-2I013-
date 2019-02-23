@@ -6,6 +6,7 @@ arene = Terrain()
 rob = Robot(100,100,0)
 arene.ajouter_robots(rob)
 t = time.time()
+fenetre = Fenetre(arene)
 
 while (True):
     if len(rob.event) == 0 or 
@@ -23,4 +24,5 @@ while (True):
     
     
     rob.update()
+    fenetre.update()
     
