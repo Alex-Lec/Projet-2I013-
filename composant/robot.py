@@ -11,16 +11,16 @@ class Robot(ObjetPhysique):
     def __init__(self, x, y, z): #dir, camera, rd, rg, detecteur, accelerometre):
 
         ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
-
+        self.event = []
         self.vecteur_direction = Vecteur(1., 0., 0.)
-        self.scalaire_rotation = 0
+        self.scalaire_rotation = 2
         self.scalaire_vitesse = 0
         
         self.vitesse_moteur_g = 0
         self.vitesse_moteur_d = 0
-        #self.terrain = Terrain()
-
-
+        
+        self.rayon_roue_g = 
+        self.rayon_roue_d = 
         
     def set_led(self, led, red = 0, green = 0,blue = 0):
         """ Allume une led. """
