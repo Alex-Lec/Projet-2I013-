@@ -16,4 +16,3 @@ class ObjetPhysique:
             (x - self.largeur // 2, y + self.longueur // 2)
         ]
 
-        self.center = (x, y)
