@@ -50,7 +50,7 @@ class Terrain():
             robot.update();
             robot.scalaire_vitesse = 0
 
-    def tourner_robot_g(self, robot):
+    def tourner_robot_d(self, robot):
         #print(self.testCollision(robot,self.objet))
         robot.detecte(self.objet)
         if (self.testCollision(robot,self.objet)):
@@ -58,7 +58,7 @@ class Terrain():
             robot.update();
             robot.scalaire_rotation =0
             
-    def tourner_robot_d(self, robot):
+    def tourner_robot_g(self, robot):
         #print(self.testCollision(robot,self.objet))
         robot.detecte(self.objet)
         if (self.testCollision(robot,self.objet)):
