@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 -
 
-from terrain import *
+from .terrain import *
 from composant import Robot, ObjetPhysique
 from diver import *
 import time
@@ -210,6 +210,26 @@ class Fenetre():
             self.arene_canvas.create_line(r.x + r.vecteur_direction.x * 20, r.y + \
                     r.vecteur_direction.y * 20, r.x + r.vecteur_direction.x * 40, r.y + \
                         r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
+                        
+    def update_arene(self):
+        for i in range(len(arene.robot)):
+            tag_robot = "robot_" + str(i)
+
+            self.arene_canvas.delete(tag_robot)
+
+            self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
+            
+            self.arene_canvas.create_text(r.x, r.y, text = self.arene.robot.index(r) + 1, \
+                fill = "black", tags = tag_robot)
+
+            self.arene_canvas.create_line(r.x + r.vecteur_direction.x * 20, r.y + \
+                r.vecteur_direction.y * 20, r.x + r.vecteur_direction.x * 40, r.y + \
+                    r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
+
+            self.arene_canvas.update()
+    
+    
+    
 
     def creerObjet(self):
 
