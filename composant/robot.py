@@ -13,9 +13,8 @@ class Robot(ObjetPhysique):
         self.arene = arene
         
         ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
-        self.event = []
         self.vecteur_direction = Vecteur(1., 0., 0.)
-        self.scalaire_rotation = 2
+        self.scalaire_rotation = 0
         self.scalaire_vitesse = 0
         
         self.vitesse_moteur_g = 0
@@ -35,7 +34,13 @@ class Robot(ObjetPhysique):
             :dps: la vitesse cible en nombre de degres par seconde
         
         """
-        pass
+        if (port == MOTOR_LEFT):
+            self.vitesse_moteur_g = dps
+        
+        elif (port == MOTOR_RIGHT):
+            self.vitesse_moteur_d = dps
+        else :
+            printf("ERREUR ROBOT_set_motor_dps : moteur invalide")
     
     
     def get_motor_position(self):
@@ -58,7 +63,21 @@ class Robot(ObjetPhysique):
     
         
     def update(self):
+        """
+        Met à jour la position et l'orientation du robot par rapport à scalaire_rotation,
+        scalaire_vitesse, vecteur direction, SAUF S'IL Y A COLLISION
         
+        """
+        ###############################################################################
+        #
+        
+        sauvx = self.x
+        sauvy = self.y
+        sauvdir = Vecteur(self.vecteur_direction.x,self.vecteur_direction.y,
+                          self.vecteur_direction.z,)
+        sauvpoints = []
+        for o in self.points:
+            sauvpoints += [o]
     
         vx = self.vecteur_direction.x * self.scalaire_vitesse
         vy = self.vecteur_direction.y * self.scalaire_vitesse
@@ -88,10 +107,27 @@ class Robot(ObjetPhysique):
             
             self.points[i]= (x_new + self.x, y_new + self.y)
             
+        ######################################################################
+        # On vérifie que on n'a pas de collisions
+        
+        if (self.testCollision()): #Si on a des collisions
+            self.x = sauvx
+            self.y = sauvy
+            self.points = sauvpoints
+            self.vecteur_direction = sauvdir
+            
+            
     
     
     def get_distance(self):
-        if (arene == None):
+        """
+        Mesure la distance entre le devant du robot et les objets devant.
+        Retourne seulement l'objet dans la bonne direction et le plus proche du robot
+        NE DETECTE PAS LES AUTRES ROBOTS
+        
+        """
+    
+        if (self.arene == None):
             return
         
         obj = self.arene.objet # + la liste des robots si collisions inter-robot
@@ -154,4 +190,65 @@ class Robot(ObjetPhysique):
                             mini = res
             
         return mini
+        
+    def testCollision(self):
+        """
+        Test les collisions avec les autres objects du terrain ssi un terrain est chargé
+        Les autres robots NE SONT PAS PRIS EN COMPTES.
+        Renvoie true s'il y a collision
+        
+        """
+        if (self.arene == None):
+            return False
+        
+        obj = self.arene.objet
+        
+        for i in range(len(self.points)):
+        
+            p1 = self.points[i]
+            p2 = self.points[(i+1)%len(self.points)]
+            
+            if (p1[0]-p2[0] != 0): 
+                a1 = (p1[1] - p2[1]) /(p1[0]- p2[0])
+                b1 = p1[1] - a1*p1[0]
+                
+            else :
+                a1 = None # Cas ou le robot est dans l'axe x
+                b1 = p1[0]
+                
+            for o in obj:
+                for j in range(len(o.points)):
+                    p3 = o.points[j]
+                    p4 = o.points[(j+1)%len(o.points)]#Marche avec un polygone à n cotées
+                    
+                    if (p3[0]-p4[0] !=0):
+                        a2 = (p3[1] - p4[1])/(p3[0]- p4[0]) 
+                        b2 = p3[1] - a2*p3[0]
+                    
+                    else :
+                        a2 = None # Cas ou le segment est dans l'axe x
+                        b2 = p4[0]
+                    
+                    if (a1 == a2) :
+                        continue
+                    
+                    if (a1 == None) :
+                        x = b1
+                        y = a2*x + b2
+                    
+                    elif (a2 == None):
+                        x = b2
+                        y = a1*x + b1
+                    
+                    else :
+                        x = (b2 - b1) / (a1 - a2)
+                        y = a1*x + b1
+                     
+                    if (min(p3[0],p4[0])<=x<=max(p3[0],p4[0]) and 
+                        min(p3[1],p4[1])<=y<=max(p3[1],p4[1]) and 
+                        min(p1[0],p2[0])<=x<=max(p1[0],p2[0]) and 
+                        min(p1[1],p2[1])<=y<=max(p1[1],p2[1])):
+                        
+                        return True
+        return False
         

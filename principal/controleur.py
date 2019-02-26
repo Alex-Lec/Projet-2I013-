@@ -5,7 +5,7 @@ import time;
 
 arene = Terrain()
 rob = Robot(100,100,0)
-arene.ajouter_robots([rob])
+arene.robot.append(rob)
 t = time.time()
 fenetre = Fenetre(arene)
 

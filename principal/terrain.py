@@ -18,44 +18,32 @@ class Terrain():
         self.robot = []
 
     def avancer_robot(self, robot):
-        #print(self.testCollision(robot,self.objet))
+        robot.arene = self
         #robot.detecte(self.objet)
-        if (self.testCollision(robot,self.objet)):
-            robot.scalaire_vitesse = 1
-            robot.update();
-            robot.scalaire_vitesse = 0
+        robot.scalaire_vitesse = 10
+        robot.update();
+        robot.scalaire_vitesse = 0
             
     def reculer_robot(self, robot):
+        robot.arene = self
         #robot.detecte(self.objet)
-        if (self.testCollision(robot,self.objet)):
-            robot.scalaire_vitesse = -1
-            robot.update();
-            robot.scalaire_vitesse = 0
+        robot.scalaire_vitesse = -10
+        robot.update();
+        robot.scalaire_vitesse = 0
 
     def tourner_robot_d(self, robot):
-        #print(self.testCollision(robot,self.objet))
+        robot.arene = self
         #robot.detecte(self.objet)
-        if (self.testCollision(robot,self.objet)):
-            robot.scalaire_rotation = 1
-            robot.update();
-            robot.scalaire_rotation =0
+        robot.scalaire_rotation = 10
+        robot.update();
+        robot.scalaire_rotation =0
             
     def tourner_robot_g(self, robot):
-        #print(self.testCollision(robot,self.objet))
+        robot.arene = self
         #robot.detecte(self.objet)
-        if (self.testCollision(robot,self.objet)):
-            robot.scalaire_rotation = -1
-            robot.update();
-            robot.scalaire_rotation =0
-            
-            
-    def ajouter_objets(self, o): #prend une liste d'object en arguement
-        for i in o:
-            self.objet.append(i)
-            
-    def ajouter_robots(self,o):
-        for i in o:
-            self.robot.append(i)
+        robot.scalaire_rotation = -10
+        robot.update();
+        robot.scalaire_rotation =0
             
 
     def testCollision(self, rob, obj):
