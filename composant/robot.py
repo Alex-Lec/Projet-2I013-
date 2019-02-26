@@ -5,7 +5,8 @@ from .objetphysique import ObjetPhysique
 from .vecteur import Vecteur
 
 
-import math
+from math import radians,sqrt, cos, sin
+
 class Robot(ObjetPhysique):
 
     def __init__(self, x, y, z, arene = None): #dir, camera, rd, rg, detecteur, accelerometre):
@@ -90,9 +91,9 @@ class Robot(ObjetPhysique):
             
             self.points[i]= (j[0] + vx, j[1] + vy)
         
-        angle = math.radians(self.scalaire_rotation)
-        cos_val = math.cos(angle)
-        sin_val = math.sin(angle)
+        angle = radians(self.scalaire_rotation)
+        cos_val = cos(angle)
+        sin_val = sin(angle)
         
         x1 = self.vecteur_direction.x
         y1 = self.vecteur_direction.y
@@ -115,7 +116,8 @@ class Robot(ObjetPhysique):
             self.y = sauvy
             self.points = sauvpoints
             self.vecteur_direction = sauvdir
-            
+        
+        print(self.get_distance())
             
     
     
