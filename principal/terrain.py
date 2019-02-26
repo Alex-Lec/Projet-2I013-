@@ -48,7 +48,7 @@ class Terrain():
             robot.update();
             robot.scalaire_rotation =0
             
-
+            
     def ajouter_objets(self, o): #prend une liste d'object en arguement
         for i in o:
             self.objet.append(i)
@@ -56,10 +56,11 @@ class Terrain():
     def ajouter_robots(self,o):
         for i in o:
             self.robot.append(i)
-    
-    def testCollision(self, rob, obj):
+            
 
-        for i in range(len(rob.points)) :
+    def testCollision(self, rob, obj):
+    
+        for i in range(len(rob.points)):
         
             p1 = rob.points[i]
             p2 = rob.points[(i+1)%len(rob.points)]
@@ -117,7 +118,6 @@ class Terrain():
                 arene.dump(self.dimy)
                 arene.dump(self.objet)
                 arene.dump(self.robot)
-
         except IOError:
             print("Le fichier n'a pas pu être ouvert !")
             pass

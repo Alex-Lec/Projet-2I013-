@@ -1,14 +1,16 @@
-from .composant import Robot, ObjetPhysique
+from composant import Robot, ObjetPhysique
 from .terrain import Terrain
+from .fenetre import Fenetre
 import time;
 
 arene = Terrain()
 rob = Robot(100,100,0)
-arene.ajouter_robots(rob)
+arene.ajouter_robots([rob])
 t = time.time()
 fenetre = Fenetre(arene)
 
 while (True):
+    """
     if len(rob.event) == 0 or 
         rob.event[-1][0] ="tourner" and rob.event[-1][1] >= time.time + 4 :
         
@@ -25,4 +27,4 @@ while (True):
     
     rob.update()
     fenetre.update()
-    
+    """

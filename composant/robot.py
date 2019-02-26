@@ -8,8 +8,10 @@ from .vecteur import Vecteur
 import math
 class Robot(ObjetPhysique):
 
-    def __init__(self, x, y, z): #dir, camera, rd, rg, detecteur, accelerometre):
-
+    def __init__(self, x, y, z, arene = None): #dir, camera, rd, rg, detecteur, accelerometre):
+        
+        self.arene = arene
+        
         ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
         self.event = []
         self.vecteur_direction = Vecteur(1., 0., 0.)
@@ -19,8 +21,8 @@ class Robot(ObjetPhysique):
         self.vitesse_moteur_g = 0
         self.vitesse_moteur_d = 0
         
-        self.rayon_roue_g = 
-        self.rayon_roue_d = 
+        self.rayon_roue_g = 10
+        self.rayon_roue_d = 10
         
     def set_led(self, led, red = 0, green = 0,blue = 0):
         """ Allume une led. """
@@ -88,8 +90,14 @@ class Robot(ObjetPhysique):
             
     
     
-    def get_distance(self,obj=[]):
-        def mmsigne(a,b):
+    def get_distance(self):
+        if (arene == None):
+            return
+        
+        obj = self.arene.objet # + la liste des robots si collisions inter-robot
+                               # Rajouter alors un test pour pas auto-détéction
+        
+        def mmsigne(a,b): 
             if (a<0 and b<0):
                 return True
             if (a==0 and b==0):
