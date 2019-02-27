@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
 from composant import*
-from fenetre import*
-from terrain import*
-#from ObjetPhysique import*
-#from Vecteur import*
-#from Robot import*
-#import math
+from principal import*
 
 """Le but ici, est de constuire quelques objets simples, un robot et de les afficher"""
 
@@ -17,7 +12,7 @@ arene = Terrain()
 arene.objet.append(ObjetPhysique(50, 40, 0, 40, 10))
 arene.objet.append(ObjetPhysique(100, 100, 0, 10, 100, 10))
 arene.objet.append(ObjetPhysique(780, 250, 0, 30, 30))
-robot = Robot(500, 200, 0)
+robot = Robot(500, 200, 0,arene)
 arene.robot.append(robot)
 fenetre = Fenetre(arene)
 

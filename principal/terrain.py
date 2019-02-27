@@ -2,12 +2,6 @@
 # -*- coding: utf-8 -*
 
 from composant import *
-#from Vecteur import *
-#from Camera import *
-#from Roue import *
-#from Detecteur import *
-#from Accelerometre import *
-#from Robot import *
 import pickle
 
 class Terrain():
@@ -22,62 +16,39 @@ class Terrain():
                       ObjetPhysique(dimx+1, dimy/2, 0, dimy, 0, 0)]#droite
         
         self.robot = []
-        
-    """ 
-        def ajouter_robot(self, x, y, z):
-            c = Camera()
-            rg = Roue()
-            rd = Roue()
-            d = Detecteur()
-            a = Accelerometre()
-            vdir = Vecteur(20, 0.0, 0.0)2I013
-            r = Robot(x, y, dir,)
-            self.objet.append(r)
-    """
 
     def avancer_robot(self, robot):
-        #print(self.testCollision(robot,self.objet))
-        robot.detecte(self.objet)
-        if (self.testCollision(robot,self.objet)):
-            robot.scalaire_vitesse = 1
-            robot.update();
-            robot.scalaire_vitesse = 0
+        robot.arene = self
+        #robot.detecte(self.objet)
+        robot.scalaire_vitesse = 10
+        robot.update();
+        robot.scalaire_vitesse = 0
             
     def reculer_robot(self, robot):
-        robot.detecte(self.objet)
-        if (self.testCollision(robot,self.objet)):
-            robot.scalaire_vitesse = -1
-            robot.update();
-            robot.scalaire_vitesse = 0
+        robot.arene = self
+        #robot.detecte(self.objet)
+        robot.scalaire_vitesse = -10
+        robot.update();
+        robot.scalaire_vitesse = 0
 
     def tourner_robot_d(self, robot):
-        #print(self.testCollision(robot,self.objet))
-        robot.detecte(self.objet)
-        if (self.testCollision(robot,self.objet)):
-            robot.scalaire_rotation = 1
-            robot.update();
-            robot.scalaire_rotation =0
+        robot.arene = self
+        #robot.detecte(self.objet)
+        robot.scalaire_rotation = 10
+        robot.update();
+        robot.scalaire_rotation =0
             
     def tourner_robot_g(self, robot):
-        #print(self.testCollision(robot,self.objet))
-        robot.detecte(self.objet)
-        if (self.testCollision(robot,self.objet)):
-            robot.scalaire_rotation = -1
-            robot.update();
-            robot.scalaire_rotation =0
+        robot.arene = self
+        #robot.detecte(self.objet)
+        robot.scalaire_rotation = -10
+        robot.update();
+        robot.scalaire_rotation =0
             
 
-    def ajouter_objets(self, o): #prend une liste d'object en arguement
-        for i in o:
-            self.objet.append(i)
-            
-    def ajouter_robots(self,o):
-        for i in o:
-            self.robot.append(i)
-    
     def testCollision(self, rob, obj):
-
-        for i in range(len(rob.points)) :
+    
+        for i in range(len(rob.points)):
         
             p1 = rob.points[i]
             p2 = rob.points[(i+1)%len(rob.points)]
@@ -135,7 +106,7 @@ class Terrain():
                 arene.dump(self.dimy)
                 arene.dump(self.objet)
                 arene.dump(self.robot)
-
+                
         except IOError:
             print("Le fichier n'a pas pu être ouvert !")
             pass
