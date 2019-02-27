@@ -203,6 +203,7 @@ class Robot(ObjetPhysique):
             return False
         
         obj = self.arene.objet
+        rob = self.arene.robot
         
         for i in range(len(self.points)):
         
@@ -251,5 +252,43 @@ class Robot(ObjetPhysique):
                         min(p1[1],p2[1])<=y<=max(p1[1],p2[1])):
                         
                         return True
+            """
+            for r in rob:
+                for j in range(len(r.points)):
+                    
+                    p3 = r.points[j]
+                    p4 = r.points[(j+1)%len(r.points)]#Marche avec un polygone à n cotées
+                    
+                    if (p3[0]-p4[0] !=0):
+                        a2 = (p3[1] - p4[1])/(p3[0]- p4[0]) 
+                        b2 = p3[1] - a2*p3[0]
+                    
+                    else :
+                        a2 = None # Cas ou le segment est dans l'axe x
+                        b2 = p4[0]
+                    
+                    if (a1 == a2) :
+                        continue
+                    
+                    if (a1 == None) :
+                        x = b1
+                        y = a2*x + b2
+                    
+                    elif (a2 == None):
+                        x = b2
+                        y = a1*x + b1
+                    
+                    else :
+                        x = (b2 - b1) / (a1 - a2)
+                        y = a1*x + b1
+                     
+                    if (min(p3[0],p4[0])<=x<=max(p3[0],p4[0]) and 
+                        min(p3[1],p4[1])<=y<=max(p3[1],p4[1]) and 
+                        min(p1[0],p2[0])<=x<=max(p1[0],p2[0]) and 
+                        min(p1[1],p2[1])<=y<=max(p1[1],p2[1])):
+                        
+                        return True
+            """
+                    
         return False
         
