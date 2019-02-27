@@ -3,13 +3,11 @@
 
 from .objetphysique import ObjetPhysique
 from .vecteur import Vecteur
-
-
 from math import radians,sqrt, cos, sin
 
 class Robot(ObjetPhysique):
 
-    def __init__(self, x, y, z, arene = None): #dir, camera, rd, rg, detecteur, accelerometre):
+    def __init__(self, x, y, z, arene = None, id = 0): #dir, camera, rd, rg, detecteur, accelerometre):
         
         self.arene = arene
         
@@ -118,21 +116,18 @@ class Robot(ObjetPhysique):
         
         print(self.get_distance())
             
-    
-    
     def get_distance(self):
         """
         Mesure la distance entre le devant du robot et les objets devant.
         Retourne seulement l'objet dans la bonne direction et le plus proche du robot
-        NE DETECTE PAS LES AUTRES ROBOTS
-        
+        DETECTE LES AUTRES ROBOTS
         """
     
         if (self.arene == None):
             return
         
-        obj = self.arene.objet # + la liste des robots si collisions inter-robot
-                               # Rajouter alors un test pour pas auto-détéction
+        obj = self.arene.objet 
+        rob = self.arene.robot
         
         def mmsigne(a,b): 
             if (a<0 and b<0):
@@ -189,20 +184,60 @@ class Robot(ObjetPhysique):
                         min(p3[1],p4[1])<=y<=max(p3[1],p4[1])):
                         if (mini > res):
                             mini = res
+
+        for r in rob:
+
+            if (self.arene.robot.index(r) != self.arene.robot.index(self)):
+
+                for j in range(len(r.points)):
+                    p3 = r.points[j]
+                    p4 = r.points[(j+1)%len(r.points)]#Marche avec un polygone à n cotées
+                    
+                    if (p3[0]-p4[0] !=0):
+                        a2 = (p3[1] - p4[1])/(p3[0]- p4[0]) 
+                        b2 = p3[1] - a2*p3[0]
+                    
+                    else :
+                        a2 = None # Cas ou le segment est dans l'axe x
+                        b2 = p4[0]
+                    
+                    if (a1 == a2) :
+                        continue
+                    
+                    if (a1 == None) :
+                        x = b1
+                        y = a2*x + b2
+                    
+                    elif (a2 == None):
+                        x = b2
+                        y = a1*x + b1
+                    
+                    else :
+                        x = (b2 - b1) / (a1 - a2)
+                        y = a1*x + b1
+                    
+                    res = sqrt(pow(p2[0]-x,2)+pow(p2[1]-y,2))
+                    
+                    if mmsigne(p2[0] - p1[0],x - p1[0]) and mmsigne(p2[1] - p1[1],y - p1[1]):
+                        
+                        if (min(p3[0],p4[0])<=x<=max(p3[0],p4[0]) and 
+                            min(p3[1],p4[1])<=y<=max(p3[1],p4[1])):
+                            if (mini > res):
+                                mini = res
             
         return mini
         
     def testCollision(self):
         """
         Test les collisions avec les autres objects du terrain ssi un terrain est chargé
-        Les autres robots NE SONT PAS PRIS EN COMPTES.
+        Les autres robots SONT PRIS EN COMPTES.
         Renvoie true s'il y a collision
-        
         """
         if (self.arene == None):
             return False
         
         obj = self.arene.objet
+        rob = self.arene.robot
         
         for i in range(len(self.points)):
         
@@ -251,5 +286,45 @@ class Robot(ObjetPhysique):
                         min(p1[1],p2[1])<=y<=max(p1[1],p2[1])):
                         
                         return True
+
+            for r in rob:
+
+                if (self.arene.robot.index(r) != self.arene.robot.index(self)):
+
+                    for j in range(len(r.points)):
+                        
+                        p3 = r.points[j]
+                        p4 = r.points[(j+1)%len(r.points)]#Marche avec un polygone à n cotées
+                        
+                        if (p3[0]-p4[0] !=0):
+                            a2 = (p3[1] - p4[1])/(p3[0]- p4[0]) 
+                            b2 = p3[1] - a2*p3[0]
+                        
+                        else :
+                            a2 = None # Cas ou le segment est dans l'axe x
+                            b2 = p4[0]
+                        
+                        if (a1 == a2) :
+                            continue
+                        
+                        if (a1 == None) :
+                            x = b1
+                            y = a2*x + b2
+                        
+                        elif (a2 == None):
+                            x = b2
+                            y = a1*x + b1
+                        
+                        else :
+                            x = (b2 - b1) / (a1 - a2)
+                            y = a1*x + b1
+                        
+                        if (min(p3[0],p4[0])<=x<=max(p3[0],p4[0]) and 
+                            min(p3[1],p4[1])<=y<=max(p3[1],p4[1]) and 
+                            min(p1[0],p2[0])<=x<=max(p1[0],p2[0]) and 
+                            min(p1[1],p2[1])<=y<=max(p1[1],p2[1])):
+                            
+                            return True
+                    
         return False
         
