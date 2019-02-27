@@ -28,7 +28,6 @@ class Robot(ObjetPhysique):
         """ Allume une led. """
         pass
     
-    
     def set_motor_dps(self,port,dps):
         """ Fixe la vitesse d'un moteur en nbr de degres par seconde
             :port: une constante moteur, MOTOR_LEFT ou MOTOR_RIGHT

@@ -106,6 +106,7 @@ class Terrain():
                 arene.dump(self.dimy)
                 arene.dump(self.objet)
                 arene.dump(self.robot)
+                
         except IOError:
             print("Le fichier n'a pas pu être ouvert !")
             pass
