@@ -195,9 +195,6 @@ class Fenetre():
                     r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
 
             self.arene_canvas.update()
-    
-    
-    
 
     def creerObjet(self):
 
@@ -382,8 +379,7 @@ class Fenetre():
         ok = Button(fen, text = "Ok", command = ok_button)
         annuler = Button(fen, text = "Exit", command = fen.destroy)
         ok.grid(row = 3, column = 1)
-        annuler.grid(row = 3,column = 2)
-        
+        annuler.grid(row = 3,column = 2)  
         
         """
         def clavier(self,event):
@@ -395,5 +391,3 @@ class Fenetre():
             elif touche == "Left":
             
         """
-        
-        
