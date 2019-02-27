@@ -5,7 +5,6 @@ from principal import*
 
 """Le but ici, est de constuire quelques objets simples, un robot et de les afficher"""
 
-
 """Test rendu graphique arène :"""
 
 arene = Terrain()
