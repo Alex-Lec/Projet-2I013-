@@ -8,6 +8,7 @@ class ObjetPhysique:
         self.largeur = largeur
         self.longueur = longueur
         self.hauteur = hauteur
+        self.vecteur_direction = Vecteur(1., 0., 0.)
 
         self.points = [
             (x + self.largeur // 2, y + self.longueur // 2),
