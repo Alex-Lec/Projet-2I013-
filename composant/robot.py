@@ -3,35 +3,32 @@
 
 from .objetphysique import ObjetPhysique
 from .vecteur import Vecteur
-from math import radians,sqrt, cos, sin
+from math import radians,sqrt, cos, sin, pi
 
 class Robot(ObjetPhysique):
 
-    """ 
-    Classe d'encapsulation du robot et des senseurs.
-    Constantes disponibles : 
-    LED (controle des LEDs) :  LED_LEFT_EYE, LED_RIGHT_EYE, LED_LEFT_BLINKER, LED_RIGHT_BLINKER, LED_WIFI
-    MOTEURS (gauche et droit) : MOTOR_LEFT, MOTOR_RIGHT
-    et les constantes ci-dessous qui definissent les elements physiques du robot
-    """
+    WHEEL_BASE_WIDTH         = 117  # distance (mm) de la roue gauche a la roue droite.
+    WHEEL_DIAMETER           = 66.5 #  diametre de la roue (mm)
+    WHEEL_BASE_CIRCUMFERENCE = WHEEL_BASE_WIDTH * pi # perimetre du cercle de rotation (mm)
+    WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * pi # perimetre de la roue (mm)
 
     def __init__(self, x, y, z, arene = None, id = 0): #dir, camera, rd, rg, detecteur, accelerometre):
+
+        
         
         self.arene = arene
+        
         ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
         
-        WHEEL_BASE_WIDTH = 117
-        WHEEL_DIAMETER = 66.5
-        WHEEL_BASE_CIRCUMFERENCE = WHEEL_BASE_WIDTH * math.pi
-        WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * math.pi
-        
-        self.vecteur_direction = Vecteur(1., 0., 0.)
-        self.scalaire_rotation = 0
+        self.scalaire_rotation = 1
         self.scalaire_vitesse = 0
         
         self.vitesse_moteur_g = 0
         self.vitesse_moteur_d = 0
-
+        
+        self.MOTOR_LEFT = 0
+        self.MOTOR_RIGHT = 0
+        
     def set_led(self, led, red = 0, green = 0,blue = 0):
         """ Allume une led. """
         pass
@@ -174,12 +171,8 @@ class Robot(ObjetPhysique):
                     continue
                 
                 if (a1 == None) :
-                    x = b1nce du parcours dans le virage à 90°, 
-on sait que le robot mesure 16 cm de 
-large au niveau de
-                    y = a2*x + b2nce du parcours dans le virage à 90°, 
-on sait que le robot mesure 16 cm de 
-large au niveau de
+                    x = b1
+                    y = a2*x + b2
                 
                 elif (a2 == None):
                     x = b2
