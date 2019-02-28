@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 -
 
-from terrain import *
+from .terrain import Terrain
 from composant import Robot, ObjetPhysique
 from diver import *
 import time
@@ -18,6 +18,7 @@ class Fenetre():
         self.fenetre.geometry("1000x600")
         self.fenetre.resizable(0, 0)
         self.arene = arene
+        self.robot_selectionne = IntVar()
 
         menubar = Menu(self.fenetre)
 
@@ -38,13 +39,80 @@ class Fenetre():
         menu2.add_command(label = "Déplacer robot", command = self.deplacerRobot)
         menubar.add_cascade(label = "Déplacement", menu = menu2)
 
+        self.menu3 = Menu(menubar, tearoff = 0)
+
+        for i in range(1, len(self.arene.robot) + 1):
+            self.menu3.add_radiobutton(label = i, variable = self.robot_selectionne, value = i, command = self.select_robot)
+
+            if (i != 1):
+                self.menu3.add_separator()
+
+        menubar.add_cascade(label = "Sélectionner robot", menu = self.menu3)
+
         self.fenetre.config(menu = menubar)
 
         self.arene_canvas = Canvas(self.fenetre, width = 1000, height = 600)
+        self.fenetre.bind("<Key>", self.deplacement)
         self.arene_canvas.pack()
-
         self.initialise_arene()
         self.fenetre.mainloop()
+
+    def deplacement(self, event):
+
+        tag_robot = "robot_" + str(self.robot_selectionne.get() - 1)
+        r = self.arene.robot[self.robot_selectionne.get() - 1]   
+        self.arene_canvas.delete(tag_robot)
+
+        if (event.keycode == 111 and self.robot_selectionne.get() != 0): #UP    
+
+            self.arene.avancer_robot(r)
+
+            self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
+            self.arene_canvas.create_text(r.x, r.y, text = self.arene.robot.index(r) + 1, \
+                fill = "black", tags = tag_robot)
+
+            self.arene_canvas.create_line(r.x + r.vecteur_direction.x * 20, r.y + \
+                r.vecteur_direction.y * 20, r.x + r.vecteur_direction.x * 40, r.y + \
+                    r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
+
+        elif (event.keycode == 116 and self.robot_selectionne.get() != 0): #DOWN    
+
+            self.arene.reculer_robot(r)
+
+            self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
+            self.arene_canvas.create_text(r.x, r.y, text = self.arene.robot.index(r) + 1, \
+                fill = "black", tags = tag_robot)
+
+            self.arene_canvas.create_line(r.x + r.vecteur_direction.x * 20, r.y + \
+                r.vecteur_direction.y * 20, r.x + r.vecteur_direction.x * 40, r.y + \
+                    r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
+
+        elif (event.keycode == 114 and self.robot_selectionne.get() != 0): #RIGHT
+
+            self.arene.tourner_robot_d(r)
+
+            self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
+            self.arene_canvas.create_text(r.x, r.y, text = self.arene.robot.index(r) + 1, \
+                fill = "black", tags = tag_robot)
+
+            self.arene_canvas.create_line(r.x + r.vecteur_direction.x * 20, r.y + \
+                r.vecteur_direction.y * 20, r.x + r.vecteur_direction.x * 40, r.y + \
+                    r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
+
+        elif (event.keycode == 113 and self.robot_selectionne.get() != 0): #LEFT
+            
+            self.arene.tourner_robot_g(r)
+
+            self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
+            self.arene_canvas.create_text(r.x, r.y, text = self.arene.robot.index(r) + 1, \
+                fill = "black", tags = tag_robot)
+
+            self.arene_canvas.create_line(r.x + r.vecteur_direction.x * 20, r.y + \
+                r.vecteur_direction.y * 20, r.x + r.vecteur_direction.x * 40, r.y + \
+                    r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
+
+    def select_robot(self):
+        print(self.robot_selectionne.get())
 
     def ouvrir(self):
 
@@ -92,22 +160,41 @@ class Fenetre():
     def initialise_arene(self):
 
         for o in self.arene.objet:
+            
+            if (self.arene.objet.index(o) > 3):
 
-            tag_objet = "objet_" + str(self.arene.objet.index(o))
-            self.arene_canvas.create_polygon(o.points, fill = "blue", tags = tag_objet)
-            self.arene_canvas.create_text(o.center[0], o.center[1], text = self.arene.objet.index(o) + 1, \
-                fill = "black", tags = tag_objet)
+                tag_objet = "objet_" + str(self.arene.objet.index(o))
+                self.arene_canvas.create_polygon(o.points, fill = "blue", tags = tag_objet)
+                self.arene_canvas.create_text(o.x, o.y, text = self.arene.objet.index(o) - 3, \
+                    fill = "black", tags = tag_objet)
         
         for r in self.arene.robot:
 
             tag_robot = "robot_" + str(self.arene.robot.index(r))
             self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
-            self.arene_canvas.create_text(r.center[0], r.center[1], text = self.arene.robot.index(r) + 1, \
+            self.arene_canvas.create_text(r.x, r.y, text = self.arene.robot.index(r) + 1, \
                 fill = "black", tags = tag_robot)
 
-            self.arene_canvas.create_line(r.center[0] + r.vecteur_direction.x * 20, r.center[1] + \
-                    r.vecteur_direction.y * 20, r.center[0] + r.vecteur_direction.x * 40, r.center[1] + \
+            self.arene_canvas.create_line(r.x + r.vecteur_direction.x * 20, r.y + \
+                    r.vecteur_direction.y * 20, r.x + r.vecteur_direction.x * 40, r.y + \
                         r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
+                        
+    def update_arene(self):
+        for i in range(len(arene.robot)):
+            tag_robot = "robot_" + str(i)
+
+            self.arene_canvas.delete(tag_robot)
+
+            self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
+            
+            self.arene_canvas.create_text(r.x, r.y, text = self.arene.robot.index(r) + 1, \
+                fill = "black", tags = tag_robot)
+
+            self.arene_canvas.create_line(r.x + r.vecteur_direction.x * 20, r.y + \
+                r.vecteur_direction.y * 20, r.x + r.vecteur_direction.x * 40, r.y + \
+                    r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
+
+            self.arene_canvas.update()
 
     def creerObjet(self):
 
@@ -119,7 +206,7 @@ class Fenetre():
 
             tag_objet = "objet_" + str(self.arene.objet.index(obj))
             self.arene_canvas.create_polygon(obj.points, fill = "blue", tags = tag_objet)
-            self.arene_canvas.create_text(obj.center[0], obj.center[1], text = self.arene.objet.index(obj) + 1, \
+            self.arene_canvas.create_text(obj.x, obj.y, text = self.arene.objet.index(obj) - 3, \
                 fill = "black", tags = tag_objet)
 
         fen = Toplevel(self.fenetre)
@@ -160,12 +247,16 @@ class Fenetre():
 
             tag_robot = "robot_" + str(self.arene.robot.index(r))
             self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
-            self.arene_canvas.create_text(r.center[0], r.center[1], text = self.arene.robot.index(r) + 1, \
+            self.arene_canvas.create_text(r.x, r.y, text = self.arene.robot.index(r) + 1, \
                 fill = "black", tags = tag_robot)
 
-            self.arene_canvas.create_line(r.center[0] + r.vecteur_direction.x * 20, r.center[1] + \
-                    r.vecteur_direction.y * 20, r.center[0] + r.vecteur_direction.x * 40, r.center[1] + \
+            self.arene_canvas.create_line(r.x + r.vecteur_direction.x * 20, r.y + \
+                    r.vecteur_direction.y * 20, r.x + r.vecteur_direction.x * 40, r.y + \
                         r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
+
+            self.menu3.add_separator()
+            self.menu3.add_radiobutton(label = len(self.arene.robot), variable = self.robot_selectionne, \
+                value = len(self.arene.robot), command = self.select_robot)
 
         fen = Toplevel(self.fenetre)
         fen.title("Ajouter robot")
@@ -197,29 +288,29 @@ class Fenetre():
 
             r = self.arene.robot[id_robot.get() - 1]
 
-            for j in range(pas.get()):
-                """
-                x = r.vecteur_direction.x
-                y = r.vecteur_direction.y
-                self.arene_canvas.move(tag_robot, x, y)
-                self.arene_canvas.update()
-                """             
-
-                self.arene.avancer_robot(r)
+            for j in range(abs(pas.get())):
+                if (pas.get() < 0):
+                    self.arene.reculer_robot(r)
+                else :
+                    self.arene.avancer_robot(r)
+                
                 tag_robot = "robot_" + str(id_robot.get() - 1)
 
                 self.arene_canvas.delete(tag_robot)
 
                 self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
-                self.arene_canvas.create_text(r.center[0], r.center[1], text = self.arene.robot.index(r) + 1, \
+                
+                self.arene_canvas.create_text(r.x, r.y, text = self.arene.robot.index(r) + 1, \
                     fill = "black", tags = tag_robot)
 
-                self.arene_canvas.create_line(r.center[0] + r.vecteur_direction.x * 20, r.center[1] + \
-                    r.vecteur_direction.y * 20, r.center[0] + r.vecteur_direction.x * 40, r.center[1] + \
+                self.arene_canvas.create_line(r.x + r.vecteur_direction.x * 20, r.y + \
+                    r.vecteur_direction.y * 20, r.x + r.vecteur_direction.x * 40, r.y + \
                         r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
 
                 self.arene_canvas.update()
+                
                 time.sleep(tps.get())
+                
 
         fen = Toplevel(self.fenetre)
         fen.title("Déplacer robot")
@@ -248,20 +339,25 @@ class Fenetre():
 
             fen.destroy()
             r = self.arene.robot[id_robot.get() - 1]
+
             
-            for j in range(angle.get()):
-                self.arene.tourner_robot(r)
+            for j in range(abs(angle.get())):
+                if (angle.get() < 0):
+                    self.arene.tourner_robot_d(r)
+                else :
+                    self.arene.tourner_robot_g(r)
 
                 tag_robot = "robot_" + str(id_robot.get() - 1)
 
                 self.arene_canvas.delete(tag_robot)
 
                 self.arene_canvas.create_polygon(r.points, fill = "red", tags = tag_robot)
-                self.arene_canvas.create_text(r.center[0], r.center[1], text = self.arene.robot.index(r) + 1, \
+                
+                self.arene_canvas.create_text(r.x, r.y, text = self.arene.robot.index(r) + 1, \
                     fill = "black", tags = tag_robot)
 
-                self.arene_canvas.create_line(r.center[0] + r.vecteur_direction.x * 20, r.center[1] + \
-                    r.vecteur_direction.y * 20, r.center[0] + r.vecteur_direction.x * 40, r.center[1] + \
+                self.arene_canvas.create_line(r.x + r.vecteur_direction.x * 20, r.y + \
+                    r.vecteur_direction.y * 20, r.x + r.vecteur_direction.x * 40, r.y + \
                         r.vecteur_direction.y * 40, fill = "black", tags = tag_robot)
 
                 self.arene_canvas.update()
@@ -283,4 +379,15 @@ class Fenetre():
         ok = Button(fen, text = "Ok", command = ok_button)
         annuler = Button(fen, text = "Exit", command = fen.destroy)
         ok.grid(row = 3, column = 1)
-        annuler.grid(row = 3,column = 2)
+        annuler.grid(row = 3,column = 2)  
+        
+        """
+        def clavier(self,event):
+            global coords
+            touche = event.keysym
+            if touche == "Up":                
+            elif touche == "Down":
+            elif touche == "Right":
+            elif touche == "Left":
+            
+        """
