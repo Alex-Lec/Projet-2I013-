@@ -47,8 +47,7 @@ class Robot(ObjetPhysique):
         
         """
         pass
-        
-        
+          
     def offset_motor_encoder(self, port, offset):
         """ Fixe l’offset des moteurs (en degres) (permet par exemple
         du moteur gauche avec offset_motor_encode(self.MOTOR_LEFT,self
@@ -57,9 +56,7 @@ class Robot(ObjetPhysique):
         Zero the encoder by offsetting it by the current position
         """
         pass
-        
     
-        
     def update(self):
         """
         Met à jour la position et l'orientation du robot par rapport à scalaire_rotation,
@@ -327,4 +324,3 @@ class Robot(ObjetPhysique):
                             return True
                     
         return False
-        
