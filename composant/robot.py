@@ -12,12 +12,12 @@ class Robot(ObjetPhysique):
     WHEEL_BASE_CIRCUMFERENCE = WHEEL_BASE_WIDTH * pi # perimetre du cercle de rotation (mm)
     WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * pi # perimetre de la roue (mm)
 
-    def __init__(self, x, y, z, arene = None, id = 0): #dir, camera, rd, rg, detecteur, accelerometre):
+    def __init__(self, x, y, z, arene = None, strategie = None, id = 0): #dir, camera, rd, rg, detecteur, accelerometre):
 
         
         
         self.arene = arene
-        
+        self.strategie = strategie
         ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
         
         self.scalaire_rotation = 1
