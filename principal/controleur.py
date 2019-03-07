@@ -8,6 +8,7 @@ rob = Robot(100,100,0)
 arene.robot.append(rob)
 t = time.time()
 fenetre = Fenetre(arene)
+event = []
 
 while (True):
     """
@@ -16,13 +17,13 @@ while (True):
         
         set_motor_dps(MOTOR_LEFT, 90)
         set_motor_dps(MOTOR_RIGHT, 90)
-        rob.event.append(("avancer",time.time()))
+        event.append(("avancer",time.time()))
         
         
     if rob.event[-1][0] = "avancer" and rob.event[-1][1] >= time.time + 4 :
         set_motor_dps(MOTOR_LEFT, 90)
         set_motor_dps(MOTOR_RIGHT, -90)
-        rbo.event +=[("tourner",time.time())]
+        event +=[("tourner",time.time())]
     
     
     rob.update()

@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*
 
 from .objetphysique import ObjetPhysique
-from .vecteur import Vecteur
 from math import radians,sqrt, cos, sin, pi
+from .vecteur import Vecteur
 
 class Robot(ObjetPhysique):
 
@@ -15,7 +15,7 @@ class Robot(ObjetPhysique):
     def __init__(self, x, y, z, arene = None, id = 0): #dir, camera, rd, rg, detecteur, accelerometre):
 
         
-        
+        self.vecteur_direction = Vecteur(1., 0., 0.)
         self.arene = arene
         
         ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
