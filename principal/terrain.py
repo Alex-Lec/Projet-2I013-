@@ -3,6 +3,7 @@
 
 from composant import *
 import pickle
+from math import radians,sqrt, cos, sin, pi
 
 class Terrain():
 
@@ -21,39 +22,98 @@ class Terrain():
         robot.arene = self
         #robot.detecte(self.objet)
         robot.scalaire_vitesse = 10
-        robot.update();
+        self.update();
         robot.scalaire_vitesse = 0
             
     def reculer_robot(self, robot):
         robot.arene = self
         #robot.detecte(self.objet)
         robot.scalaire_vitesse = -10
-        robot.update();
+        self.update();
         robot.scalaire_vitesse = 0
 
     def tourner_robot_d(self, robot):
         robot.arene = self
         #robot.detecte(self.objet)
         robot.scalaire_rotation = 10
-        robot.update();
+        self.update();
         robot.scalaire_rotation =0
             
     def tourner_robot_g(self, robot):
         robot.arene = self
         #robot.detecte(self.objet)
         robot.scalaire_rotation = -10
-        robot.update();
+        self.update();
         robot.scalaire_rotation =0
-            
+        
 
-    def testCollision(self, rob, obj):
-    
+    def update(self):
+        self.update_robot();
+
+    def update_robot(self):
+        """
+        Met à jour la position et l'orientation du robot par rapport à scalaire_rotation,
+        scalaire_vitesse, vecteur direction, SAUF S'IL Y A COLLISION
+        
+        """
+        for rob in self.robot:
+            sauvx = rob.x
+            sauvy = rob.y
+            sauvdir = Vecteur(rob.vecteur_direction.x,rob.vecteur_direction.y,
+                              rob.vecteur_direction.z,)
+            sauvpoints = []
+            
+            for o in rob.points:
+                sauvpoints += [o]
+        
+            vx = rob.vecteur_direction.x * rob.scalaire_vitesse
+            vy = rob.vecteur_direction.y * rob.scalaire_vitesse
+            
+            rob.x += vx
+            rob.y += vy
+            
+            for i in range(len(rob.points)):
+                j = rob.points[i]
+                
+                rob.points[i]= (j[0] + vx, j[1] + vy)
+            
+            angle = radians(rob.scalaire_rotation)
+            cos_val = cos(angle)
+            sin_val = sin(angle)
+            
+            x1 = rob.vecteur_direction.x
+            y1 = rob.vecteur_direction.y
+            
+            rob.vecteur_direction.x = x1*cos_val - y1*sin_val
+            rob.vecteur_direction.y = x1*sin_val + y1*cos_val
+            
+            for i in range(len(rob.points)):
+                j = rob.points[i]
+                x_new = (j[0] - rob.x) * cos_val - (j[1] - rob.y) * sin_val
+                y_new = (j[0] - rob.x) * sin_val + (j[1] - rob.y) * cos_val
+                
+                rob.points[i]= (x_new + rob.x, y_new + rob.y)
+            
+            if (self.testCollision(rob)): #Si on a des collisions
+                rob.x = sauvx
+                rob.y = sauvy
+                rob.points = sauvpoints
+                rob.vecteur_direction = sauvdir
+            
+            print(rob.get_distance())
+        
+        
+
+    def testCollision(self, rob):
+        
+        obj = self.objet + self.robot
+        
         for i in range(len(rob.points)):
         
             p1 = rob.points[i]
             p2 = rob.points[(i+1)%len(rob.points)]
             
-            if (p1[0]-p2[0] != 0): 
+            if (round(p1[0]-p2[0],12) != 0): 
                 a1 = (p1[1] - p2[1]) /(p1[0]- p2[0])
                 b1 = p1[1] - a1*p1[0]
                 
@@ -62,11 +122,14 @@ class Terrain():
                 b1 = p1[0]
                 
             for o in obj:
+                if (o == rob):
+                    continue
+            
                 for j in range(len(o.points)):
                     p3 = o.points[j]
                     p4 = o.points[(j+1)%len(o.points)]#Marche avec un polygone à n cotées
                     
-                    if (p3[0]-p4[0] !=0):
+                    if (round(p3[0]-p4[0],12) !=0):
                         a2 = (p3[1] - p4[1])/(p3[0]- p4[0]) 
                         b2 = p3[1] - a2*p3[0]
                     
@@ -94,8 +157,9 @@ class Terrain():
                         min(p1[0],p2[0])<=x<=max(p1[0],p2[0]) and 
                         min(p1[1],p2[1])<=y<=max(p1[1],p2[1])):
                         
-                        return False
-        return True
+                        return True
+                    
+        return False
         
     def sauvegarder_arene(self, fichier):
 
