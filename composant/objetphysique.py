@@ -13,12 +13,6 @@ class ObjetPhysique:
         self.hauteur = hauteur
         self.vecteur_direction = Vecteur(1., 0., 0.)
 
-        self.points = [
-            (x + self.largeur // 2, y + self.longueur // 2),\
-            (x + self.largeur // 2, y - self.longueur // 2),\
-            (x - self.largeur // 2, y - self.longueur // 2),\
-            (x - self.largeur // 2, y + self.longueur // 2)
-        ]
 
     def get_points(self):
     

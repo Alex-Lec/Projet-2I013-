@@ -65,6 +65,41 @@ class Robot(ObjetPhysique):
             self.OFFSET_RIGHT = offset;
         else :
             printf("ERREUR ROBOT_set_motor_dps : moteur invalide")
+            
+            
+    def update_robot(self):
+        """
+        Met à jour la position et l'orientation du robot par rapport à scalaire_rotation,
+        scalaire_vitesse, vecteur direction, SAUF S'IL Y A COLLISION
+        
+        """
+        sauvx = self.x
+        sauvy = self.y
+        sauvdir = Vecteur(self.vecteur_direction.x,self.vecteur_direction.y,
+                          self.vecteur_direction.z,)
+    
+
+        self.x += self.vecteur_direction.x * self.scalaire_vitesse
+        self.y += self.vecteur_direction.y * self.scalaire_vitesse
+        
+        angle = radians(self.scalaire_rotation)
+        cos_val = cos(angle)
+        sin_val = sin(angle)
+
+        
+        self.vecteur_direction.x = self.vecteur_direction.x*cos_val -\
+                                   self.vecteur_direction.y*sin_val
+                                   
+        self.vecteur_direction.y = self.vecteur_direction.x*sin_val +\
+                                   self.vecteur_direction.y*cos_val
+        
+        
+        if (self.arene.testCollision(self)): #Si on a des collisions
+            self.x = sauvx
+            self.y = sauvy
+            self.vecteur_direction = sauvdir
+
+        print(self.get_distance())
     
     def get_distance(self):
         """

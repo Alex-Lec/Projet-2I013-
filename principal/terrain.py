@@ -48,54 +48,12 @@ class Terrain():
         
 
     def update(self):
-        self.update_robot()
-
-    def update_robot(self):
-        """
-        Met à jour la position et l'orientation du robot par rapport à scalaire_rotation,
-        scalaire_vitesse, vecteur direction, SAUF S'IL Y A COLLISION
-        
-        """
         for rob in self.robot:
-            sauvx = rob.x
-            sauvy = rob.y
-            sauvdir = Vecteur(rob.vecteur_direction.x,rob.vecteur_direction.y,
-                              rob.vecteur_direction.z,)
-        
-            vx = rob.vecteur_direction.x * rob.scalaire_vitesse
-            vy = rob.vecteur_direction.y * rob.scalaire_vitesse
-            
-            rob.x += vx
-            rob.y += vy
-            
-            for i in range(len(rob.points)):
-                j = rob.points[i]
-                
-                rob.points[i]= (j[0] + vx, j[1] + vy)
-            
-            angle = radians(rob.scalaire_rotation)
-            cos_val = cos(angle)
-            sin_val = sin(angle)
-            
-            x1 = rob.vecteur_direction.x
-            y1 = rob.vecteur_direction.y
-            
-            rob.vecteur_direction.x = x1*cos_val - y1*sin_val
-            rob.vecteur_direction.y = x1*sin_val + y1*cos_val
-            
-            rob.points = rob.get_points()
-            
-            if (self.testCollision(rob)): #Si on a des collisions
-                rob.x = sauvx
-                rob.y = sauvy
-                rob.vecteur_direction = sauvdir
-                rob.points = rob.get_points()
+            rob.arene = self
+            rob.update_robot()
 
-            
-            print(rob.get_distance())
-        
-        
 
+        
     def testCollision(self, rob):
         
         obj = self.objet + self.robot
