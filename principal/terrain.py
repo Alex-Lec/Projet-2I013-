@@ -48,7 +48,7 @@ class Terrain():
         
 
     def update(self):
-        self.update_robot();
+        self.update_robot()
 
     def update_robot(self):
         """
@@ -61,10 +61,6 @@ class Terrain():
             sauvy = rob.y
             sauvdir = Vecteur(rob.vecteur_direction.x,rob.vecteur_direction.y,
                               rob.vecteur_direction.z,)
-            sauvpoints = []
-            
-            for o in rob.points:
-                sauvpoints += [o]
         
             vx = rob.vecteur_direction.x * rob.scalaire_vitesse
             vy = rob.vecteur_direction.y * rob.scalaire_vitesse
@@ -87,18 +83,14 @@ class Terrain():
             rob.vecteur_direction.x = x1*cos_val - y1*sin_val
             rob.vecteur_direction.y = x1*sin_val + y1*cos_val
             
-            for i in range(len(rob.points)):
-                j = rob.points[i]
-                x_new = (j[0] - rob.x) * cos_val - (j[1] - rob.y) * sin_val
-                y_new = (j[0] - rob.x) * sin_val + (j[1] - rob.y) * cos_val
-                
-                rob.points[i]= (x_new + rob.x, y_new + rob.y)
+            rob.points = rob.get_points()
             
             if (self.testCollision(rob)): #Si on a des collisions
                 rob.x = sauvx
                 rob.y = sauvy
-                rob.points = sauvpoints
                 rob.vecteur_direction = sauvdir
+                rob.points = rob.get_points()
+
             
             print(rob.get_distance())
         
@@ -108,10 +100,11 @@ class Terrain():
         
         obj = self.objet + self.robot
         
-        for i in range(len(rob.points)):
+        robpts = rob.get_points()
+        for i in range(len(robpts)):
         
-            p1 = rob.points[i]
-            p2 = rob.points[(i+1)%len(rob.points)]
+            p1 = robpts[i]
+            p2 = robpts[(i+1)%len(robpts)]
             
             if (round(p1[0]-p2[0],12) != 0): 
                 a1 = (p1[1] - p2[1]) /(p1[0]- p2[0])
@@ -124,10 +117,10 @@ class Terrain():
             for o in obj:
                 if (o == rob):
                     continue
-            
-                for j in range(len(o.points)):
-                    p3 = o.points[j]
-                    p4 = o.points[(j+1)%len(o.points)]#Marche avec un polygone à n cotées
+                opts = o.get_points()
+                for j in range(len(opts)):
+                    p3 = opts[j]
+                    p4 = opts[(j+1)%len(opts)]#Marche avec un polygone à n cotées
                     
                     if (round(p3[0]-p4[0],12) !=0):
                         a2 = (p3[1] - p4[1])/(p3[0]- p4[0]) 

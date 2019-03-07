@@ -102,10 +102,11 @@ class Robot(ObjetPhysique):
         for o in obj:
             if (o == self):
                 continue
-        
-            for j in range(len(o.points)):
-                p3 = o.points[j]
-                p4 = o.points[(j+1)%len(o.points)]#Marche avec un polygone à n cotées
+                
+            o = o.get_points()
+            for j in range(len(o)):
+                p3 = o[j]
+                p4 = o[(j+1)%len(o)]#Marche avec un polygone à n cotées
                 
                 if (round(p3[0]-p4[0],12) !=0):
                     a2 = (p3[1] - p4[1])/(p3[0]- p4[0]) 
