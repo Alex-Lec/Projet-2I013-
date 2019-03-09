@@ -1,17 +1,20 @@
 from composant import Robot, ObjetPhysique
-from .terrain import Terrain
-from .fenetre import Fenetre
+from principal import Terrain, Affichage
+from threading import Thread
 import time;
 
-arene = Terrain()
-rob = Robot(100,100,0)
-arene.robot.append(rob)
-t = time.time()
-fenetre = Fenetre(arene)
-event = []
+class Controleur(Thread):
+    def __init__(self):
+        super(Controleur,self).__init__()
+        self.robot
+        
 
+    def run(self):
+        while True:
+         self.update()
+        #time.sleep(1./fps)
+"""
 while (True):
-    """
     if len(rob.event) == 0 or 
         rob.event[-1][0] ="tourner" and rob.event[-1][1] >= time.time + 4 :
         

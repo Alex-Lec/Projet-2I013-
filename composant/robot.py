@@ -4,7 +4,7 @@
 from .objetphysique import ObjetPhysique
 from math import radians,sqrt, cos, sin, pi
 from .vecteur import Vecteur
-
+import time
 class Robot(ObjetPhysique):
 
     WHEEL_BASE_WIDTH         = 117  # distance (mm) de la roue gauche a la roue droite.
@@ -12,20 +12,20 @@ class Robot(ObjetPhysique):
     WHEEL_BASE_CIRCUMFERENCE = WHEEL_BASE_WIDTH * pi # perimetre du cercle de rotation (mm)
     WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * pi # perimetre de la roue (mm)
 
-    def __init__(self, x, y, z, arene = None, id = 0): #dir, camera, rd, rg, detecteur, accelerometre):
-
+    def __init__(self, x, y, z, arene = None, id = 0): 
         self.arene = arene
-        
         ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
         
-        self.scalaire_rotation = 0
-        self.scalaire_vitesse = 0
+        self.v_rotation = 0
+        self.vitesse = 0
         
         self.MOTOR_LEFT = 0
         self.MOTOR_RIGHT = 0
         
         self.OFFSET_LEFT = 0
         self.OFFSET_RIGHT = 0
+        
+        self.last_up = time.time()
         
     def set_led(self, led, red = 0, green = 0,blue = 0):
         """ Allume une led. """
@@ -69,38 +69,40 @@ class Robot(ObjetPhysique):
             
     def update_robot(self):
         """
-        Met à jour la position et l'orientation du robot par rapport à scalaire_rotation,
-        scalaire_vitesse, vecteur direction, SAUF S'IL Y A COLLISION
+        Met à jour la position et l'orientation du robot par rapport à v_rotation,
+        vitesse, vecteur direction, SAUF S'IL Y A COLLISION
         
         """
+        #print("update")
         sauvx = self.x
         sauvy = self.y
-        sauvdir = Vecteur(self.vecteur_direction.x,self.vecteur_direction.y,
-                          self.vecteur_direction.z,)
+        sauvdir = Vecteur(self.v_dir.x,self.v_dir.y,
+                          self.v_dir.z,)
     
 
-        self.x += self.vecteur_direction.x * self.scalaire_vitesse
-        self.y += self.vecteur_direction.y * self.scalaire_vitesse
+        self.x += self.v_dir.x * self.vitesse
+        self.y += self.v_dir.y * self.vitesse
         
-        angle = radians(self.scalaire_rotation)
+        angle = radians(self.v_rotation)
         cos_val = cos(angle)
         sin_val = sin(angle)
 
         
-        self.vecteur_direction.x = self.vecteur_direction.x*cos_val -\
-                                   self.vecteur_direction.y*sin_val
+        self.v_dir.x = self.v_dir.x*cos_val -\
+                                   self.v_dir.y*sin_val
                                    
-        self.vecteur_direction.y = self.vecteur_direction.x*sin_val +\
-                                   self.vecteur_direction.y*cos_val
+        self.v_dir.y = self.v_dir.x*sin_val +\
+                                   self.v_dir.y*cos_val
         
         
         if (self.arene.testCollision(self)): #Si on a des collisions
             self.x = sauvx
             self.y = sauvy
-            self.vecteur_direction = sauvdir
+            self.v_dir = sauvdir
 
         print(self.get_distance())
-    
+        self.last_up = time.time()
+        
     def get_distance(self):
         """
         Mesure la distance entre le devant du robot et les objets devant.
@@ -124,8 +126,8 @@ class Robot(ObjetPhysique):
             
         mini = 1000000
         p1 = (self.x,self.y)
-        p2 = (self.x + (self.largeur /2)*self.vecteur_direction.x,
-              self.y + (self.largeur /2)*self.vecteur_direction.y)
+        p2 = (self.x + (self.largeur /2)*self.v_dir.x,
+              self.y + (self.largeur /2)*self.v_dir.y)
         
         if (round(p1[0]-p2[0],12) != 0): 
             a1 = (p1[1] - p2[1]) /(p1[0]- p2[0])

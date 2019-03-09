@@ -11,7 +11,7 @@ class ObjetPhysique:
         self.largeur = largeur
         self.longueur = longueur
         self.hauteur = hauteur
-        self.vecteur_direction = Vecteur(1., 0., 0.)
+        self.v_dir = Vecteur(1., 0., 0.)
 
 
     def get_points(self):
@@ -22,14 +22,14 @@ class ObjetPhysique:
             [self.x - self.largeur//2, self.y + self.longueur//2]]
 
 
-        VecteurDirection = (self.vecteur_direction.x,self.vecteur_direction.y,self.vecteur_direction.z)
+        VecteurDirection = (self.v_dir.x,self.v_dir.y,self.v_dir.z)
         v_direction =    VecteurDirection / np.linalg.norm(VecteurDirection)
 
         
         VecteurDefaut = (1,0,0)
         v_defaut = VecteurDefaut/np.linalg.norm(VecteurDefaut)
 
-        if (self.vecteur_direction.y > 0):
+        if (self.v_dir.y > 0):
             angle = np.arccos(np.clip(np.dot(v_direction, v_defaut), -1.0, 1.0))
         else :
             angle = 2*pi-np.arccos(np.clip(np.dot(v_direction, v_defaut), -1.0, 1.0))

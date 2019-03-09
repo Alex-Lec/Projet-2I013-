@@ -4,11 +4,13 @@
 from composant import *
 import pickle
 from math import radians,sqrt, cos, sin, pi
+from threading import Thread
+import time 
 
-class Terrain():
+class Terrain(Thread):
 
     def __init__(self, dimx = 1000, dimy = 600):
-        
+        super(Terrain,self).__init__()
         self.dimx = dimx
         self.dimy = dimy
         self.objet = [ObjetPhysique(dimx/2, -1, 0, 1, dimx, 0),# haut
@@ -17,34 +19,35 @@ class Terrain():
                       ObjetPhysique(dimx+1, dimy/2, 0, dimy, 1, 0)]#droite
         
         self.robot = []
+        
+    def run(self):
+        while True :
+            self.update()
+            time.sleep(0.01)
 
     def avancer_robot(self, robot):
         robot.arene = self
-        #robot.detecte(self.objet)
-        robot.scalaire_vitesse = 10
+        robot.vitesse = 10
         self.update();
-        robot.scalaire_vitesse = 0
+        robot.vitesse = 0
             
     def reculer_robot(self, robot):
         robot.arene = self
-        #robot.detecte(self.objet)
-        robot.scalaire_vitesse = -10
+        robot.vitesse = -10
         self.update();
-        robot.scalaire_vitesse = 0
+        robot.vitesse = 0
 
     def tourner_robot_d(self, robot):
         robot.arene = self
-        #robot.detecte(self.objet)
-        robot.scalaire_rotation = 10
+        robot.v_rotation = 10
         self.update();
-        robot.scalaire_rotation =0
+        robot.v_rotation =0
             
     def tourner_robot_g(self, robot):
         robot.arene = self
-        #robot.detecte(self.objet)
-        robot.scalaire_rotation = -10
+        robot.v_rotation = -10
         self.update();
-        robot.scalaire_rotation =0
+        robot.v_rotation =0
         
 
     def update(self):
