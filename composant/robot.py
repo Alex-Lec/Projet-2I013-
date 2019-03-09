@@ -69,6 +69,7 @@ class Robot(ObjetPhysique):
             
     def update_robot(self):
         """
+        N'APPARTIENT PAS A LA CLASSE ROBOT PHYSIQUE NE PAS L'UTILISER DANS LES STRATEGIES 
         Met à jour la position et l'orientation du robot par rapport à v_rotation,
         vitesse, vecteur direction, SAUF S'IL Y A COLLISION
         
@@ -78,23 +79,19 @@ class Robot(ObjetPhysique):
         sauvy = self.y
         sauvdir = Vecteur(self.v_dir.x,self.v_dir.y,
                           self.v_dir.z,)
-    
+        ################################################################
 
-        self.x += self.v_dir.x * self.vitesse
-        self.y += self.v_dir.y * self.vitesse
+        self.x += self.v_dir.x * self.vitesse * (time.time() - self.last_up)
+        self.y += self.v_dir.y * self.vitesse * (time.time() - self.last_up)
         
-        angle = radians(self.v_rotation)
+        angle = radians(self.v_rotation* (time.time() - self.last_up))
         cos_val = cos(angle)
         sin_val = sin(angle)
-
         
-        self.v_dir.x = self.v_dir.x*cos_val -\
-                                   self.v_dir.y*sin_val
-                                   
-        self.v_dir.y = self.v_dir.x*sin_val +\
-                                   self.v_dir.y*cos_val
+        self.v_dir.x = self.v_dir.x*cos_val - self.v_dir.y*sin_val
+        self.v_dir.y = self.v_dir.x*sin_val + self.v_dir.y*cos_val
         
-        
+        ##############################################################
         if (self.arene.testCollision(self)): #Si on a des collisions
             self.x = sauvx
             self.y = sauvy

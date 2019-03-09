@@ -35,7 +35,6 @@ class Affichage(Thread):
         menu1.add_command(label = "Créer objet", command = self.creerObjet)
         menubar.add_cascade(label = "Création", menu = menu1)
 
-
         self.menu3 = Menu(menubar, tearoff = 0)
 
         for i in range(1, len(self.arene.robot) + 1):
@@ -51,17 +50,12 @@ class Affichage(Thread):
         self.canvas.pack()
         self.update_robots()
         self.update_objets()
-        self.fen = Toplevel(self.fenetre)
-
-
-    def run(self):
+        self.tps = 10
         
+    def run(self):
         while True:
-            #self.fen.mainloop()
             self.update_robots()
-            time.sleep(0.01)
-
-            
+            time.sleep(1./self.tps)
 
     def select_robot(self):
         print(self.robot_selectionne.get())

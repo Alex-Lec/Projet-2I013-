@@ -19,6 +19,7 @@ class Terrain(Thread):
                       ObjetPhysique(dimx+1, dimy/2, 0, dimy, 1, 0)]#droite
         
         self.robot = []
+        self.tps = 10
         
     def run(self):
         while True :
@@ -54,6 +55,7 @@ class Terrain(Thread):
         for rob in self.robot:
             rob.arene = self
             rob.update_robot()
+            time.sleep(1./self.tps)
 
 
         
