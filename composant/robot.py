@@ -75,58 +75,56 @@ class Robot(ObjetPhysique):
         vitesse, vecteur direction, SAUF S'IL Y A COLLISION
         
         """
-        #print("update")
-        sauvx = self.x
-        sauvy = self.y
-        sauvdir = Vecteur(self.v_dir.x,self.v_dir.y,
-                          self.v_dir.z,)
         ################################################################
-        omega1 = self.MOTOR_LEFT*self.WHEEL_CIRCUMFERENCE / self.WHEEL_BASE_CIRCUMFERENCE
-        omega2 = self.MOTOR_RIGHT*self.WHEEL_CIRCUMFERENCE / self.WHEEL_BASE_CIRCUMFERENCE
         
         x = self.x
         y = self.y
         v_x = self.v_dir.x
         v_y = self.v_dir.y
         
+        rot = 100
+        t = time.time()
         ################################
-        cos_val = cos(-radians(omega2))
-        sin_val = sin(-radians(omega2))
-
-        xo =  x + v_y * (self.WHEEL_CIRCUMFERENCE/2)
-        yo =  y - v_x * (self.WHEEL_CIRCUMFERENCE/2)
-        
-        x = (x-xo)*cos_val - (y-yo)*sin_val + xo
-        y = (x-xo)*sin_val + (y-yo)*cos_val + yo
-        
-        v_x = v_x*cos_val - v_y*sin_val
-        v_y = v_x*sin_val + v_y*cos_val
-        
-        cos_val = cos(radians(omega1))
-        sin_val = sin(radians(omega1))
-        
-        xo = x - v_y * (self.WHEEL_CIRCUMFERENCE/2) 
-        yo = y + v_x * (self.WHEEL_CIRCUMFERENCE/2)
-        
-        x = (x-xo)*cos_val - (y-yo)*sin_val + xo
-        y = (x-xo)*sin_val + (y-yo)*cos_val + yo
-        
-        v_x = v_x*cos_val - v_y*sin_val
-        v_y = v_x*sin_val + v_y*cos_val
-        
+        for i in range(rot):
+            omega1 = (self.MOTOR_LEFT *(t - self.last_up)/rot)*self.WHEEL_CIRCUMFERENCE / self.WHEEL_BASE_CIRCUMFERENCE
+            omega2 = (self.MOTOR_RIGHT*(t - self.last_up)/rot)*self.WHEEL_CIRCUMFERENCE / self.WHEEL_BASE_CIRCUMFERENCE
+            
+            cos_val = cos(-radians(omega2))
+            sin_val = sin(-radians(omega2))
+            xo =  x + v_y * (self.WHEEL_CIRCUMFERENCE/2)
+            yo =  y - v_x * (self.WHEEL_CIRCUMFERENCE/2)
+            x = (x-xo)*cos_val - (y-yo)*sin_val + xo
+            y = (x-xo)*sin_val + (y-yo)*cos_val + yo
+            v_x = v_x*cos_val - v_y*sin_val
+            v_y = v_x*sin_val + v_y*cos_val
+            
+            cos_val = cos(radians(omega1))
+            sin_val = sin(radians(omega1))
+            xo = x - v_y * (self.WHEEL_CIRCUMFERENCE/2) 
+            yo = y + v_x * (self.WHEEL_CIRCUMFERENCE/2)
+            x = (x-xo)*cos_val - (y-yo)*sin_val + xo
+            y = (x-xo)*sin_val + (y-yo)*cos_val + yo
+            v_x = v_x*cos_val - v_y*sin_val
+            v_y = v_x*sin_val + v_y*cos_val
+            
+        ##############################################################        
         #print(self.v_dir.x , self.v_dir.y)
-        self.x = x
-        self.y = y
-        self.v_dir = Vecteur(v_x,v_y,self.v_dir.z)
+        v_d = Vecteur(v_x,v_y,self.v_dir.z)
         
-        ##############################################################
-        if (self.arene.testCollision(self)): #Si on a des collisions
-            self.x = sauvx
-            self.y = sauvy
-            self.v_dir = sauvdir
+        robTest = Robot(x,y,0)
+        robTest.v_dir = v_d
+
+        self.OFFSET_LEFT  += self.MOTOR_LEFT
+        self.OFFSET_RIGHT += self.MOTOR_RIGHT
 
         #print(self.get_distance())
         self.last_up = time.time()
+        
+        if (self.arene.testCollision(robTest,self) == False):
+            self.x = x
+            self.y = y
+            self.v_dir = v_d
+        
         
     def get_distance(self):
         """
