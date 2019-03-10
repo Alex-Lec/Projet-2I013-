@@ -84,35 +84,40 @@ class Robot(ObjetPhysique):
         omega1 = self.MOTOR_LEFT*self.WHEEL_CIRCUMFERENCE / self.WHEEL_BASE_CIRCUMFERENCE
         omega2 = self.MOTOR_RIGHT*self.WHEEL_CIRCUMFERENCE / self.WHEEL_BASE_CIRCUMFERENCE
         
+        x = self.x
+        y = self.y
+        v_x = self.v_dir.x
+        v_y = self.v_dir.y
+        
         ################################
         cos_val = cos(-radians(omega2))
         sin_val = sin(-radians(omega2))
 
-        xo =  self.x + self.v_dir.y * (self.WHEEL_CIRCUMFERENCE/2)
-        yo =  self.y - self.v_dir.x * (self.WHEEL_CIRCUMFERENCE/2)
+        xo =  x + v_y * (self.WHEEL_CIRCUMFERENCE/2)
+        yo =  y - v_x * (self.WHEEL_CIRCUMFERENCE/2)
         
-        self.x = (self.x-xo)*cos_val - (self.y-yo)*sin_val + xo
-        self.y = (self.x-xo)*sin_val + (self.y-yo)*cos_val + yo
+        x = (x-xo)*cos_val - (y-yo)*sin_val + xo
+        y = (x-xo)*sin_val + (y-yo)*cos_val + yo
         
-        self.v_dir.x = round(self.v_dir.x*cos_val - self.v_dir.y*sin_val,13)
-        self.v_dir.y = round(self.v_dir.x*sin_val + self.v_dir.y*cos_val,13)
-        
-        #print(self.v_dir.x , self.v_dir.y)
+        v_x = v_x*cos_val - v_y*sin_val
+        v_y = v_x*sin_val + v_y*cos_val
         
         cos_val = cos(radians(omega1))
         sin_val = sin(radians(omega1))
         
-        xo = self.x - self.v_dir.y * (self.WHEEL_CIRCUMFERENCE/2) 
-        yo = self.y + self.v_dir.x * (self.WHEEL_CIRCUMFERENCE/2)
+        xo = x - v_y * (self.WHEEL_CIRCUMFERENCE/2) 
+        yo = y + v_x * (self.WHEEL_CIRCUMFERENCE/2)
         
-        self.x = (self.x-xo)*cos_val - (self.y-yo)*sin_val + xo
-        self.y = (self.x-xo)*sin_val + (self.y-yo)*cos_val + yo
+        x = (x-xo)*cos_val - (y-yo)*sin_val + xo
+        y = (x-xo)*sin_val + (y-yo)*cos_val + yo
         
-        self.v_dir.x = round(self.v_dir.x*cos_val - self.v_dir.y*sin_val,13)
-        self.v_dir.y = round(self.v_dir.x*sin_val + self.v_dir.y*cos_val,13)
+        v_x = v_x*cos_val - v_y*sin_val
+        v_y = v_x*sin_val + v_y*cos_val
         
         #print(self.v_dir.x , self.v_dir.y)
-        
+        self.x = x
+        self.y = y
+        self.v_dir = Vecteur(v_x,v_y,self.v_dir.z)
         
         ##############################################################
         if (self.arene.testCollision(self)): #Si on a des collisions
