@@ -30,25 +30,29 @@ class Terrain(Thread):
         robot.arene = self
         robot.MOTOR_LEFT = 10
         robot.MOTOR_RIGHT = 10
+        robot.last_up = time.time()-1
         self.update();
             
     def reculer_robot(self, robot):
         robot.arene = self
         robot.MOTOR_LEFT = -10
         robot.MOTOR_RIGHT = -10
+        robot.last_up = time.time()-1
         self.update();
         
 
     def tourner_robot_d(self, robot):
         robot.arene = self
-        robot.MOTOR_LEFT = 2
-        robot.MOTOR_RIGHT = -2
+        robot.MOTOR_LEFT = 10
+        robot.MOTOR_RIGHT = -10
+        robot.last_up = time.time()-1
         self.update();
             
     def tourner_robot_g(self, robot):
         robot.arene = self
-        robot.MOTOR_LEFT = -2
-        robot.MOTOR_RIGHT = 2
+        robot.MOTOR_LEFT = -10
+        robot.MOTOR_RIGHT = 10
+        robot.last_up = time.time()-1
         self.update();
         
 
@@ -56,7 +60,6 @@ class Terrain(Thread):
         for rob in self.robot:
             rob.arene = self
             rob.update_robot()
-            time.sleep(1./self.tps)
 
 
         

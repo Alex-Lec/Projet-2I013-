@@ -64,50 +64,9 @@ class Robot(ObjetPhysique):
         elif (port == "MOTOR_RIGHT"):
             self.OFFSET_RIGHT = offset;
         else :
-            print("ERREUR ROBOT_motor_encoder : moteur invalide")
+            print("ERREUR ROBOT_motor_encoder : moteur invalide")  
             
     def update_robot(self):
-        """
-        N'APPARTIENT PAS A LA CLASSE ROBOT PHYSIQUE NE PAS L'UTILISER DANS LES STRATEGIES
-        
-        """
-        sauvx = self.x
-        sauvy = self.y
-        sauvdir = Vecteur(self.v_dir.x,self.v_dir.y, self.v_dir.z,)
-        
-        vitesse = 0
-        rotation = 0
-        
-        if (self.MOTOR_LEFT == self.MOTOR_RIGHT):
-            vitesse = self.MOTOR_LEFT*self.WHEEL_CIRCUMFERENCE/360
-            
-        elif(self.MOTOR_LEFT == - self.MOTOR_RIGHT):
-            rotation = self.MOTOR_LEFT*self.WHEEL_CIRCUMFERENCE * 360\
-                      /self.WHEEL_BASE_CIRCUMFERENCE   
-         
-            if (self.MOTOR_LEFT < 0):
-                rotation = -rotation
-        else :
-            print("Erreur update_robot : Moteurs non synchrones")
-        
-        self.x += self.v_dir.x * vitesse
-        self.y += self.v_dir.y * vitesse
-        
-        angle = radians(rotation)
-        cos_val = cos(angle)
-        sin_val = sin(angle)
-        
-        self.v_dir.x = self.v_dir.x*cos_val - self.v_dir.y*sin_val
-        self.v_dir.y = self.v_dir.x*sin_val + self.v_dir.y*cos_val
-        
-        if (self.arene.testCollision(self)): #Si on a des collisions
-            self.x = sauvx
-            self.y = sauvy
-            self.v_dir = sauvdir
-
-        self.last_up = time.time()        
-            
-    def update_robot_plus(self):
         """
         N'APPARTIENT PAS A LA CLASSE ROBOT PHYSIQUE NE PAS L'UTILISER DANS LES STRATEGIES 
         Met à jour la position et l'orientation du robot par rapport à v_rotation,
@@ -120,7 +79,7 @@ class Robot(ObjetPhysique):
         v_x = self.v_dir.x
         v_y = self.v_dir.y
         
-        rot = 100
+        rot = 10
         t = time.time()
         ################################
         for i in range(rot):
@@ -239,5 +198,43 @@ class Robot(ObjetPhysique):
                             mini = res
 
         return mini
+        
+        
+    def update_robot_plus(self):
+        """
+        UPDATE_ROBOT VESTIGIALE NE PAS EFFACER PEUT SERVIRE
+        
+        """
+        sauvx = self.x
+        sauvy = self.y
+        sauvdir = Vecteur(self.v_dir.x,self.v_dir.y, self.v_dir.z,)
+        
+        vitesse = 0
+        rotation = 0
+        
+        if (self.MOTOR_LEFT == self.MOTOR_RIGHT):
+            vitesse = self.MOTOR_LEFT*self.WHEEL_CIRCUMFERENCE/360
+            
+        elif(self.MOTOR_LEFT == - self.MOTOR_RIGHT):
+            rotation = self.MOTOR_LEFT*self.WHEEL_CIRCUMFERENCE * 360/self.WHEEL_BASE_CIRCUMFERENCE
+        else :
+            print("Erreur update_robot : Moteurs non synchrones")
+        
+        self.x += self.v_dir.x * vitesse
+        self.y += self.v_dir.y * vitesse
+        
+        angle = radians(rotation)
+        cos_val = cos(angle)
+        sin_val = sin(angle)
+        
+        self.v_dir.x = self.v_dir.x*cos_val - self.v_dir.y*sin_val
+        self.v_dir.y = self.v_dir.x*sin_val + self.v_dir.y*cos_val
+        
+        if (self.arene.testCollision(self)): #Si on a des collisions
+            self.x = sauvx
+            self.y = sauvy
+            self.v_dir = sauvdir
+
+        self.last_up = time.time()      
         
 
