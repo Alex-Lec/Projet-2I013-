@@ -7,10 +7,17 @@ class Controleur(Thread):
     def __init__(self):
         super(Controleur,self).__init__()
         self.robot
+        self.fps
         
 
     def run(self):
         while True:
-         self.update()
-        #time.sleep(1./fps)
+            self.update()
+            time.sleep(1./fps)
 
+
+    def update(self):
+        for i in range(4):
+            Strategie.avancer(100)
+            Strategie.tourner(90)
+        

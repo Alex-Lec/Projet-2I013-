@@ -28,27 +28,27 @@ class Terrain(Thread):
 
     def avancer_robot(self, robot):
         robot.arene = self
-        robot.vitesse = 10
+        robot.MOTOR_LEFT = 5
+        robot.MOTOR_RIGHT = 5
         self.update();
-        robot.vitesse = 0
             
     def reculer_robot(self, robot):
         robot.arene = self
-        robot.vitesse = -10
+        robot.MOTOR_LEFT = -5
+        robot.MOTOR_RIGHT = -5
         self.update();
-        robot.vitesse = 0
 
     def tourner_robot_d(self, robot):
         robot.arene = self
-        robot.v_rotation = 10
+        robot.MOTOR_LEFT = 5
+        robot.MOTOR_RIGHT = -5
         self.update();
-        robot.v_rotation =0
             
     def tourner_robot_g(self, robot):
         robot.arene = self
-        robot.v_rotation = -10
+        robot.MOTOR_LEFT = -5
+        robot.MOTOR_RIGHT = 5
         self.update();
-        robot.v_rotation =0
         
 
     def update(self):

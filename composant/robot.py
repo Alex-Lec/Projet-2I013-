@@ -16,9 +16,6 @@ class Robot(ObjetPhysique):
         self.arene = arene
         ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
         
-        self.v_rotation = 0
-        self.vitesse = 0
-        
         self.MOTOR_LEFT = 0
         self.MOTOR_RIGHT = 0
         
@@ -31,15 +28,15 @@ class Robot(ObjetPhysique):
         """ Allume une led. """
         pass
     
-    def set_motor_dps(self,port,dps):
+    def set_motor_dps(self,port ,dps):
         """ Fixe la vitesse d'un moteur en nbr de degres par seconde
             :port: une constante moteur, MOTOR_LEFT ou MOTOR_RIGHT
             :dps: la vitesse cible en nombre de degres par seconde
         
         """
-        if (port == MOTOR_LEFT):
+        if (port == "MOTOR_LEFT"):
             self.MOTOR_LEFT = dps
-        elif (port == MOTOR_RIGHT):
+        elif (port == "MOTOR_RIGHT"):
             self.MOTOR_RIGHT = dps
         else :
             printf("ERREUR ROBOT_set_motor_dps : moteur invalide")
@@ -59,6 +56,10 @@ class Robot(ObjetPhysique):
         :offset: l’offset de decalage en degre.
         Zero the encoder by offsetting it by the current position
         """
+        if (port == MOTOR_LEFT_RIGHT or port == MOTOR_RIGHT_LEFT):
+            self.OFFSET_LEFT  = offset;
+            self.OFFSET_RIGHT = offset;
+            
         if (port == MOTOR_LEFT):
             self.OFFSET_LEFT = offset;
         elif (port == MOTOR_RIGHT):
@@ -80,16 +81,38 @@ class Robot(ObjetPhysique):
         sauvdir = Vecteur(self.v_dir.x,self.v_dir.y,
                           self.v_dir.z,)
         ################################################################
+        omega1 = self.MOTOR_LEFT*self.WHEEL_CIRCUMFERENCE / self.WHEEL_BASE_CIRCUMFERENCE
+        omega2 = self.MOTOR_RIGHT*self.WHEEL_CIRCUMFERENCE / self.WHEEL_BASE_CIRCUMFERENCE
+        
+        ################################
+        cos_val = cos(-radians(omega2))
+        sin_val = sin(-radians(omega2))
 
-        self.x += self.v_dir.x * self.vitesse * (time.time() - self.last_up)
-        self.y += self.v_dir.y * self.vitesse * (time.time() - self.last_up)
+        xo =  self.x + self.v_dir.y * (self.WHEEL_CIRCUMFERENCE/2)
+        yo =  self.y - self.v_dir.x * (self.WHEEL_CIRCUMFERENCE/2)
         
-        angle = radians(self.v_rotation* (time.time() - self.last_up))
-        cos_val = cos(angle)
-        sin_val = sin(angle)
+        self.x = (self.x-xo)*cos_val - (self.y-yo)*sin_val + xo
+        self.y = (self.x-xo)*sin_val + (self.y-yo)*cos_val + yo
         
-        self.v_dir.x = self.v_dir.x*cos_val - self.v_dir.y*sin_val
-        self.v_dir.y = self.v_dir.x*sin_val + self.v_dir.y*cos_val
+        self.v_dir.x = round(self.v_dir.x*cos_val - self.v_dir.y*sin_val,13)
+        self.v_dir.y = round(self.v_dir.x*sin_val + self.v_dir.y*cos_val,13)
+        
+        #print(self.v_dir.x , self.v_dir.y)
+        
+        cos_val = cos(radians(omega1))
+        sin_val = sin(radians(omega1))
+        
+        xo = self.x - self.v_dir.y * (self.WHEEL_CIRCUMFERENCE/2) 
+        yo = self.y + self.v_dir.x * (self.WHEEL_CIRCUMFERENCE/2)
+        
+        self.x = (self.x-xo)*cos_val - (self.y-yo)*sin_val + xo
+        self.y = (self.x-xo)*sin_val + (self.y-yo)*cos_val + yo
+        
+        self.v_dir.x = round(self.v_dir.x*cos_val - self.v_dir.y*sin_val,13)
+        self.v_dir.y = round(self.v_dir.x*sin_val + self.v_dir.y*cos_val,13)
+        
+        #print(self.v_dir.x , self.v_dir.y)
+        
         
         ##############################################################
         if (self.arene.testCollision(self)): #Si on a des collisions
@@ -97,7 +120,7 @@ class Robot(ObjetPhysique):
             self.y = sauvy
             self.v_dir = sauvdir
 
-        print(self.get_distance())
+        #print(self.get_distance())
         self.last_up = time.time()
         
     def get_distance(self):
