@@ -39,7 +39,7 @@ class Robot(ObjetPhysique):
         elif (port == "MOTOR_RIGHT"):
             self.MOTOR_RIGHT = dps
         else :
-            printf("ERREUR ROBOT_set_motor_dps : moteur invalide")
+            print("ERREUR ROBOT_set_motor_dps : moteur invalide")
     
     
     def get_motor_position(self):
@@ -47,7 +47,7 @@ class Robot(ObjetPhysique):
         :return: couple du degre de rotation des moteurs
         
         """
-        return (OFFSET_LEFT,OFFSET_RIGHT);
+        return (self.OFFSET_LEFT,self.OFFSET_RIGHT);
           
     def offset_motor_encoder(self, port, offset):
         """ Fixe l’offset des moteurs (en degres) (permet par exemple
@@ -56,16 +56,15 @@ class Robot(ObjetPhysique):
         :offset: l’offset de decalage en degre.
         Zero the encoder by offsetting it by the current position
         """
-        if (port == MOTOR_LEFT_RIGHT or port == MOTOR_RIGHT_LEFT):
+        if (port == "MOTOR_LEFT_RIGHT" or port == "MOTOR_RIGHT_LEFT"):
             self.OFFSET_LEFT  = offset;
             self.OFFSET_RIGHT = offset;
-            
-        if (port == MOTOR_LEFT):
+        elif (port == "MOTOR_LEFT"):
             self.OFFSET_LEFT = offset;
-        elif (port == MOTOR_RIGHT):
+        elif (port == "MOTOR_RIGHT"):
             self.OFFSET_RIGHT = offset;
         else :
-            printf("ERREUR ROBOT_set_motor_dps : moteur invalide")
+            print("ERREUR ROBOT_motor_encoder : moteur invalide")
             
             
     def update_robot(self):

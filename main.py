@@ -5,13 +5,13 @@ from diver import*
 
 arene = Terrain()
 robot = Robot(100, 200, 0, arene)
-robot.MOTOR_LEFT = 50
-robot.MOTOR_RIGHT = 50
-
+controleur = Controleur(robot)
 arene.robot.append(robot)
+
 affichage = Affichage(arene)
 affichage.start()
 arene.start()
+controleur.start()
 affichage.fenetre.mainloop()
 
 
