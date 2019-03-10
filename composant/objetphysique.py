@@ -3,23 +3,23 @@ import numpy as np
 from math import radians,sqrt, cos, sin, pi
 class ObjetPhysique:
 
-    def __init__(self, x = 0, y = 0, z = 0, longueur = 50, largeur = 100, hauteur = 20):
+    def __init__(self, x = 0, y = 0, z = 0, largeur = 50, longueur = 100, hauteur = 20):
        
         self.x = x
         self.y = y
         self.z = z
-        self.largeur = largeur
         self.longueur = longueur
+        self.largeur = largeur
         self.hauteur = hauteur
         self.v_dir = Vecteur(1., 0., 0.)
 
 
     def get_points(self):
     
-        points = [[self.x -self.largeur//2, self.y - self.longueur//2],\
-            [self.x + self.largeur//2, self.y - self.longueur//2],\
-            [self.x + self.largeur//2, self.y + self.longueur//2],\
-            [self.x - self.largeur//2, self.y + self.longueur//2]]
+        points = [[self.x -self.longueur//2, self.y - self.largeur//2],\
+            [self.x + self.longueur//2, self.y - self.largeur//2],\
+            [self.x + self.longueur//2, self.y + self.largeur//2],\
+            [self.x - self.longueur//2, self.y + self.largeur//2]]
 
 
         VecteurDirection = (self.v_dir.x,self.v_dir.y,self.v_dir.z)

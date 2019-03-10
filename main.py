@@ -5,15 +5,13 @@ from diver import*
 
 arene = Terrain()
 robot = Robot(100, 200, 0, arene)
-robot.vitesse = 10
-
+controleur = Controleur(robot)
 arene.robot.append(robot)
 
-print("hop")
 affichage = Affichage(arene)
-print("flop")
 affichage.start()
 arene.start()
+controleur.start()
 affichage.fenetre.mainloop()
 
 

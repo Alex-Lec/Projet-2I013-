@@ -28,39 +28,47 @@ class Terrain(Thread):
 
     def avancer_robot(self, robot):
         robot.arene = self
-        robot.vitesse = 10
+        robot.MOTOR_LEFT = 10
+        robot.MOTOR_RIGHT = 10
+        robot.last_up = time.time()-1
         self.update();
-        robot.vitesse = 0
             
     def reculer_robot(self, robot):
         robot.arene = self
-        robot.vitesse = -10
+        robot.MOTOR_LEFT = -10
+        robot.MOTOR_RIGHT = -10
+        robot.last_up = time.time()-1
         self.update();
-        robot.vitesse = 0
+        
 
     def tourner_robot_d(self, robot):
         robot.arene = self
-        robot.v_rotation = 10
+        robot.MOTOR_LEFT = 10
+        robot.MOTOR_RIGHT = -10
+        robot.last_up = time.time()-1
         self.update();
-        robot.v_rotation =0
             
     def tourner_robot_g(self, robot):
         robot.arene = self
-        robot.v_rotation = -10
+        robot.MOTOR_LEFT = -10
+        robot.MOTOR_RIGHT = 10
+        robot.last_up = time.time()-1
         self.update();
-        robot.v_rotation =0
         
 
     def update(self):
         for rob in self.robot:
             rob.arene = self
             rob.update_robot()
-            time.sleep(1./self.tps)
 
 
         
-    def testCollision(self, rob):
-        
+    def testCollision(self, rob, projection = None):
+        """
+        Detecte lorsque deux segments d'objets se rencontre.
+        Renvoie true s'il y a collision, false sinon.
+        Projection sert à tester la position suivante du robot.
+        """
         obj = self.objet + self.robot
         
         robpts = rob.get_points()
@@ -78,7 +86,7 @@ class Terrain(Thread):
                 b1 = p1[0]
                 
             for o in obj:
-                if (o == rob):
+                if (o == rob or o == projection ):
                     continue
                 opts = o.get_points()
                 for j in range(len(opts)):

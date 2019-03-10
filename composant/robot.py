@@ -14,10 +14,7 @@ class Robot(ObjetPhysique):
 
     def __init__(self, x, y, z, arene = None, id = 0): 
         self.arene = arene
-        ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
-        
-        self.v_rotation = 0
-        self.vitesse = 0
+        ObjetPhysique.__init__(self, x, y, z, largeur = 50, longueur = 100, hauteur = 25)
         
         self.MOTOR_LEFT = 0
         self.MOTOR_RIGHT = 0
@@ -31,18 +28,18 @@ class Robot(ObjetPhysique):
         """ Allume une led. """
         pass
     
-    def set_motor_dps(self,port,dps):
+    def set_motor_dps(self,port ,dps):
         """ Fixe la vitesse d'un moteur en nbr de degres par seconde
             :port: une constante moteur, MOTOR_LEFT ou MOTOR_RIGHT
             :dps: la vitesse cible en nombre de degres par seconde
         
         """
-        if (port == MOTOR_LEFT):
+        if (port == "MOTOR_LEFT"):
             self.MOTOR_LEFT = dps
-        elif (port == MOTOR_RIGHT):
+        elif (port == "MOTOR_RIGHT"):
             self.MOTOR_RIGHT = dps
         else :
-            printf("ERREUR ROBOT_set_motor_dps : moteur invalide")
+            print("ERREUR ROBOT_set_motor_dps : moteur invalide")
     
     
     def get_motor_position(self):
@@ -50,7 +47,7 @@ class Robot(ObjetPhysique):
         :return: couple du degre de rotation des moteurs
         
         """
-        return (OFFSET_LEFT,OFFSET_RIGHT);
+        return (self.OFFSET_LEFT,self.OFFSET_RIGHT);
           
     def offset_motor_encoder(self, port, offset):
         """ Fixe l’offset des moteurs (en degres) (permet par exemple
@@ -59,13 +56,15 @@ class Robot(ObjetPhysique):
         :offset: l’offset de decalage en degre.
         Zero the encoder by offsetting it by the current position
         """
-        if (port == MOTOR_LEFT):
+        if (port == "MOTOR_LEFT_RIGHT" or port == "MOTOR_RIGHT_LEFT"):
+            self.OFFSET_LEFT  = offset;
+            self.OFFSET_RIGHT = offset;
+        elif (port == "MOTOR_LEFT"):
             self.OFFSET_LEFT = offset;
-        elif (port == MOTOR_RIGHT):
+        elif (port == "MOTOR_RIGHT"):
             self.OFFSET_RIGHT = offset;
         else :
-            printf("ERREUR ROBOT_set_motor_dps : moteur invalide")
-            
+            print("ERREUR ROBOT_motor_encoder : moteur invalide")  
             
     def update_robot(self):
         """
@@ -74,31 +73,55 @@ class Robot(ObjetPhysique):
         vitesse, vecteur direction, SAUF S'IL Y A COLLISION
         
         """
-        #print("update")
-        sauvx = self.x
-        sauvy = self.y
-        sauvdir = Vecteur(self.v_dir.x,self.v_dir.y,
-                          self.v_dir.z,)
         ################################################################
+        x = self.x
+        y = self.y
+        v_x = self.v_dir.x
+        v_y = self.v_dir.y
+        
+        rot = 10
+        t = time.time()
+        ################################
+        for i in range(rot):
+            omega1 = (self.MOTOR_LEFT *(t - self.last_up)/rot)*self.WHEEL_CIRCUMFERENCE / self.WHEEL_BASE_CIRCUMFERENCE
+            omega2 = (self.MOTOR_RIGHT*(t - self.last_up)/rot)*self.WHEEL_CIRCUMFERENCE / self.WHEEL_BASE_CIRCUMFERENCE
+            
+            cos_val = cos(-radians(omega2))
+            sin_val = sin(-radians(omega2))
+            xo =  x + v_y * (self.WHEEL_BASE_CIRCUMFERENCE/2)
+            yo =  y - v_x * (self.WHEEL_BASE_CIRCUMFERENCE/2)
+            x = (x-xo)*cos_val - (y-yo)*sin_val + xo
+            y = (x-xo)*sin_val + (y-yo)*cos_val + yo
+            v_x = v_x*cos_val - v_y*sin_val
+            v_y = v_x*sin_val + v_y*cos_val
+            
+            cos_val = cos(radians(omega1))
+            sin_val = sin(radians(omega1))
+            xo = x - v_y * (self.WHEEL_BASE_CIRCUMFERENCE/2) 
+            yo = y + v_x * (self.WHEEL_BASE_CIRCUMFERENCE/2)
+            x = (x-xo)*cos_val - (y-yo)*sin_val + xo
+            y = (x-xo)*sin_val + (y-yo)*cos_val + yo
+            v_x = v_x*cos_val - v_y*sin_val
+            v_y = v_x*sin_val + v_y*cos_val
+            
+        ##############################################################        
+        #print(self.v_dir.x , self.v_dir.y)
+        v_d = Vecteur(v_x,v_y,self.v_dir.z)
+        
+        robTest = Robot(x,y,0)
+        robTest.v_dir = v_d
 
-        self.x += self.v_dir.x * self.vitesse * (time.time() - self.last_up)
-        self.y += self.v_dir.y * self.vitesse * (time.time() - self.last_up)
-        
-        angle = radians(self.v_rotation* (time.time() - self.last_up))
-        cos_val = cos(angle)
-        sin_val = sin(angle)
-        
-        self.v_dir.x = self.v_dir.x*cos_val - self.v_dir.y*sin_val
-        self.v_dir.y = self.v_dir.x*sin_val + self.v_dir.y*cos_val
-        
-        ##############################################################
-        if (self.arene.testCollision(self)): #Si on a des collisions
-            self.x = sauvx
-            self.y = sauvy
-            self.v_dir = sauvdir
+        self.OFFSET_LEFT  += self.MOTOR_LEFT*(t - self.last_up)
+        self.OFFSET_RIGHT += self.MOTOR_RIGHT*(t - self.last_up)
 
-        print(self.get_distance())
+        #print(self.get_distance())
         self.last_up = time.time()
+        
+        if (self.arene.testCollision(robTest,self) == False):
+            self.x = x
+            self.y = y
+            self.v_dir = v_d
+        
         
     def get_distance(self):
         """
@@ -123,8 +146,8 @@ class Robot(ObjetPhysique):
             
         mini = 1000000
         p1 = (self.x,self.y)
-        p2 = (self.x + (self.largeur /2)*self.v_dir.x,
-              self.y + (self.largeur /2)*self.v_dir.y)
+        p2 = (self.x + (self.longueur /2)*self.v_dir.x,
+              self.y + (self.longueur /2)*self.v_dir.y)
         
         if (round(p1[0]-p2[0],12) != 0): 
             a1 = (p1[1] - p2[1]) /(p1[0]- p2[0])
@@ -175,5 +198,43 @@ class Robot(ObjetPhysique):
                             mini = res
 
         return mini
+        
+        
+    def update_robot_plus(self):
+        """
+        UPDATE_ROBOT VESTIGIALE NE PAS EFFACER PEUT SERVIRE
+        
+        """
+        sauvx = self.x
+        sauvy = self.y
+        sauvdir = Vecteur(self.v_dir.x,self.v_dir.y, self.v_dir.z,)
+        
+        vitesse = 0
+        rotation = 0
+        
+        if (self.MOTOR_LEFT == self.MOTOR_RIGHT):
+            vitesse = self.MOTOR_LEFT*self.WHEEL_CIRCUMFERENCE/360
+            
+        elif(self.MOTOR_LEFT == - self.MOTOR_RIGHT):
+            rotation = self.MOTOR_LEFT*self.WHEEL_CIRCUMFERENCE * 360/self.WHEEL_BASE_CIRCUMFERENCE
+        else :
+            print("Erreur update_robot : Moteurs non synchrones")
+        
+        self.x += self.v_dir.x * vitesse
+        self.y += self.v_dir.y * vitesse
+        
+        angle = radians(rotation)
+        cos_val = cos(angle)
+        sin_val = sin(angle)
+        
+        self.v_dir.x = self.v_dir.x*cos_val - self.v_dir.y*sin_val
+        self.v_dir.y = self.v_dir.x*sin_val + self.v_dir.y*cos_val
+        
+        if (self.arene.testCollision(self)): #Si on a des collisions
+            self.x = sauvx
+            self.y = sauvy
+            self.v_dir = sauvdir
+
+        self.last_up = time.time()      
         
 
