@@ -14,7 +14,7 @@ class Robot(ObjetPhysique):
 
     def __init__(self, x, y, z, arene = None, id = 0): 
         self.arene = arene
-        ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
+        ObjetPhysique.__init__(self, x, y, z, largeur = 50, longueur = 100, hauteur = 25)
         
         self.MOTOR_LEFT = 0
         self.MOTOR_RIGHT = 0
@@ -66,8 +66,48 @@ class Robot(ObjetPhysique):
         else :
             print("ERREUR ROBOT_motor_encoder : moteur invalide")
             
-            
     def update_robot(self):
+        """
+        N'APPARTIENT PAS A LA CLASSE ROBOT PHYSIQUE NE PAS L'UTILISER DANS LES STRATEGIES
+        
+        """
+        sauvx = self.x
+        sauvy = self.y
+        sauvdir = Vecteur(self.v_dir.x,self.v_dir.y, self.v_dir.z,)
+        
+        vitesse = 0
+        rotation = 0
+        
+        if (self.MOTOR_LEFT == self.MOTOR_RIGHT):
+            vitesse = self.MOTOR_LEFT*self.WHEEL_CIRCUMFERENCE/360
+            
+        elif(self.MOTOR_LEFT == - self.MOTOR_RIGHT):
+            rotation = self.MOTOR_LEFT*self.WHEEL_CIRCUMFERENCE * 360\
+                      /self.WHEEL_BASE_CIRCUMFERENCE   
+         
+            if (self.MOTOR_LEFT < 0):
+                rotation = -rotation
+        else :
+            print("Erreur update_robot : Moteurs non synchrones")
+        
+        self.x += self.v_dir.x * vitesse
+        self.y += self.v_dir.y * vitesse
+        
+        angle = radians(rotation)
+        cos_val = cos(angle)
+        sin_val = sin(angle)
+        
+        self.v_dir.x = self.v_dir.x*cos_val - self.v_dir.y*sin_val
+        self.v_dir.y = self.v_dir.x*sin_val + self.v_dir.y*cos_val
+        
+        if (self.arene.testCollision(self)): #Si on a des collisions
+            self.x = sauvx
+            self.y = sauvy
+            self.v_dir = sauvdir
+
+        self.last_up = time.time()        
+            
+    def update_robot_plus(self):
         """
         N'APPARTIENT PAS A LA CLASSE ROBOT PHYSIQUE NE PAS L'UTILISER DANS LES STRATEGIES 
         Met à jour la position et l'orientation du robot par rapport à v_rotation,
@@ -75,7 +115,6 @@ class Robot(ObjetPhysique):
         
         """
         ################################################################
-        
         x = self.x
         y = self.y
         v_x = self.v_dir.x
@@ -148,8 +187,8 @@ class Robot(ObjetPhysique):
             
         mini = 1000000
         p1 = (self.x,self.y)
-        p2 = (self.x + (self.largeur /2)*self.v_dir.x,
-              self.y + (self.largeur /2)*self.v_dir.y)
+        p2 = (self.x + (self.longueur /2)*self.v_dir.x,
+              self.y + (self.longueur /2)*self.v_dir.y)
         
         if (round(p1[0]-p2[0],12) != 0): 
             a1 = (p1[1] - p2[1]) /(p1[0]- p2[0])
