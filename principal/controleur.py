@@ -20,5 +20,6 @@ class Controleur(Thread):
 
     def update(self):
         #for i in range(4):
-        self.strategie.avancer(200,50)
-        #Strategie.tourner(90 ,50)
+        self.strategie.avancer(100,50)
+        #self.strategie.stop = False
+        #self.strategie.tourner(90,50)

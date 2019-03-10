@@ -90,8 +90,8 @@ class Robot(ObjetPhysique):
             
             cos_val = cos(-radians(omega2))
             sin_val = sin(-radians(omega2))
-            xo =  x + v_y * (self.WHEEL_CIRCUMFERENCE/2)
-            yo =  y - v_x * (self.WHEEL_CIRCUMFERENCE/2)
+            xo =  x + v_y * (self.WHEEL_BASE_CIRCUMFERENCE/2)
+            yo =  y - v_x * (self.WHEEL_BASE_CIRCUMFERENCE/2)
             x = (x-xo)*cos_val - (y-yo)*sin_val + xo
             y = (x-xo)*sin_val + (y-yo)*cos_val + yo
             v_x = v_x*cos_val - v_y*sin_val
@@ -99,8 +99,8 @@ class Robot(ObjetPhysique):
             
             cos_val = cos(radians(omega1))
             sin_val = sin(radians(omega1))
-            xo = x - v_y * (self.WHEEL_CIRCUMFERENCE/2) 
-            yo = y + v_x * (self.WHEEL_CIRCUMFERENCE/2)
+            xo = x - v_y * (self.WHEEL_BASE_CIRCUMFERENCE/2) 
+            yo = y + v_x * (self.WHEEL_BASE_CIRCUMFERENCE/2)
             x = (x-xo)*cos_val - (y-yo)*sin_val + xo
             y = (x-xo)*sin_val + (y-yo)*cos_val + yo
             v_x = v_x*cos_val - v_y*sin_val
@@ -113,8 +113,8 @@ class Robot(ObjetPhysique):
         robTest = Robot(x,y,0)
         robTest.v_dir = v_d
 
-        self.OFFSET_LEFT  += self.MOTOR_LEFT
-        self.OFFSET_RIGHT += self.MOTOR_RIGHT
+        self.OFFSET_LEFT  += self.MOTOR_LEFT*(t - self.last_up)
+        self.OFFSET_RIGHT += self.MOTOR_RIGHT*(t - self.last_up)
 
         #print(self.get_distance())
         self.last_up = time.time()
