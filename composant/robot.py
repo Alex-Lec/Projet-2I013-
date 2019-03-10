@@ -79,7 +79,7 @@ class Robot(ObjetPhysique):
         v_x = self.v_dir.x
         v_y = self.v_dir.y
         
-        rot = 10
+        rot = 20
         t = time.time()
         ################################
         for i in range(rot):

@@ -19,7 +19,7 @@ class Terrain(Thread):
                       ObjetPhysique(dimx+1, dimy/2, 0, dimy, 1, 0)]#droite
         
         self.robot = []
-        self.tps = 10
+        self.tps = 20
         
     def run(self):
         while True :

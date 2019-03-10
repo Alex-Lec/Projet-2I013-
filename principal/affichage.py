@@ -50,7 +50,7 @@ class Affichage(Thread):
         self.canvas.pack()
         self.update_robots()
         self.update_objets()
-        self.tps = 20
+        self.tps = 30
         
     def run(self):
         while True:
