@@ -79,7 +79,7 @@ class Robot(ObjetPhysique):
         v_x = self.v_dir.x
         v_y = self.v_dir.y
         
-        rot = 20
+        rot = 50
         t = time.time()
         ################################
         for i in range(rot):
@@ -88,8 +88,8 @@ class Robot(ObjetPhysique):
             
             cos_val = cos(-radians(omega2))
             sin_val = sin(-radians(omega2))
-            xo =  x + v_y * (self.WHEEL_BASE_CIRCUMFERENCE/2)
-            yo =  y - v_x * (self.WHEEL_BASE_CIRCUMFERENCE/2)
+            xo =  x + v_y * (self.WHEEL_BASE_WIDTH/2)
+            yo =  y - v_x * (self.WHEEL_BASE_WIDTH/2)
             x = (x-xo)*cos_val - (y-yo)*sin_val + xo
             y = (x-xo)*sin_val + (y-yo)*cos_val + yo
             v_x = v_x*cos_val - v_y*sin_val
@@ -97,8 +97,8 @@ class Robot(ObjetPhysique):
             
             cos_val = cos(radians(omega1))
             sin_val = sin(radians(omega1))
-            xo = x - v_y * (self.WHEEL_BASE_CIRCUMFERENCE/2) 
-            yo = y + v_x * (self.WHEEL_BASE_CIRCUMFERENCE/2)
+            xo = x - v_y * (self.WHEEL_BASE_WIDTH/2) 
+            yo = y + v_x * (self.WHEEL_BASE_WIDTH/2)
             x = (x-xo)*cos_val - (y-yo)*sin_val + xo
             y = (x-xo)*sin_val + (y-yo)*cos_val + yo
             v_x = v_x*cos_val - v_y*sin_val

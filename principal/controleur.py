@@ -11,18 +11,18 @@ class Controleur(Thread):
         self.fps = 10
 
     def run(self):
-        Go   = StratAvance(self.robot,50,50)
+        Go   = StratAvance(self.robot,100,200)
         Go.start()
         cnt = 0
         while True:
             if (Go.stop()):
                 print(type(Go).__name__ )
                 if (type(Go).__name__ == "StratAvance") :
-                    Go = StratTourne(self.robot,77.1,25)
+                    Go = StratTourne(self.robot,90,25)
                     cnt +=1
                     
                 elif (type(Go).__name__ == 'StratTourne') :
-                    Go = StratAvance(self.robot,50,50)
+                    Go = StratAvance(self.robot,100,200)
                 
                 Go.start()
             
