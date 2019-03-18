@@ -8,7 +8,7 @@ class Controleur(Thread):
     def __init__(self,rob):
         super(Controleur,self).__init__()
         self.robot = rob
-        self.fps = 1000
+        self.fps = 25
 
     def run(self):
         Go   = StratAvance(self.robot,100,200)
