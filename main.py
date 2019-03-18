@@ -1,7 +1,10 @@
-from composant import*
-from principal import*
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*
+
+from composant import *
+from principal import *
 import time
-from diver import*
+from diver import *
 
 arene = Terrain()
 robot = Robot(100, 200, 0, arene)

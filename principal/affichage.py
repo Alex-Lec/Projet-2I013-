@@ -60,7 +60,6 @@ class Affichage(Thread):
     def select_robot(self):
         print(self.robot_selectionne.get())
 
-
     def update_objets(self):
         for o in self.arene.objet:
             if (self.arene.objet.index(o) > 3):
@@ -71,8 +70,6 @@ class Affichage(Thread):
                 self.canvas.create_text(o.x, o.y, text = self.arene.objet.index(o) - 3, \
                     fill = "black", tags = tag_objet)
         
-
-
     def update_robots(self):
         for r in self.arene.robot:
             tag_robot = "robot_" + str(self.arene.robot.index(r))
@@ -85,8 +82,6 @@ class Affichage(Thread):
             self.canvas.create_line(r.x + r.v_dir.x * 20, r.y + \
                                     r.v_dir.y * 20, r.x + r.v_dir.x * 40, r.y + \
                                     r.v_dir.y * 40, fill = "black", tags = tag_robot)
-
-
 
     def ouvrir(self):
 
