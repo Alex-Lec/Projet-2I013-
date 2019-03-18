@@ -14,11 +14,14 @@ class Affichage(Thread):
 
     def __init__(self, arene = Terrain()):
         super(Affichage,self).__init__()
+        self.arene = arene
+        self.tps = 25
+
+    def init_run(self):
         self.fenetre = Tk()
         self.fenetre.title("Simulateur")
         self.fenetre.geometry("1000x600")
         self.fenetre.resizable(0, 0)
-        self.arene = arene
         self.robot_selectionne = IntVar()
 
         menubar = Menu(self.fenetre)
@@ -50,13 +53,15 @@ class Affichage(Thread):
         self.canvas.pack()
         self.update_robots()
         self.update_objets()
-        self.tps = 25
         
     def run(self):
-        while True:
-            self.update_robots()
-            time.sleep(1./self.tps)
-
+        #   while True:
+        self.init_run()
+        #self.fenetre.after(int(1000./self.tps),self.update_robots)
+        self.fenetre.after(5,self.update_robots)
+        #self.update_robots()
+        #time.sleep(1./self.tps)
+        self.fenetre.mainloop()
     def select_robot(self):
         print(self.robot_selectionne.get())
 
@@ -71,6 +76,7 @@ class Affichage(Thread):
                     fill = "black", tags = tag_objet)
         
     def update_robots(self):
+        print("tptp")
         for r in self.arene.robot:
             tag_robot = "robot_" + str(self.arene.robot.index(r))
             self.canvas.delete(tag_robot)
@@ -82,7 +88,8 @@ class Affichage(Thread):
             self.canvas.create_line(r.x + r.v_dir.x * 20, r.y + \
                                     r.v_dir.y * 20, r.x + r.v_dir.x * 40, r.y + \
                                     r.v_dir.y * 40, fill = "black", tags = tag_robot)
-
+        #self.fenetre.after(int(1000./self.tps),self.update_robots)
+        self.fenetre.after(5,self.update_robots)
     def ouvrir(self):
 
         def ok_button():

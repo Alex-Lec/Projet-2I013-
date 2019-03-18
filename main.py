@@ -8,14 +8,17 @@ from diver import *
 
 arene = Terrain()
 robot = Robot(100, 200, 0, arene)
-controleur = Controleur(robot)
+ctrc = Controleur_carre(robot)
 arene.robot.append(robot)
 
 affichage = Affichage(arene)
 affichage.start()
 arene.start()
-controleur.start()
-affichage.fenetre.mainloop()
+tps = 25
 
+ctrc.start()
+while ctrc.stop():
+    ctrc.step()
+    time.sleep(1/tps)
 
 
