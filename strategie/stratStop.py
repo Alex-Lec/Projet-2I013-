@@ -4,5 +4,5 @@ class StratStop:
         self.robot = robot
 
     def start(self):
-        self.robot.set_motor_dps("MOTOR_LEFT" , 0)
-        self.robot.set_motor_dps("MOTOR_RIGHT", 0)
+        self.robot.set_motor_dps(1 , 0)
+        self.robot.set_motor_dps(2 , 0)

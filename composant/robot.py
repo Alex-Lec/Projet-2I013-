@@ -58,12 +58,12 @@ class Robot(ObjetPhysique):
         Zero the encoder by offsetting it by the current position
         """
         if (port == 3):
-            self.OFFSET_LEFT  += offset;
-            self.OFFSET_RIGHT += offset;
+            self.OFFSET_LEFT  -= offset;
+            self.OFFSET_RIGHT -= offset;
         elif (port == 1):
-            self.OFFSET_LEFT  += offset;
+            self.OFFSET_LEFT  -= offset;
         elif (port == 2):
-            self.OFFSET_RIGHT += offset;
+            self.OFFSET_RIGHT -= offset;
         else :
             print("ERREUR ROBOT_motor_encoder : moteur invalide")  
             
