@@ -17,8 +17,10 @@ arene.start()
 tps = 25
 
 ctrc.start()
+print(robot.get_motor_position())
+i = 0
 while ctrc.stop():
     ctrc.step()
     time.sleep(1/tps)
 
-
+print("stop")

@@ -18,19 +18,17 @@ class Controleur_carre():
     def step(self):
         if (self.Go.stop()):
             print(type(self.Go).__name__)
-        if (type(self.Go).__name__ == "StratAvance") :
-            self.Go = StratTourne(self.robot,90,25)
-            self.cnt +=1
-            
-        elif (type(self.Go).__name__ == 'StratTourne') :
-            self.Go = StratAvance(self.robot,100,200)
+            if (type(self.Go).__name__ == "StratAvance") :
+                self.Go = StratTourne(self.robot,90,25)
+                self.cnt +=1
+            elif (type(self.Go).__name__ == 'StratTourne') :
+                self.Go = StratAvance(self.robot,100,200)
         
-        self.Go.start()
+            self.Go.start()
         
     def stop(self):
         if (self.cnt == 4):
             self.Go = StratStop(self.robot)
             self.Go.start()
             return False
-        return True 
-
+        return True

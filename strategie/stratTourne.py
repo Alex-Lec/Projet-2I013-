@@ -14,11 +14,11 @@ class StratTourne:
     
     def stop(self):        
         if((2*self.robot.get_motor_position()[0]*self.robot.WHEEL_CIRCUMFERENCE /self.robot.WHEEL_BASE_CIRCUMFERENCE) 
-                >= self.angle-1):
+                >= self.angle):
             return True
             
         if((2*self.robot.get_motor_position()[1]*self.robot.WHEEL_CIRCUMFERENCE /self.robot.WHEEL_BASE_CIRCUMFERENCE)
-                <= -self.angle-1):
+                <= -self.angle):
             return True
         
         return False

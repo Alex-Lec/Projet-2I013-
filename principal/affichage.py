@@ -76,7 +76,6 @@ class Affichage(Thread):
                     fill = "black", tags = tag_objet)
         
     def update_robots(self):
-        print("tptp")
         for r in self.arene.robot:
             tag_robot = "robot_" + str(self.arene.robot.index(r))
             self.canvas.delete(tag_robot)
