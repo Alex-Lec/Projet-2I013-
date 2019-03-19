@@ -14,7 +14,7 @@ arene.robot.append(robot)
 affichage = Affichage(arene)
 affichage.start()
 arene.start()
-tps = 25
+tps = 30
 
 ctrc.start()
 print(robot.get_motor_position())

@@ -27,7 +27,7 @@ class Controleur_carre():
             self.Go.start()
         
     def stop(self):
-        if (self.cnt == 4):
+        if (self.cnt >= 4):
             self.Go = StratStop(self.robot)
             self.Go.start()
             return False
