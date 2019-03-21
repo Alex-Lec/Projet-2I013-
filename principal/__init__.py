@@ -1,4 +1,4 @@
-from .fenetre import Fenetre 
+from .affichage import Affichage 
 from .terrain import Terrain
-from .controleur import *
+from .controleur_carre import Controleur_carre
 

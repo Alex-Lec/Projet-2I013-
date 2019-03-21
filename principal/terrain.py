@@ -3,11 +3,14 @@
 
 from composant import *
 import pickle
+from math import radians,sqrt, cos, sin, pi
+from threading import Thread
+import time 
 
-class Terrain():
+class Terrain(Thread):
 
     def __init__(self, dimx = 1000, dimy = 600):
-        
+        super(Terrain,self).__init__()
         self.dimx = dimx
         self.dimy = dimy
         self.objet = [ObjetPhysique(dimx/2, -1, 0, 1, dimx, 0),# haut
@@ -16,44 +19,66 @@ class Terrain():
                       ObjetPhysique(dimx+1, dimy/2, 0, dimy, 1, 0)]#droite
         
         self.robot = []
+        self.tps = 30
+        self.last_up = time.time();
+        
+    def run(self):
+        while True :
+            self.update()
+            time.sleep(1./self.tps)
 
     def avancer_robot(self, robot):
         robot.arene = self
-        #robot.detecte(self.objet)
-        robot.scalaire_vitesse = 10
-        robot.update();
-        robot.scalaire_vitesse = 0
+        robot.MOTOR_LEFT = 15
+        robot.MOTOR_RIGHT = 15
+        robot.last_up = time.time()-1
+        self.update();
             
     def reculer_robot(self, robot):
         robot.arene = self
-        #robot.detecte(self.objet)
-        robot.scalaire_vitesse = -10
-        robot.update();
-        robot.scalaire_vitesse = 0
+        robot.MOTOR_LEFT = -15
+        robot.MOTOR_RIGHT = -15
+        robot.last_up = time.time()-1
+        self.update();
+        
 
     def tourner_robot_d(self, robot):
         robot.arene = self
-        #robot.detecte(self.objet)
-        robot.scalaire_rotation = 10
-        robot.update();
-        robot.scalaire_rotation =0
+        robot.MOTOR_LEFT = 15
+        robot.MOTOR_RIGHT = 0
+        robot.last_up = time.time()-1
+        self.update();
             
     def tourner_robot_g(self, robot):
         robot.arene = self
-        #robot.detecte(self.objet)
-        robot.scalaire_rotation = -10
-        robot.update();
-        robot.scalaire_rotation =0
-            
-
-    def testCollision(self, rob, obj):
-    
-        for i in range(len(rob.points)):
+        robot.MOTOR_LEFT = 0
+        robot.MOTOR_RIGHT = 15
+        robot.last_up = time.time()-1
+        self.update();
         
-            p1 = rob.points[i]
-            p2 = rob.points[(i+1)%len(rob.points)]
+
+    def update(self):
+        for rob in self.robot:
+            rob.arene = self
+            rob.update_robot()
+
+
+        
+    def testCollision(self, rob, projection = None):
+        """
+        Detecte lorsque deux segments d'objets se rencontre.
+        Renvoie true s'il y a collision, false sinon.
+        Projection sert à tester la position suivante du robot.
+        """
+        obj = self.objet + self.robot
+        
+        robpts = rob.get_points()
+        for i in range(len(robpts)):
+        
+            p1 = robpts[i]
+            p2 = robpts[(i+1)%len(robpts)]
             
-            if (p1[0]-p2[0] != 0): 
+            if (round(p1[0]-p2[0],12) != 0): 
                 a1 = (p1[1] - p2[1]) /(p1[0]- p2[0])
                 b1 = p1[1] - a1*p1[0]
                 
@@ -62,11 +87,14 @@ class Terrain():
                 b1 = p1[0]
                 
             for o in obj:
-                for j in range(len(o.points)):
-                    p3 = o.points[j]
-                    p4 = o.points[(j+1)%len(o.points)]#Marche avec un polygone à n cotées
+                if (o == rob or o == projection ):
+                    continue
+                opts = o.get_points()
+                for j in range(len(opts)):
+                    p3 = opts[j]
+                    p4 = opts[(j+1)%len(opts)]#Marche avec un polygone à n cotées
                     
-                    if (p3[0]-p4[0] !=0):
+                    if (round(p3[0]-p4[0],12) !=0):
                         a2 = (p3[1] - p4[1])/(p3[0]- p4[0]) 
                         b2 = p3[1] - a2*p3[0]
                     
@@ -94,8 +122,9 @@ class Terrain():
                         min(p1[0],p2[0])<=x<=max(p1[0],p2[0]) and 
                         min(p1[1],p2[1])<=y<=max(p1[1],p2[1])):
                         
-                        return False
-        return True
+                        return True
+                    
+        return False
         
     def sauvegarder_arene(self, fichier):
 

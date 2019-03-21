@@ -1,30 +1,37 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*
+
 from composant import Robot, ObjetPhysique
-from .terrain import Terrain
-from .fenetre import Fenetre
+from principal import Terrain, Affichage
+from strategie import StratAvance,StratStop,StratTourne
+from threading import Thread
 import time;
 
-arene = Terrain()
-rob = Robot(100,100,0)
-arene.robot.append(rob)
-t = time.time()
-fenetre = Fenetre(arene)
+class Controleur(Thread):
+    def __init__(self,rob):
+        super(Controleur,self).__init__()
+        self.robot = rob
+        self.fps = 1000
 
-while (True):
-    """
-    if len(rob.event) == 0 or 
-        rob.event[-1][0] ="tourner" and rob.event[-1][1] >= time.time + 4 :
+    def run(self):
+        Go = StratAvance(self.robot,100,200)
+        Go.start()
+        cnt = 0
+        while True:
+            if (Go.stop()):
+                print(type(Go).__name__)
+                if (type(Go).__name__ == "StratAvance") :
+                    Go = StratTourne(self.robot,90,25)
+                    cnt +=1
+                    
+                elif (type(Go).__name__ == 'StratTourne') :
+                    Go = StratAvance(self.robot,100,200)
+                
+                Go.start()
+            
+            if (cnt == 4):
+                break
+            time.sleep(1./self.fps)
         
-        set_motor_dps(MOTOR_LEFT, 90)
-        set_motor_dps(MOTOR_RIGHT, 90)
-        rob.event.append(("avancer",time.time()))
-        
-        
-    if rob.event[-1][0] = "avancer" and rob.event[-1][1] >= time.time + 4 :
-        set_motor_dps(MOTOR_LEFT, 90)
-        set_motor_dps(MOTOR_RIGHT, -90)
-        rbo.event +=[("tourner",time.time())]
-    
-    
-    rob.update()
-    fenetre.update()
-    """
+        Go = StratStop(self.robot)
+        Go.start()

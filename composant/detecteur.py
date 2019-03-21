@@ -1,14 +1,25 @@
 from math import sqrt
-from principal import Terrain as t
 
 class Detecteur:
     
     def __init__(self, robot):
-        pass
+        self.robot = robot
         
-    def detecter(self,rob, obj): #prend une liste d'objetphysique en arguement et un robot'
-
-        def mmsigne(a,b):
+    def detecte(self):
+        """
+        Mesure la distance entre le devant du robot et les objets devant.
+        Retourne seulement l'objet dans la bonne direction et le plus proche du robot
+        DETECTE LES AUTRES ROBOTS
+        
+        NE MARCHE QUE SI ROBOT A UNE robot.arene !!!
+        """
+    
+        if (self.robot.arene == None):
+            return
+        
+        obj = self.robot.arene.objet + self.robot.arene.robot
+        
+        def mmsigne(a,b): 
             if (a<0 and b<0):
                 return True
             if (a==0 and b==0):
@@ -16,11 +27,11 @@ class Detecteur:
             return (a>0 and b>0)
             
         mini = 1000000
-        p1 = (rob.x,rob.y)
-        p2 = (rob.x + (rob.largeur /2)*rob.vecteur_direction.x,
-              rob.y + (rob.largeur /2)*rob.vecteur_direction.y)
+        p1 = (self.robot.x,self.robot.y)
+        p2 = (self.robot.x + (self.robot.longueur /2)*self.robot.v_dir.x,
+              self.robot.y + (self.robot.longueur /2)*self.robot.v_dir.y)
         
-        if (p1[0]-p2[0] != 0): 
+        if (round(p1[0]-p2[0],12) != 0): 
             a1 = (p1[1] - p2[1]) /(p1[0]- p2[0])
             b1 = p1[1] - a1*p1[0]
         else :
@@ -28,11 +39,15 @@ class Detecteur:
             b1 = p1[0]
             
         for o in obj:
-            for j in range(len(o.points)):
-                p3 = o.points[j]
-                p4 = o.points[(j+1)%len(o.points)]#Marche avec un polygone à n cotées
+            if (o == self.robot):
+                continue
                 
-                if (p3[0]-p4[0] !=0):
+            o = o.get_points()
+            for j in range(len(o)):
+                p3 = o[j]
+                p4 = o[(j+1)%len(o)]#Marche avec un polygone à n cotées
+                
+                if (round(p3[0]-p4[0],12) !=0):
                     a2 = (p3[1] - p4[1])/(p3[0]- p4[0]) 
                     b2 = p3[1] - a2*p3[0]
                 
@@ -63,6 +78,6 @@ class Detecteur:
                         min(p3[1],p4[1])<=y<=max(p3[1],p4[1])):
                         if (mini > res):
                             mini = res
-            
+
         return mini
              

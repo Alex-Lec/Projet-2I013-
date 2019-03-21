@@ -13,7 +13,8 @@ arene.objet.append(ObjetPhysique(100, 100, 0, 10, 100, 10))
 arene.objet.append(ObjetPhysique(780, 250, 0, 30, 30))
 robot = Robot(500, 200, 0, arene)
 arene.robot.append(robot)
-fenetre = Fenetre(arene)
+fen = Affichage(arene)
+fen.fenetre.mainloop();
 
 """
 arene = Terrain()

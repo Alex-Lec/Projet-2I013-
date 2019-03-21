@@ -2,8 +2,14 @@
 # -*- coding: utf-8 -*
 
 from .objetphysique import ObjetPhysique
-from .vecteur import Vecteur
+from .detecteur import Detecteur
 from math import radians,sqrt, cos, sin, pi
+from .vecteur import Vecteur
+import time
+from smbus import SMBus
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(12, GPIO.IN)
 
 class Robot(ObjetPhysique):
 
@@ -12,40 +18,36 @@ class Robot(ObjetPhysique):
     WHEEL_BASE_CIRCUMFERENCE = WHEEL_BASE_WIDTH * pi # perimetre du cercle de rotation (mm)
     WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * pi # perimetre de la roue (mm)
 
-    def __init__(self, x, y, z, arene = None, id = 0): #dir, camera, rd, rg, detecteur, accelerometre):
-
-        
-        
+    def __init__(self, x, y, z, arene = None, id = 0): 
         self.arene = arene
+        ObjetPhysique.__init__(self, x, y, z, largeur = 50, longueur = 100, hauteur = 25)
         
-        ObjetPhysique.__init__(self, x, y, z, largeur = 100, longueur = 50, hauteur = 25)
+        self.detecteur = Detecteur(self)
+        self.MOTOR_LEFT = 1
+        self.MOTOR_RIGHT = 2
         
-        self.scalaire_rotation = 1
-        self.scalaire_vitesse = 0
+        self.OFFSET_LEFT = 0
+        self.OFFSET_RIGHT = 0
         
-        self.vitesse_moteur_g = 0
-        self.vitesse_moteur_d = 0
         
-        self.MOTOR_LEFT = 0
-        self.MOTOR_RIGHT = 0
+        self.last_up = time.time()
         
     def set_led(self, led, red = 0, green = 0,blue = 0):
         """ Allume une led. """
         pass
     
-    def set_motor_dps(self,port,dps):
+    def set_motor_dps(self,port ,dps):
         """ Fixe la vitesse d'un moteur en nbr de degres par seconde
             :port: une constante moteur, MOTOR_LEFT ou MOTOR_RIGHT
             :dps: la vitesse cible en nombre de degres par seconde
         
         """
-        if (port == MOTOR_LEFT):
-            self.vitesse_moteur_g = dps
-        
-        elif (port == MOTOR_RIGHT):
-            self.vitesse_moteur_d = dps
+        if (port == 1):
+            self.MOTOR_LEFT = dps
+        elif (port == 2):
+            self.MOTOR_RIGHT = dps
         else :
-            printf("ERREUR ROBOT_set_motor_dps : moteur invalide")
+            print("ERREUR ROBOT_set_motor_dps : moteur invalide")
     
     
     def get_motor_position(self):
@@ -53,7 +55,7 @@ class Robot(ObjetPhysique):
         :return: couple du degre de rotation des moteurs
         
         """
-        pass
+        return (self.OFFSET_LEFT,self.OFFSET_RIGHT);
           
     def offset_motor_encoder(self, port, offset):
         """ Fixe l’offset des moteurs (en degres) (permet par exemple
@@ -62,197 +64,81 @@ class Robot(ObjetPhysique):
         :offset: l’offset de decalage en degre.
         Zero the encoder by offsetting it by the current position
         """
-        pass
-    
-    def update(self):
+        if (port == 3):
+            self.OFFSET_LEFT  -= offset;
+            self.OFFSET_RIGHT -= offset;
+        elif (port == 1):
+            self.OFFSET_LEFT  -= offset;
+        elif (port == 2):
+            self.OFFSET_RIGHT -= offset;
+        else :
+            print("ERREUR ROBOT_motor_encoder : moteur invalide")  
+            
+    def update_robot(self):
         """
-        Met à jour la position et l'orientation du robot par rapport à scalaire_rotation,
-        scalaire_vitesse, vecteur direction, SAUF S'IL Y A COLLISION
+        N'APPARTIENT PAS A LA CLASSE ROBOT PHYSIQUE NE PAS L'UTILISER DANS LES STRATEGIES 
+        Met à jour la position et l'orientation du robot par rapport à v_rotation,
+        vitesse, vecteur direction, SAUF S'IL Y A COLLISION
         
         """
-        ###############################################################################
-        #
+        ################################################################
+        x = self.x
+        y = self.y
+        v_x = self.v_dir.x
+        v_y = self.v_dir.y
         
-        sauvx = self.x
-        sauvy = self.y
-        sauvdir = Vecteur(self.vecteur_direction.x,self.vecteur_direction.y,
-                          self.vecteur_direction.z,)
-        sauvpoints = []
-        for o in self.points:
-            sauvpoints += [o]
-    
-        vx = self.vecteur_direction.x * self.scalaire_vitesse
-        vy = self.vecteur_direction.y * self.scalaire_vitesse
-        
-        self.x += vx
-        self.y += vy
-        
-        for i in range(len(self.points)):
-            j = self.points[i]
+        rot = 50
+        t = time.time()
+        ################################
+        for i in range(rot):
+            omega1 = (self.MOTOR_LEFT *(t - self.last_up)/rot)*self.WHEEL_CIRCUMFERENCE / self.WHEEL_BASE_CIRCUMFERENCE
+            omega2 = (self.MOTOR_RIGHT*(t - self.last_up)/rot)*self.WHEEL_CIRCUMFERENCE / self.WHEEL_BASE_CIRCUMFERENCE
             
-            self.points[i]= (j[0] + vx, j[1] + vy)
-        
-        angle = radians(self.scalaire_rotation)
-        cos_val = cos(angle)
-        sin_val = sin(angle)
-        
-        x1 = self.vecteur_direction.x
-        y1 = self.vecteur_direction.y
-        
-        self.vecteur_direction.x = x1*cos_val - y1*sin_val
-        self.vecteur_direction.y = x1*sin_val + y1*cos_val
-        
-        for i in range(len(self.points)):
-            j = self.points[i]
-            x_new = (j[0] - self.x) * cos_val - (j[1] - self.y) * sin_val
-            y_new = (j[0] - self.x) * sin_val + (j[1] - self.y) * cos_val
+            cos_val = cos(-radians(omega2))
+            sin_val = sin(-radians(omega2))
+            xo =  x + v_y * (self.WHEEL_BASE_WIDTH/2)
+            yo =  y - v_x * (self.WHEEL_BASE_WIDTH/2)
+            x = (x-xo)*cos_val - (y-yo)*sin_val + xo
+            y = (x-xo)*sin_val + (y-yo)*cos_val + yo
+            v_x = v_x*cos_val - v_y*sin_val
+            v_y = v_x*sin_val + v_y*cos_val
             
-            self.points[i]= (x_new + self.x, y_new + self.y)
+            cos_val = cos(radians(omega1))
+            sin_val = sin(radians(omega1))
+            xo = x - v_y * (self.WHEEL_BASE_WIDTH/2) 
+            yo = y + v_x * (self.WHEEL_BASE_WIDTH/2)
+            x = (x-xo)*cos_val - (y-yo)*sin_val + xo
+            y = (x-xo)*sin_val + (y-yo)*cos_val + yo
+            v_x = v_x*cos_val - v_y*sin_val
+            v_y = v_x*sin_val + v_y*cos_val
             
-        ######################################################################
-        # On vérifie que on n'a pas de collisions
+        ##############################################################        
+        #print(self.v_dir.x , self.v_dir.y)
+        v_d = Vecteur(v_x,v_y,self.v_dir.z)
         
-        if (self.testCollision()): #Si on a des collisions
-            self.x = sauvx
-            self.y = sauvy
-            self.points = sauvpoints
-            self.vecteur_direction = sauvdir
+        robTest = Robot(x,y,0)
+        robTest.v_dir = v_d
+
+        self.OFFSET_LEFT  += self.MOTOR_LEFT*(t - self.last_up)
+        self.OFFSET_RIGHT += self.MOTOR_RIGHT*(t - self.last_up)
+
+        #print(self.get_distance())
+        self.last_up = time.time()
         
-        print(self.get_distance())
-            
+        if (self.arene.testCollision(robTest,self) == False):
+            self.x = x
+            self.y = y
+            self.v_dir = v_d
+        
+        
     def get_distance(self):
         """
         Mesure la distance entre le devant du robot et les objets devant.
         Retourne seulement l'objet dans la bonne direction et le plus proche du robot
         DETECTE LES AUTRES ROBOTS
+        
+        NE MARCHE QUE SI ROBOT A UNE ARENE !!!
         """
-    
-        if (self.arene == None):
-            return
-        
-        obj = self.arene.objet + self.arene.robot
-        
-        def mmsigne(a,b): 
-            if (a<0 and b<0):
-                return True
-            if (a==0 and b==0):
-                return True
-            return (a>0 and b>0)
-            
-        mini = 1000000
-        p1 = (self.x,self.y)
-        p2 = (self.x + (self.largeur /2)*self.vecteur_direction.x,
-              self.y + (self.largeur /2)*self.vecteur_direction.y)
-        
-        if (round(p1[0]-p2[0],12) != 0): 
-            a1 = (p1[1] - p2[1]) /(p1[0]- p2[0])
-            b1 = p1[1] - a1*p1[0]
-        else :
-            a1 = None # Cas ou le robot est dans l'axe x
-            b1 = p1[0]
-            
-        for o in obj:
-            if (o == self):
-                continue
-        
-            for j in range(len(o.points)):
-                p3 = o.points[j]
-                p4 = o.points[(j+1)%len(o.points)]#Marche avec un polygone à n cotées
-                
-                if (round(p3[0]-p4[0],12) !=0):
-                    a2 = (p3[1] - p4[1])/(p3[0]- p4[0]) 
-                    b2 = p3[1] - a2*p3[0]
-                
-                else :
-                    a2 = None # Cas ou le segment est dans l'axe x
-                    b2 = p4[0]
-                
-                if (a1 == a2) :
-                    continue
-                
-                if (a1 == None) :
-                    x = b1
-                    y = a2*x + b2
-                
-                elif (a2 == None):
-                    x = b2
-                    y = a1*x + b1
-                
-                else :
-                    x = (b2 - b1) / (a1 - a2)
-                    y = a1*x + b1
-                
-                res = sqrt(pow(p2[0]-x,2)+pow(p2[1]-y,2))
-                
-                if mmsigne(p2[0] - p1[0],x - p1[0]) and mmsigne(p2[1] - p1[1],y - p1[1]):
-                    
-                    if (min(p3[0],p4[0])<=x<=max(p3[0],p4[0]) and 
-                        min(p3[1],p4[1])<=y<=max(p3[1],p4[1])):
-                        if (mini > res):
-                            mini = res
+        return self.detecteur.detecte()
 
-        return mini
-        
-    def testCollision(self):
-        """
-        Test les collisions avec les autres objects du terrain ssi un terrain est chargé
-        Les autres robots SONT PRIS EN COMPTES.
-        Renvoie true s'il y a collision
-        """
-        if (self.arene == None):
-            return False
-        
-        obj = self.arene.objet + self.arene.robot
-        
-        for i in range(len(self.points)):
-        
-            p1 = self.points[i]
-            p2 = self.points[(i+1)%len(self.points)]
-            
-            if (round(p1[0]-p2[0],12) != 0): 
-                a1 = (p1[1] - p2[1]) /(p1[0]- p2[0])
-                b1 = p1[1] - a1*p1[0]
-                
-            else :
-                a1 = None # Cas ou le robot est dans l'axe x
-                b1 = p1[0]
-                
-            for o in obj:
-                if (o == self):
-                    continue
-            
-                for j in range(len(o.points)):
-                    p3 = o.points[j]
-                    p4 = o.points[(j+1)%len(o.points)]#Marche avec un polygone à n cotées
-                    
-                    if (round(p3[0]-p4[0],12) !=0):
-                        a2 = (p3[1] - p4[1])/(p3[0]- p4[0]) 
-                        b2 = p3[1] - a2*p3[0]
-                    
-                    else :
-                        a2 = None # Cas ou le segment est dans l'axe x
-                        b2 = p4[0]
-                    
-                    if (a1 == a2) :
-                        continue
-                    
-                    if (a1 == None) :
-                        x = b1
-                        y = a2*x + b2
-                    
-                    elif (a2 == None):
-                        x = b2
-                        y = a1*x + b1
-                    
-                    else :
-                        x = (b2 - b1) / (a1 - a2)
-                        y = a1*x + b1
-                     
-                    if (min(p3[0],p4[0])<=x<=max(p3[0],p4[0]) and 
-                        min(p3[1],p4[1])<=y<=max(p3[1],p4[1]) and 
-                        min(p1[0],p2[0])<=x<=max(p1[0],p2[0]) and 
-                        min(p1[1],p2[1])<=y<=max(p1[1],p2[1])):
-                        
-                        return True
-                    
-        return False
+
