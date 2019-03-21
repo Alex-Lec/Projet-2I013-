@@ -18,8 +18,14 @@ Ce n’est pas grave pour la semaine 1 mais sera nécessaire dés la semaine 2.
 
 	Luc
 
+
+=============================================================================================================================
+
+
 Jeudi 31 Janvier TME 2
-Permier "meeting hebdomadaire" avec les profs : bon bilan, problèmes techniques mais l'équipe est efficace.
+Permier "meeting hebdomadaire" avec les profs : bon bilan, problèmes 
+
+techniques mais l'équipe est efficace.
 Les profs semblent trouver qu'on commence à comprendre la méthodologie.
 
 Avancement des méthodes de déplacement du robot, création d'une première version d'une fenêtre (interface graphique).
@@ -31,7 +37,7 @@ Pas de tâches de plus d'une heure, une fonction = une tâche.
 
 Cécile
 
-
+=============================================================================================================================
 
 Jeudi 07 Février TME 3
 
@@ -49,7 +55,7 @@ Conseils :
 	
 La prochaine fois : avoir un robot orienté et qui peut tourner :)
 	
-
+============================================================================================================================
 Cécile
 
 Jeudi 14 Février TME 4
@@ -68,6 +74,32 @@ La prochaine fois :
 	
 Luc
 
+=============================================================================================================================
+
+Jeudi 28 février TME5 et 6
+
+Problèmes recontrés :
+- Alexis a cassé son pc
+- Manque de vision ( Pas pouvoir test sur le robot )
+- Ambiguité sur la hiérarchie des classe
+
+Debriefing :
+- Clarification sur la hiérarchie des classe
+- Recréation de la classe capteur supprimé
+
+Avancement:
+- Déplacement avec interraction clavier
+- Classe controller
+- Sauvegarde avec pickle
+- Organisation des fichiers( séparer en module )
+- Finalisation des colisions (Plus de bug et marche avec d'autres robot)
+- Changement de 
 
 
+Objectif pour la smeaine 7:
+- Changer le fonctionnement des points
+- Boucle update asynchrone
+- Rotation via vitesse angulaire des roues
+- Faire une classe stratégie qui fera l'intermédiaire entre le controller et les déplacements du robot
 
+	Alexandre 

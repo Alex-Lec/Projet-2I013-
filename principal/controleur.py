@@ -5,7 +5,7 @@ from composant import Robot, ObjetPhysique
 from principal import Terrain, Affichage
 from strategie import StratAvance,StratStop,StratTourne
 from threading import Thread
-import time;
+import time
 
 class Controleur(Thread):
     def __init__(self,rob):
@@ -14,18 +14,19 @@ class Controleur(Thread):
         self.fps = 1000
 
     def run(self):
-        Go = StratAvance(self.robot,100,200)
+        Go = StratAvance(self.robot,1000,200)
         Go.start()
         cnt = 0
         while True:
             if (Go.stop()):
                 print(type(Go).__name__)
                 if (type(Go).__name__ == "StratAvance") :
-                    Go = StratTourne(self.robot,90,25)
+                    Go = StratTourne(self.robot,360,50)
+                    Go = StratTourne(self.robot,360,50)
                     cnt +=1
                     
                 elif (type(Go).__name__ == 'StratTourne') :
-                    Go = StratAvance(self.robot,100,200)
+                    Go = StratAvance(self.robot,1000,200)
                 
                 Go.start()
             
