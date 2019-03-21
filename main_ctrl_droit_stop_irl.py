@@ -8,14 +8,12 @@ from diver import *
 from robot2I013.robot2I013 import Robot2I013
 
 robot = Robot2I013()
-ctrc = Controleur_carre(robot)
 
-#image = robot.get_image()
+ctrc = Controleur_droit_stop(robot)
 
-tps = 30
+tps = 100
 
 ctrc.start()
-print(robot.get_motor_position())
 i = 0
 while ctrc.stop():
     ctrc.step()

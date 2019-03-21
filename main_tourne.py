@@ -5,11 +5,15 @@ from composant import *
 from principal import *
 import time
 from diver import *
-from robot2I013.robot2I013 import Robot2I013
 
-robot = Robot2I013()
+arene = Terrain()
+robot = Robot(100, 100, 0, arene)
 ctrc = Controleur_carre(robot)
+arene.robot.append(robot)
 
+affichage = Affichage(arene)
+affichage.start()
+arene.start()
 #image = robot.get_image()
 
 tps = 30
