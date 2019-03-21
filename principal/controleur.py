@@ -21,8 +21,7 @@ class Controleur(Thread):
             if (Go.stop()):
                 print(type(Go).__name__)
                 if (type(Go).__name__ == "StratAvance") :
-                    Go = StratTourne(self.robot,360,50)
-                    Go = StratTourne(self.robot,360,50)
+                    Go = StratTourne(self.robot,90,50)
                     cnt +=1
                     
                 elif (type(Go).__name__ == 'StratTourne') :
