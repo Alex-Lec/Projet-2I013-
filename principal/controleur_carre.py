@@ -22,7 +22,7 @@ class Controleur_carre():
                 self.Go = StratTourne(self.robot,90,50)
                 self.cnt +=1
             elif (type(self.Go).__name__ == 'StratTourne') :#switch strategie
-                self.Go = StratAvance(self.robot,150,200)
+                self.Go = StratAvance(self.robot,150,100)
         
             self.Go.start()
         
