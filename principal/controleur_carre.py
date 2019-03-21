@@ -10,7 +10,7 @@ class Controleur_carre():
         self.cnt = 0
         self.Go = None
 
-    def start(self):
+    def start(self):    
         self.Go = StratAvance(self.robot,1000,500)
         self.Go.start()
         self.cnt = 0
