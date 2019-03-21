@@ -6,6 +6,11 @@ from .detecteur import Detecteur
 from math import radians,sqrt, cos, sin, pi
 from .vecteur import Vecteur
 import time
+from smbus import SMBus
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(12, GPIO.IN)
+
 class Robot(ObjetPhysique):
 
     WHEEL_BASE_WIDTH         = 117  # distance (mm) de la roue gauche a la roue droite.

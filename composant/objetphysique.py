@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*
+
 from .vecteur import Vecteur
 import numpy as np
 from math import radians,sqrt, cos, sin, pi
