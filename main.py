@@ -7,17 +7,16 @@ import time
 from diver import *
 
 arene = Terrain()
-robot = Robot(100, 200, 0, arene)
-ctrc = Controleur_carre(robot)
+robot = Robot(100, 100, 0, arene)
+ctrc = Controleur_droit_stop(robot)
 arene.robot.append(robot)
 
 affichage = Affichage(arene)
 affichage.start()
 arene.start()
-tps = 30
+tps = 100
 
 ctrc.start()
-print(robot.get_motor_position())
 i = 0
 while ctrc.stop():
     ctrc.step()
