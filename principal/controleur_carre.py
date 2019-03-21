@@ -18,10 +18,10 @@ class Controleur_carre():
     def step(self):
         if (self.Go.stop()):
             print(type(self.Go).__name__)
-            if (type(self.Go).__name__ == "StratAvance") :
+            if (type(self.Go).__name__ == "StratAvance") :#switch strategie
                 self.Go = StratTourne(self.robot,90,25)
                 self.cnt +=1
-            elif (type(self.Go).__name__ == 'StratTourne') :
+            elif (type(self.Go).__name__ == 'StratTourne') :#switch strategie
                 self.Go = StratAvance(self.robot,100,200)
         
             self.Go.start()
