@@ -10,8 +10,8 @@ class Controleur_carre():
         self.cnt = 0
         self.Go = None
 
-    def start(self):
-        self.Go = StratAvance(self.robot,150,200)
+    def start(self):    
+        self.Go = StratAvance(self.robot,1000,500)
         self.Go.start()
         self.cnt = 0
         
@@ -19,10 +19,10 @@ class Controleur_carre():
         if (self.Go.stop()):
             print(type(self.Go).__name__)
             if (type(self.Go).__name__ == "StratAvance") :#switch strategie
-                self.Go = StratTourne(self.robot,90,50)
+                self.Go = StratTourne(self.robot,90,500)
                 self.cnt +=1
             elif (type(self.Go).__name__ == 'StratTourne') :#switch strategie
-                self.Go = StratAvance(self.robot,150,100)
+                self.Go = StratAvance(self.robot,1000,500)
         
             self.Go.start()
         
