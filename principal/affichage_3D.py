@@ -11,12 +11,12 @@ from pyglet.image.codecs.png import PNGImageDecoder
 class Affichage_3D(pyglet.window.Window):
     xRotation = yRotation = 0
     increment = 5
-    toDraw = []
-
-    def __init__(self, width, height, title='Test'):
+    
+    def __init__(self, width, height, title='Test', arene = None):
         super(Affichage_3D, self).__init__(width, height, title)
         self.zoom = 20
         self.setup()
+        
 
 
     def setup(self):
@@ -60,6 +60,7 @@ class Affichage_3D(pyglet.window.Window):
         glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, vec(1, 1, 1, 1))
         glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 50)
 
+
     def on_draw(self):
         # Clear the current GL Window
         self.clear()
@@ -68,8 +69,10 @@ class Affichage_3D(pyglet.window.Window):
         glPushMatrix()
         glRotatef(self.xRotation, 1, 0, 0)
         glRotatef(self.yRotation, 0, 1, 0)
+        if (self.arene == None):
+            return
         
-        for c in self.toDraw:
+        for c in self.arene.objet and self.arene.robot:
             # Draw the six sides of the cube
             c.draw()
             
