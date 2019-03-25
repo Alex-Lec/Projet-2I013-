@@ -2,6 +2,7 @@
 # -- coding: utf-8 -
 
 import pyglet
+import time
 from OpenGL.GL import glLight
 from pyglet.gl import *
 from pyglet.window import key
@@ -14,10 +15,9 @@ class Affichage_3D(pyglet.window.Window):
     
     def __init__(self, width, height, title='Test', arene = None):
         super(Affichage_3D, self).__init__(width, height, title)
-        self.zoom = 20
+        self.zoom = 1000
         self.setup()
-        
-
+       
 
     def setup(self):
         # One-time GL setup
@@ -61,6 +61,11 @@ class Affichage_3D(pyglet.window.Window):
         glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 50)
 
 
+    def loop(self,fps):
+        while True:
+            #self.update()
+            time.sleep(1./fps)
+            
     def on_draw(self):
         # Clear the current GL Window
         self.clear()
@@ -78,5 +83,5 @@ class Affichage_3D(pyglet.window.Window):
             
         # Pop Matrix off stack
         glPopMatrix()
-
+    
             
