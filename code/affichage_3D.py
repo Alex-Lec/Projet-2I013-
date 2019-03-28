@@ -1,0 +1,137 @@
+# !/usr/bin/env python3
+# -- coding: utf-8 -
+
+import pyglet
+import time
+from OpenGL.GL import glLight
+from pyglet.gl import *
+from pyglet.window import key
+from OpenGL.GLUT import *
+from pyglet.image.codecs.png import PNGImageDecoder
+
+class Affichage_3D(pyglet.window.Window):
+    xRotation = yRotation = 0
+    increment = 5
+    
+    def __init__(self, width, height, title='Test', arene = None):
+        super(Affichage_3D, self).__init__(width, height, title)
+        self.zoom = 1
+        self.arene = arene
+        self.setup()
+
+    def setup(self):
+        # One-time GL setup
+        glClearColor(0, 0, 1, 1)
+        glColor3f(1, 0, 0)
+        glEnable(GL_DEPTH_TEST)
+        # using Projection mode
+        glViewport(0, 0, super(Affichage_3D, self).width*2, \
+        super(Affichage_3D, self).height*2) # taille de la scene
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
+        # perspective
+        aspectRatio = super(Affichage_3D, self).width / \
+                      super(Affichage_3D, self).height
+        gluPerspective(35*self.zoom, aspectRatio, 1, 1000)
+        #
+        glMatrixMode(GL_MODELVIEW)
+        glLoadIdentity()
+
+    def setup_light(self):
+        # Simple light setup. On Windows GL_LIGHT0 is enabled by default,
+        # but this is not the case on Linux or Mac, so remember to always
+        # include it.
+        glEnable(GL_LIGHTING)
+        glEnable(GL_LIGHT0)
+        glEnable(GL_LIGHT1)
+        # Define a simple function to create ctypes arrays of floats:
+
+        def vec(*args):
+            return (GLfloat * len(args))(*args)
+
+        glLightfv(GL_LIGHT0, GL_POSITION, vec(.5, .5, 1, 0))
+        glLightfv(GL_LIGHT0, GL_SPECULAR, vec(.5, .5, 1, 1))
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, vec(1, 1, 1, 1))
+        glLightfv(GL_LIGHT1, GL_POSITION, vec(1, 0, .5, 0))
+        glLightfv(GL_LIGHT1, GL_DIFFUSE, vec(.5, .5, .5, 1))
+        glLightfv(GL_LIGHT1, GL_SPECULAR, vec(1, 1, 1, 1))
+        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, \
+        vec(0.5, 0.5, 0.5, 1))
+        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, vec(1, 1, 1, 1))
+        glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 50)
+
+
+    def loop(self,fps):
+        while True:
+            #self.update()
+            time.sleep(1./fps)
+            
+    def on_draw(self):
+        # Clear the current GL Window
+        self.clear()
+        #self.set_camera() # cf plus tard
+        # Push Matrix onto stack
+        glPushMatrix()
+        glRotatef(self.xRotation, 1, 0, 0)
+        glRotatef(self.yRotation, 0, 1, 0)
+        if (self.arene == None):
+            return
+        
+        for c in self.arene.objet and self.arene.robot:
+            # Draw the six sides of the cube
+            self.draw(c)
+            
+        # Pop Matrix off stack
+        glPopMatrix()
+    
+    def draw(self,obj):
+        v_y = obj.v_dir.y
+        v_x = obj.v_dir.x
+        
+        v_xg = -obj.v_dir.y
+        v_yg = obj.v_dir.x
+        
+        v_xd = obj.v_dir.y
+        v_yd = -obj.v_dir.x
+        
+        v_xb = -obj.v_dir.x
+        v_yb = -obj.v_dir.y
+        
+        glBegin(GL_QUADS)
+        glColor3ub(obj.r,obj.g,obj.b)
+        
+        glVertex3f(v_xb*obj.longueur/2 + v_xg*obj.largeur/2,
+                   v_yb*obj.longueur/2 + v_yg*obj.largeur/2,
+                   obj.z)# point 1
+    
+        glVertex3f(v_xb*obj.longueur/2 + v_xg*obj.largeur/2,
+                   v_yb*obj.longueur/2 + v_yg*obj.largeur/2,
+                   obj.z + obj.hauteur)# point 2
+    
+        glVertex3f(v_x*obj.longueur/2 + v_xg*obj.largeur/2,
+                   v_y*obj.longueur/2 + v_yg*obj.largeur/2,
+                   obj.z)# point 3
+    
+        glVertex3f(v_x*obj.longueur/2 + v_xg*obj.largeur/2,
+                   v_y*obj.longueur/2 + v_yg*obj.largeur/2,
+                   obj.z+obj.hauteur)# point 4
+                   
+        glVertex3f(v_x*obj.longueur/2 + v_xd*obj.largeur/2,
+                   v_y*obj.longueur/2 + v_yd*obj.largeur/2,
+                   obj.z)# point 5
+                   
+        glVertex3f(v_x*obj.longueur/2 + v_xd*obj.largeur/2,
+                   v_y*obj.longueur/2 + v_yd*obj.largeur/2,
+                   obj.z + obj.hauteur)# point 6
+                
+        glVertex3f(v_xb*obj.longueur/2 + v_xd*obj.largeur/2,
+                   v_yb*obj.longueur/2 + v_yd*obj.largeur/2,
+                   obj.z)# point 7
+                   
+        glVertex3f(v_xb*obj.longueur/2 + v_xd*obj.largeur/2,
+                   v_yb*obj.longueur/2 + v_yd*obj.largeur/2,
+                   obj.z + obj.hauteur)# point 8
+                   
+        glEnd()
+                
+            
