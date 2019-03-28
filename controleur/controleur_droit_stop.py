@@ -1,5 +1,5 @@
-from composant import Robot, ObjetPhysique
-from code import Terrain, Affichage
+#from composant import Robot, ObjetPhysique
+#from code import Terrain, Affichage
 from strategie import StratAvanceStop,StratStop
 from threading import Thread
 import time;
@@ -12,7 +12,7 @@ class Controleur_droit_stop():
     
     
     def start(self):
-        self.Go = StratAvanceStop(self.robot,1000,50)
+        self.Go = StratAvanceStop(self.robot,1000,100)
         self.Go.start()
         
     def step(self):

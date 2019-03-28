@@ -1,5 +1,5 @@
-from composant import Robot, ObjetPhysique
-from code import Terrain, Affichage
+#from composant import Robot, ObjetPhysique
+#from code import Terrain, Affichage
 from strategie import StratAvance,StratStop,StratTourne
 from threading import Thread
 import time;

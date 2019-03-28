@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
 
-from composant import *
-from code import *
 import time
 from diver import *
 from controleur import Controleur_carre, Controleur_droit_stop
 import sys
+from robot2I013.robot2I013 import Robot2I013
 #arene = Terrain()
-robot = Robot2I013
+robot = Robot2I013()
 
 
 ###################################################################
