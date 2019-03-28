@@ -13,15 +13,19 @@ class StratAvance:
         #self.robot.last_up = time.time()
     
     def step(self):
-        pos1 =selg.robot.get_motor_position()[0] 
-        pos2 = selg.robot.get_motor_position()[1]
+        pos1 =self.robot.get_motor_position()[0] 
+        pos2 = self.robot.get_motor_position()[1]
         if (pos1 > pos2):
             print("declage gauche")
-            #self.robot.set_motor_dps(1, self.vit + pos1-pos2)
+            self.robot.set_motor_dps(1, self.vit + pos1 - pos2)
         if (pos1 < pos2):
             print("declage droit")
-            #self.robot.set_motor_dps(1, self.vit + pos1-pos2)
+            self.robot.set_motor_dps(2, self.vit + pos1 - pos2)
+        if (pos1 == pos2):
+            self.robot.set_motor_dps(1, self.vit)
+            self.robot.set_motor_dps(2, self.vit)
             
+        print("Success")
     
     def stop(self):
         if((self.robot.get_motor_position()[0]*self.robot.WHEEL_CIRCUMFERENCE)

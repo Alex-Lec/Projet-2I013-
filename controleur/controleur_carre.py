@@ -16,6 +16,7 @@ class Controleur_carre():
         self.cnt = 0
         
     def step(self):
+        self.Go.step()
         if (self.Go.stop()):
             print(type(self.Go).__name__)
             if (type(self.Go).__name__ == "StratAvance") :#switch strategie
@@ -25,6 +26,7 @@ class Controleur_carre():
                 self.Go = StratAvance(self.robot,500,500)
         
             self.Go.start()
+          
         
     def stop(self):
         if (self.cnt >= 4):
