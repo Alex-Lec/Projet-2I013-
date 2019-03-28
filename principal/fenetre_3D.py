@@ -15,17 +15,23 @@ class Carre():
         self.vertex_list = pyglet.graphics.vertex_list(4, ('v3f', [x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4]), \
             ('c3B', [0, 0, 0] * 4))
 
+class Carre2D():
+    def __init__(self, x1, y1, x2, y2, x3, y3, x4, y4):
+        self.vertex_list = pyglet.graphics.vertex_list(4, ('v3f', [x1, y1, x2, y2, x3, y3, x4, y4]), \
+            ('c3B', [0, 0, 0] * 4))
+
 class Window(pyglet.window.Window):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         glClearColor(1, 1, 1, 1)
         self.ligne = Ligne(500, 500, 200, 200)
-        self.carre = Carre(600, 600, 600, 400, 400, 300, 500, 500, 300, 300, 300, 200)
+        self.carre = Carre(600, 600, 400, 400, 500, 500 300, 300)
+        #self.carre = Carre(600, 600, 0, 400, 400, 0, 500, 500, 0, 300, 300, 0)
         
     def on_draw(self):
         self.clear()
         self.ligne.vertex_list.draw(GL_LINES)
-        self.ligne.vertex_list.draw(GL_QUADS)
+        self.ligne.vertex_list.draw(GL_POLYGON)
 
 if __name__ == '__main__':
     window = Window(1000, 600, "Robot 2I013")
