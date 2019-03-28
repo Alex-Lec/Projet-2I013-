@@ -16,7 +16,7 @@ class Robot(ObjetPhysique):
 
     def __init__(self, x, y, z, arene = None, id = 0): 
         self.arene = arene
-        ObjetPhysique.__init__(self, x, y, z, largeur = 50, longueur = 100, hauteur = 25)
+        ObjetPhysique.__init__(self, x, y, z, largeur = 117/2, longueur = 100, hauteur = 25)
         
         self.detecteur = Detecteur(self)
         self.MOTOR_LEFT = 1
