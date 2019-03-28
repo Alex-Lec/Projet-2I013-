@@ -22,6 +22,9 @@ class Robot(ObjetPhysique):
         self.MOTOR_LEFT = 1
         self.MOTOR_RIGHT = 2
         
+        self.vd = 0
+        self.vg = 0
+        
         self.OFFSET_LEFT = 0
         self.OFFSET_RIGHT = 0
         
@@ -39,9 +42,9 @@ class Robot(ObjetPhysique):
         
         """
         if (port == 1):
-            self.MOTOR_LEFT = dps
+            self.vg = dps
         elif (port == 2):
-            self.MOTOR_RIGHT = dps
+            self.vd = dps
         else :
             print("ERREUR ROBOT_set_motor_dps : moteur invalide")
     
@@ -87,8 +90,8 @@ class Robot(ObjetPhysique):
         t = time.time()
         ################################
         for i in range(rot):
-            omega1 = ((self.MOTOR_LEFT *(t - self.last_up)/rot)*self.WHEEL_CIRCUMFERENCE) /(2*self.WHEEL_BASE_CIRCUMFERENCE)
-            omega2 = ((self.MOTOR_RIGHT*(t - self.last_up)/rot)*self.WHEEL_CIRCUMFERENCE) /(2*self.WHEEL_BASE_CIRCUMFERENCE)
+            omega1 = ((self.vg *(t - self.last_up)/rot)*self.WHEEL_CIRCUMFERENCE) /(2*self.WHEEL_BASE_CIRCUMFERENCE)
+            omega2 = ((self.vd*(t - self.last_up)/rot)*self.WHEEL_CIRCUMFERENCE) /(2*self.WHEEL_BASE_CIRCUMFERENCE)
             
             cos_val = cos(-radians(omega2))
             sin_val = sin(-radians(omega2))
@@ -115,8 +118,8 @@ class Robot(ObjetPhysique):
         robTest = Robot(x,y,0)
         robTest.v_dir = v_d
 
-        self.OFFSET_LEFT  += self.MOTOR_LEFT*(t - self.last_up)
-        self.OFFSET_RIGHT += self.MOTOR_RIGHT*(t - self.last_up)
+        self.OFFSET_LEFT  += self.vg*(t - self.last_up)
+        self.OFFSET_RIGHT += self.vd*(t - self.last_up)
 
         #print(self.get_distance())
         self.last_up = time.time()
