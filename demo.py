@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
 from composant import*
-from principal import*
+from code import*
 
 """Le but ici, est de constuire quelques objets simples, un robot et de les afficher"""
 

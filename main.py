@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*
 
 from composant import *
-from principal import *
+from code import *
 import time
 from diver import *
+from controleur import Controleur_carre, Controleur_droit_stop
 
 arene = Terrain()
 robot = Robot(100, 100, 0, arene)
