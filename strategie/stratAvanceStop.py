@@ -10,7 +10,6 @@ class StratAvanceStop:
         self.robot.set_motor_dps(2, self.vit)
         self.robot.offset_motor_encoder(1, self.robot.get_motor_position()[0])
         self.robot.offset_motor_encoder(2, self.robot.get_motor_position()[1])
-        #self.robot.last_up = time.time()
     
     def step(self):
         pass
