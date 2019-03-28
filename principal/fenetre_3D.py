@@ -2,76 +2,31 @@
 # -- coding: utf-8 -
 
 import pyglet
-from OpenGL.GL import glLight
 from pyglet.gl import *
 from pyglet.window import key
-from OpenGL.GLUT import *
-from pyglet.image.codecs.png import PNGImageDecoder
+from pyglet.graphics import *
+
+class Ligne():
+    def __init__(self, x1, y1, x2, y2):
+        self.vertex_list = pyglet.graphics.vertex_list(2, ('v2f', [x1, y1, x2, y2]), ('c3B', [0, 0, 0] * 2))
+
+class Carre():
+    def __init__(self, x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4):
+        self.vertex_list = pyglet.graphics.vertex_list(4, ('v3f', [x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4]), \
+            ('c3B', [0, 0, 0] * 4))
 
 class Window(pyglet.window.Window):
-    xRotation = yRotation = 0
-    increment = 5
-    toDraw = []
-
-    def __init__(self, width, height, title='Test'):
-        super(Window, self).__init__(width, height, title)
-        self.setup()
-
-    def setup(self):
-        # One-time GL setup
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         glClearColor(1, 1, 1, 1)
-        glColor3f(1, 0, 0)
-        glEnable(GL_DEPTH_TEST)
-        # using Projection mode
-        glViewport(0, 0, super(Window, self).width*2, \
-        super(Window, self).height*2) # taille de la scene
-        glMatrixMode(GL_PROJECTION)
-        glLoadIdentity()
-        # perspective
-        aspectRatio = super(Window, self).width / \
-        super(Window, self).height
-        gluPerspective(35*self.zoom, aspectRatio, 1, 1000)
-        #
-        glMatrixMode(GL_MODELVIEW)
-        glLoadIdentity()
-
-    def setup_light(self):
-        # Simple light setup. On Windows GL_LIGHT0 is enabled by default,
-        # but this is not the case on Linux or Mac, so remember to always
-        # include it.
-        glEnable(GL_LIGHTING)
-        glEnable(GL_LIGHT0)
-        glEnable(GL_LIGHT1)
-        # Define a simple function to create ctypes arrays of floats:
-
-    def vec(*args):
-        return (GLfloat * len(args))(*args)
-
-    glLightfv(GL_LIGHT0, GL_POSITION, vec(.5, .5, 1, 0))
-    glLightfv(GL_LIGHT0, GL_SPECULAR, vec(.5, .5, 1, 1))
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, vec(1, 1, 1, 1))
-    glLightfv(GL_LIGHT1, GL_POSITION, vec(1, 0, .5, 0))
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, vec(.5, .5, .5, 1))
-    glLightfv(GL_LIGHT1, GL_SPECULAR, vec(1, 1, 1, 1))
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, \
-    vec(0.5, 0.5, 0.5, 1))
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, vec(1, 1, 1, 1))
-    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 50)
-
-    def on_draw(self):
-        # Clear the current GL Window
-        self.clear()
-        self.set_camera() # cf plus tard
-        # Push Matrix onto stack
-        glPushMatrix()
-        glRotatef(self.xRotation, 1, 0, 0)
-        glRotatef(self.yRotation, 0, 1, 0)
+        self.ligne = Ligne(500, 500, 200, 200)
+        self.carre = Carre(600, 600, 600, 400, 400, 300, 500, 500, 300, 300, 300, 200)
         
-        for c in self.toDraw:
-            # Draw the six sides of the cube
-            c.draw()
-            
-        # Pop Matrix off stack
-        glPopMatrix()
+    def on_draw(self):
+        self.clear()
+        self.ligne.vertex_list.draw(GL_LINES)
+        self.ligne.vertex_list.draw(GL_QUADS)
 
-            
+if __name__ == '__main__':
+    window = Window(1000, 600, "Robot 2I013")
+    pyglet.app.run()
