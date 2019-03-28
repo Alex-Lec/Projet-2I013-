@@ -9,7 +9,7 @@ import time
 
 class Terrain(Thread):
 
-    def __init__(self, dimx = 1000, dimy = 600):
+    def __init__(self, dimx = 2000, dimy = 1000):
         super(Terrain,self).__init__()
         self.dimx = dimx
         self.dimy = dimy

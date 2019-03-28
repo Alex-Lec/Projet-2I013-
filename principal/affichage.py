@@ -20,7 +20,7 @@ class Affichage(Thread):
     def init_run(self):
         self.fenetre = Tk()
         self.fenetre.title("Simulateur")
-        self.fenetre.geometry("1000x600")
+        self.fenetre.geometry("2000x1000")
         self.fenetre.resizable(0, 0)
         self.robot_selectionne = IntVar()
 
@@ -48,7 +48,7 @@ class Affichage(Thread):
 
         menubar.add_cascade(label = "Sélectionner robot", menu = self.menu3)
         self.fenetre.config(menu = menubar)
-        self.canvas = Canvas(self.fenetre, width = 1000, height = 600)
+        self.canvas = Canvas(self.fenetre, width = 2000, height = 1000)
         self.fenetre.bind("<Key>", self.deplacement)
         self.canvas.pack()
         self.update_robots()
@@ -94,7 +94,7 @@ class Affichage(Thread):
         def ok_button():
             fen.destroy()
             self.arene.ouvrir_arene(nom_fichier.get())
-            self.canvas.addtag_enclosed("del", 0, 0, 1000, 600)
+            self.canvas.addtag_enclosed("del", 0, 0,2000, 1000)
             self.canvas.delete("del")
             self.initialise_arene()
         

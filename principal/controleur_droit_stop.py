@@ -10,7 +10,7 @@ class Controleur_droit_stop():
         self.Go = None
     
     def start(self):
-        self.Go = StratAvanceStop(self.robot,10000,500)
+        self.Go = StratAvanceStop(self.robot,1000,200)
         self.Go.start()
         
     def step(self):

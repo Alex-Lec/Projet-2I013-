@@ -15,13 +15,13 @@ class Affichage_3D(pyglet.window.Window):
     
     def __init__(self, width, height, title='Test', arene = None):
         super(Affichage_3D, self).__init__(width, height, title)
-        self.zoom = 1000
+        self.zoom = 1
+        self.arene = arene
         self.setup()
-       
 
     def setup(self):
         # One-time GL setup
-        glClearColor(1, 1, 1, 1)
+        glClearColor(0, 0, 1, 1)
         glColor3f(1, 0, 0)
         glEnable(GL_DEPTH_TEST)
         # using Projection mode
@@ -69,7 +69,7 @@ class Affichage_3D(pyglet.window.Window):
     def on_draw(self):
         # Clear the current GL Window
         self.clear()
-        self.set_camera() # cf plus tard
+        #self.set_camera() # cf plus tard
         # Push Matrix onto stack
         glPushMatrix()
         glRotatef(self.xRotation, 1, 0, 0)
@@ -79,9 +79,59 @@ class Affichage_3D(pyglet.window.Window):
         
         for c in self.arene.objet and self.arene.robot:
             # Draw the six sides of the cube
-            c.draw()
+            self.draw(c)
             
         # Pop Matrix off stack
         glPopMatrix()
     
+    def draw(self,obj):
+        v_y = obj.v_dir.y
+        v_x = obj.v_dir.x
+        
+        v_xg = -obj.v_dir.y
+        v_yg = obj.v_dir.x
+        
+        v_xd = obj.v_dir.y
+        v_yd = -obj.v_dir.x
+        
+        v_xb = -obj.v_dir.x
+        v_yb = -obj.v_dir.y
+        
+        glBegin(GL_QUADS)
+        glColor3ub(obj.r,obj.g,obj.b)
+        
+        glVertex3f(v_xb*obj.longueur/2 + v_xg*obj.largeur/2,
+                   v_yb*obj.longueur/2 + v_yg*obj.largeur/2,
+                   obj.z)# point 1
+    
+        glVertex3f(v_xb*obj.longueur/2 + v_xg*obj.largeur/2,
+                   v_yb*obj.longueur/2 + v_yg*obj.largeur/2,
+                   obj.z + obj.hauteur)# point 2
+    
+        glVertex3f(v_x*obj.longueur/2 + v_xg*obj.largeur/2,
+                   v_y*obj.longueur/2 + v_yg*obj.largeur/2,
+                   obj.z)# point 3
+    
+        glVertex3f(v_x*obj.longueur/2 + v_xg*obj.largeur/2,
+                   v_y*obj.longueur/2 + v_yg*obj.largeur/2,
+                   obj.z+obj.hauteur)# point 4
+                   
+        glVertex3f(v_x*obj.longueur/2 + v_xd*obj.largeur/2,
+                   v_y*obj.longueur/2 + v_yd*obj.largeur/2,
+                   obj.z)# point 5
+                   
+        glVertex3f(v_x*obj.longueur/2 + v_xd*obj.largeur/2,
+                   v_y*obj.longueur/2 + v_yd*obj.largeur/2,
+                   obj.z + obj.hauteur)# point 6
+                
+        glVertex3f(v_xb*obj.longueur/2 + v_xd*obj.largeur/2,
+                   v_yb*obj.longueur/2 + v_yd*obj.largeur/2,
+                   obj.z)# point 7
+                   
+        glVertex3f(v_xb*obj.longueur/2 + v_xd*obj.largeur/2,
+                   v_yb*obj.longueur/2 + v_yd*obj.largeur/2,
+                   obj.z + obj.hauteur)# point 8
+                   
+        glEnd()
+                
             

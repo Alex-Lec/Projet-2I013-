@@ -8,8 +8,8 @@ from diver import *
 
 arene = Terrain()
 robot = Robot(100, 100, 0, arene)
-#ctrc = Controleur_droit_stop(robot)
-ctrc = Controleur_carre(robot)
+ctrc = Controleur_droit_stop(robot)
+#ctrc = Controleur_carre(robot)
 arene.robot.append(robot)
 
 affichage = Affichage(arene)

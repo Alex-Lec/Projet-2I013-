@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
+import pyglet
+import time
+from OpenGL.GL import glLight
+from pyglet.gl import *
+from pyglet.window import key
+from OpenGL.GLUT import *
+from pyglet.image.codecs.png import PNGImageDecoder
 
 from .vecteur import Vecteur
 import numpy as np
@@ -8,7 +15,7 @@ class ObjetPhysique:
 
     def __init__(self, x = 0, y = 0, z = 0, \
                  largeur = 50, longueur = 100, hauteur = 20,\
-                 r = 0, g = 50, b = 0):
+                 r = 50, g = 50, b = 0):
        
         self.x = x
         self.y = y
@@ -71,6 +78,7 @@ class ObjetPhysique:
         
         glBegin(GL_QUADS)
         glColor3ub(self.r,self.g,self.b)
+        
         glVertex3f(v_xb*self.longueur/2 + v_xg*self.largeur/2,
                    v_yb*self.longueur/2 + v_yg*self.largeur/2,
                    self.z)# point 1
