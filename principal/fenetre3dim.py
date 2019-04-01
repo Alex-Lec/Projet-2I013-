@@ -37,9 +37,10 @@ class Window(pyglet.window.Window):
         glViewport(0, 0, self.width, self.height)
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
-        gluPerspective(70, self.width / self.height, 0.5, 1000)
+        gluPerspective(70, self.width / self.height, 0.5, 5000)
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
+        #gluLookAt(-200, -200, 0, 200, 200, -100, 0, 0, 1)
 
     def setup2D(self): 
         glClearColor(1, 1, 1, 1)
@@ -54,14 +55,17 @@ class Window(pyglet.window.Window):
         self.clear()
         glPushMatrix()
 
+        glRotatef(self.xRotation, 1, 0, 0)
+        glRotatef(self.yRotation, 0, 1, 0)
+        
         self.carre.vertex_list.draw(GL_POLYGON)
         self.cube.vertex_list.draw(GL_POLYGON)
         self.ligne.vertex_list.draw(GL_LINES)
-
+        
         """
         for c in self.toDraw:
             c.draw() 
-        """           
+        """
 
         glPopMatrix()
 
@@ -75,7 +79,6 @@ class Window(pyglet.window.Window):
         elif (motion == key.RIGHT):
             self.yRotation += self.increment
 
-    """
     def on_resize(self, width, height):
         # set the Viewport
         glViewport(0, 0, self.width, self.height)
@@ -84,21 +87,19 @@ class Window(pyglet.window.Window):
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
 
-        aspectRatio = self.width / self.height
-        gluPerspective(70, aspectRatio, 1, 1000)
+        gluPerspective(70, self.width / self.height , 0.5, 5000)
 
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
-        glTranslatef(0, 0, -400)
-    """
+        glTranslatef(-500, -300, -1000)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         #self.toDraw += Carre(100, 100, 0, 200, 100, 0, 200, 200, 0, 100, 200, 0)
-        self.carre = Carre(100, 100, 0, 200, 100, 0, 200, 200, 0, 100, 200, 0)
-        self.cube = Cube(100, 100, 0, 200, 100, 0, 200, 200, 0, 100, 200, 0, 100, 100, -100, 200, 100, -100, \
-            200, 200, -100, 100, 200, -100)
-        self.ligne = Ligne(500, 500, 0, 600, 400, -100)
+        self.carre = Carre(400, 400, 0, 500, 400, 0, 500, 500, 0, 400, 500, 0)
+        self.cube = Cube(100, 100, 0, 200, 100, 0, 200, 200, 0, 100, 200, 0, \
+            100, 200, -100, 100, 100, -100, 200, 100, -100, 200, 200, -100)
+        self.ligne = Ligne(600, 300, 0, 700, 300, 0)
         self.setup()
         #self.setup2D()
 
