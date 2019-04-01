@@ -8,6 +8,11 @@ from pyglet.window import key
 from OpenGL.GLUT import *
 from pyglet.image.codecs.png import PNGImageDecoder
 
+class Carre():
+    def __init__(self, x1, y1, z1, x2, y2, z2, x3, y3, x4, y4, z4):
+        vertex_list = pyglet.graphics.vertex_list(4, ('v3f', [x1, y1, z1, x2, y2, z2, x3, y3, x4, y4, z4]), \
+            ('c3B', [255, 255, 255 * 4]))
+
 class Affichage_3D(pyglet.window.Window):
     xRotation = yRotation = 0
     increment = 5
@@ -63,7 +68,7 @@ class Affichage_3D(pyglet.window.Window):
     def on_draw(self):
         # Clear the current GL Window
         self.clear()
-        self.set_camera() # cf plus tard
+        #self.set_camera() # cf plus tard
         # Push Matrix onto stack
         glPushMatrix()
         glRotatef(self.xRotation, 1, 0, 0)
@@ -76,4 +81,6 @@ class Affichage_3D(pyglet.window.Window):
         # Pop Matrix off stack
         glPopMatrix()
 
-            
+if __name__ == '__main__':
+    window = Affichage_3D(width = 1000, height = 600, title = "Robot 2I013")
+    pyglet.app.run() 
