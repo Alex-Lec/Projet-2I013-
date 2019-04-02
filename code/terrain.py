@@ -9,14 +9,14 @@ import time
 
 class Terrain(Thread):
 
-    def __init__(self, dimx = 1000, dimy = 600):
+    def __init__(self, dimx = 2000, dimy = 1000):
         super(Terrain,self).__init__()
         self.dimx = dimx
         self.dimy = dimy
-        self.objet = [ObjetPhysique(dimx/2, -1, 0, 1, dimx, 0),# haut
-                      ObjetPhysique(-1, dimy/2, 0, dimy, 1, 0),# gauche
-                      ObjetPhysique(dimx/2, dimy+1, 0, 1, dimx, 0),#bas
-                      ObjetPhysique(dimx+1, dimy/2, 0, dimy, 1, 0)]#droite
+        self.objet = [ObjetPhysique(dimx/2, -1, 0, 1, dimx, 100),# haut
+                      ObjetPhysique(-1, dimy/2, 0, dimy, 1, 100),# gauche
+                      ObjetPhysique(dimx/2, dimy+1, 0, 1, dimx, 100),#bas
+                      ObjetPhysique(dimx+1, dimy/2, 0, dimy, 1, 100)]#droite
         
         self.robot = []
         self.tps = 30
