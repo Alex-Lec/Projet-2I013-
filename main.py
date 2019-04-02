@@ -7,14 +7,15 @@ import time
 from diver import *
 from controleur import Controleur_carre, Controleur_droit_stop
 import sys
+
 arene = Terrain()
 robot = Robot(100, 100, 0, arene)
 
 
 ###################################################################
 print("\
-              Bienvenue dans la matrice\n\
-              Selectionnez votre choix\n\n\
+            Bienvenue dans la matrice\n\
+            Selectionnez votre choix\n\n\
             #  Controleur_carre      -> 1 #\n\
             #  Controleur_droit_stop -> 2 #\n\
             #  quit                  -> q #")

@@ -12,19 +12,22 @@ import random
 import numpy
 
 if __name__ == '__main__':
+    img = Image.new("RGB", (10, 10), "black")
+    img.save("texture.png", "png")
+
+"""
+if __name__ == '__main__':
     img = Image.open("screenshot.png")
     print(img.size, img.format)
-    #img.show()
     data = list(img.getdata())
-    #print(data[:10])
     r = [i[0] for i in data]
-    print(r[0])
     for i in range(len(r)):
         if (r[i] == 255):
             data[i] = (0, 0, 0, 255)
     imgNew = Image.new(img.mode, img.size)
     imgNew.putdata(data)
     imgNew.show()
+"""
 
 """
 if __name__ == '__main__':

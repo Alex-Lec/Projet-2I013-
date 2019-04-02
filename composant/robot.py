@@ -34,7 +34,7 @@ class Robot(ObjetPhysique):
         """ Allume une led. """
         pass
     
-    def set_motor_dps(self, port ,dps):
+    def set_motor_dps(self, port, dps):
         """ Fixe la vitesse d'un moteur en nbr de degres par seconde
             :port: une constante moteur, MOTOR_LEFT ou MOTOR_RIGHT
             :dps: la vitesse cible en nombre de degres par seconde        
@@ -47,13 +47,11 @@ class Robot(ObjetPhysique):
         else :
             print("ERREUR ROBOT_set_motor_dps : moteur invalide")
     
-    
     def get_motor_position(self):
         """ Lit les etats des moteurs en degre.
         :return: couple du degre de rotation des moteurs
-        
         """
-        return (self.OFFSET_LEFT, self.OFFSET_RIGHT);
+        return (self.OFFSET_LEFT, self.OFFSET_RIGHT)
           
     def offset_motor_encoder(self, port, offset):
         """ Fixe l’offset des moteurs (en degres) (permet par exemple

@@ -89,6 +89,7 @@ class Affichage(Thread):
                                     r.v_dir.y * 40, fill = "black", tags = tag_robot)
         #self.fenetre.after(int(1000./self.tps),self.update_robots)
         self.fenetre.after(5,self.update_robots)
+        
     def ouvrir(self):
 
         def ok_button():

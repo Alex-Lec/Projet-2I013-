@@ -20,7 +20,7 @@ class Terrain(Thread):
         
         self.robot = []
         self.tps = 30
-        self.last_up = time.time();
+        self.last_up = time.time()
         
     def run(self):
         while True :
@@ -32,38 +32,34 @@ class Terrain(Thread):
         robot.MOTOR_LEFT = 15
         robot.MOTOR_RIGHT = 15
         robot.last_up = time.time()-1
-        self.update();
+        self.update()
             
     def reculer_robot(self, robot):
         robot.arene = self
         robot.MOTOR_LEFT = -15
         robot.MOTOR_RIGHT = -15
         robot.last_up = time.time()-1
-        self.update();
-        
+        self.update()
 
     def tourner_robot_d(self, robot):
         robot.arene = self
         robot.MOTOR_LEFT = 15
         robot.MOTOR_RIGHT = 0
         robot.last_up = time.time()-1
-        self.update();
+        self.update()
             
     def tourner_robot_g(self, robot):
         robot.arene = self
         robot.MOTOR_LEFT = 0
         robot.MOTOR_RIGHT = 15
         robot.last_up = time.time()-1
-        self.update();
-        
+        self.update()
 
     def update(self):
         for rob in self.robot:
             rob.arene = self
             rob.update_robot()
 
-
-        
     def testCollision(self, rob, projection = None):
         """
         Detecte lorsque deux segments d'objets se rencontre.
