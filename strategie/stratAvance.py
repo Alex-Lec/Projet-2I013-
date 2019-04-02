@@ -16,12 +16,10 @@ class StratAvance:
         pos2 = self.robot.get_motor_position()[1]
         
         if (pos1 < pos2):
-            print("declage GAUCHE")
-            self.robot.set_motor_dps(1, self.vit + pos2 - pos1)
+            self.robot.set_motor_dps(1, self.vit + 2*(pos2 - pos1))
         
         elif (pos1 > pos2):
-            print("declage droit")
-            self.robot.set_motor_dps(2, self.vit + pos1 - pos2)
+            self.robot.set_motor_dps(2, self.vit + 2*(pos1 - pos2))
             
         else :
             self.robot.set_motor_dps(1, self.vit)
@@ -29,6 +27,7 @@ class StratAvance:
             
     
     def stop(self):
+            
         if((self.robot.get_motor_position()[0]*self.robot.WHEEL_CIRCUMFERENCE)
             /360 > self.dst):
             return True

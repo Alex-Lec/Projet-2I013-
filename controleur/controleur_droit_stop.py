@@ -1,29 +1,46 @@
 #from composant import Robot, ObjetPhysique
 #from code import Terrain, Affichage
-from strategie import StratAvanceStop,StratStop
+from strategie import StratAvance,StratStop
 from threading import Thread
 import time;
 
 class Controleur_droit_stop():
-    def __init__(self,rob):
+    def __init__(self,rob, dst = 100, vit = 1000):
         self.robot = rob
         self.Go = None
-        self.cnt = 0
-    
+        self.cnt = 2
+        self.dst = dst
+        self.vitesse = vit
     
     def start(self):
-        self.Go = StratAvanceStop(self.robot,1000,100)
+        self.Go = StratAvance(self.robot, 100, self.vitesse)
         self.Go.start()
+        self.cnt = 2
         
     def step(self):
-        if(self.cnt == 0 and self.robot.get_distance() <= 100):
-            self.robot.set_motor_dps(1, 500)
-            self.robot.set_motor_dps(2, 500)
-            self.cnt = 1
+        self.Go.step()
+        
+        if(self.robot.get_distance() <= self.dst):
+            if (self.cnt != 0):
+                self.Go = StratStop(self.robot)
+                self.Go.start()
+                self.cnt = 0
+    
+        elif(self.robot.get_distance() <= (2*self.dst)):
+            if (self.cnt != 1):
+                self.Go = StratAvance(self.robot, 100, self.vitesse/2)
+                self.Go.start()
+                self.cnt = 1
+        
+        elif(self != 2 ):
+            self.Go = StratAvance(self.robot, 100, self.vitesse)
+            self.Go.start()
+            self.cnt = 2
+        
         
     def stop(self):
-        if (self.Go.stop()):
-            self.Go = StratStop(self.robot)
-            self.Go.start()
-            return False
+        #if (self.Go.stop()):
+        #    self.Go = StratStop(self.robot)
+        #    self.Go.start()
+        #    return False
         return True

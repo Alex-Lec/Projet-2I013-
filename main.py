@@ -1,15 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
-
-from composant import *
-from code import *
 import time
 from diver import *
 from controleur import Controleur_carre, Controleur_droit_stop
 import sys
-arene = Terrain()
-robot = Robot(100, 100, 0, arene)
 
+robot_irl = True
+
+try :
+    from robot2I013.robot2I013 import Robot2I013
+    robot = Robot2I013()
+except:
+    from composant import *
+    from code import *
+    arene = Terrain()
+    robot = Robot(100, 100, 0, arene)
+    robot_irl = False
 
 ###################################################################
 print("\
@@ -21,18 +27,19 @@ print("\
 
 choix = input()
 if (choix == "1"):
-    ctrc = Controleur_carre(robot)
+    ctrc = Controleur_carre(robot,500,500)
 elif (choix == "2"):
     ctrc = Controleur_droit_stop(robot)
 else :
     sys.exit()
 
 ###################################################################
-
-arene.robot.append(robot)
-affichage = Affichage(arene)
-affichage.start()
-arene.start()
+if not robot_irl:
+    arene.robot.append(robot)
+    affichage = Affichage(arene)
+    affichage.start()
+    arene.start()
+    
 tps = 100
 
 ctrc.start()

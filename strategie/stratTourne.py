@@ -1,10 +1,17 @@
 import time
 class StratTourne:
     def __init__(self, robot, angle, vitesse):
+        """
+        Tourne d'un angle 0 à la vitesse v; !!! Tourne dans le sens trigo. 
+        Un angle < 0 le fait tourner dans le sens anti-trigo 
+        
+        """
         self.robot = robot
         self.angle = angle
+        if(self.angle<0):
+            vitesse = -vitesse
         self.vit = vitesse
-
+        
     def start(self):
         self.robot.set_motor_dps(1,  self.vit)
         self.robot.set_motor_dps(2, -self.vit)
@@ -16,12 +23,10 @@ class StratTourne:
         pos2 = self.robot.get_motor_position()[1]
     
         if (pos1 < -pos2):
-            print("declage gauche")
-            self.robot.set_motor_dps(1,  self.vit +  (pos1 + pos2))
+            self.robot.set_motor_dps(1,  self.vit +  2*(pos1 + pos2))
         
         elif (pos1 > -pos2):
-            print("declage droit")
-            self.robot.set_motor_dps(2, -self.vit + -(pos2 + pos1))
+            self.robot.set_motor_dps(2, -self.vit + -2*(pos2 + pos1))
             
         else :
             self.robot.set_motor_dps(1, self.vit)
