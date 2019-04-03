@@ -6,6 +6,7 @@ from composant import Robot, ObjetPhysique
 from diver import *
 import time
 from threading import Thread
+import sys
 
 # http://effbot.org/zone/tkinter-complex-canvas.htm
 # http://www.fil.univ-lille1.fr/~marvie/python/chapitre6.html
@@ -20,7 +21,7 @@ class Affichage(Thread):
     def init_run(self):
         self.fenetre = Tk()
         self.fenetre.title("Simulateur")
-        self.fenetre.geometry("2000x1000")
+        self.fenetre.geometry("1500x900")
         self.fenetre.resizable(0, 0)
         self.robot_selectionne = IntVar()
 

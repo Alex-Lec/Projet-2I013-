@@ -5,13 +5,15 @@ from threading import Thread
 import time;
 
 class Controleur_carre():
-    def __init__(self,rob):
+    def __init__(self,rob,dst = 500,vit = 500):
         self.robot = rob
         self.cnt = 0
         self.Go = None
+        self.vitesse = vit
+        self.dst = dst
 
     def start(self):    
-        self.Go = StratAvance(self.robot,500,500)
+        self.Go = StratAvance(self.robot,self.dst,self.vitesse)
         self.Go.start()
         self.cnt = 0
         
@@ -22,8 +24,9 @@ class Controleur_carre():
             if (type(self.Go).__name__ == "StratAvance") :#switch strategie
                 self.Go = StratTourne(self.robot,90,100)
                 self.cnt +=1
+                
             elif (type(self.Go).__name__ == 'StratTourne') :#switch strategie
-                self.Go = StratAvance(self.robot,500,500)
+                self.Go = StratAvance(self.robot,self.dst,self.vitesse)
         
             self.Go.start()
           
