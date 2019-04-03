@@ -11,7 +11,7 @@ import math
 import random
 import numpy
 from composant import Robot, ObjetPhysique
-from terrain import Terrain
+from .terrain import Terrain
 import time
 from threading import Thread
 
@@ -20,7 +20,7 @@ class Carre():
         self.vertex_list = pyglet.graphics.vertex_list(4, ('v3f', [x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4]), \
             ('c3B', [red, green, blue] * 4))
 
-class Cube():
+class Cube_test():
     def __init__(self, x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4, x5, y5, z5, x6, y6, z6, x7, y7, z7, x8, y8, z8, \
         red = 0, green = 0, blue = 0):
         self.vertex_list = pyglet.graphics.vertex_list(20, ('v3f', [x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4, \
@@ -34,6 +34,35 @@ class Ligne():
     def __init__(self, x1, y1, z1, x2, y2, z2, red = 0, green = 0, blue = 0):
         self.vertex_list = pyglet.graphics.vertex_list(2, ('v3f', [x1, y1, z1, x2, y2, z2]), ('c3B', [red, green, blue] * 2))
 
+class Rectangle(ObjetPhysique):
+    def __init__(self, *args, **kwargs):
+
+        ObjetPhysique.__init__(self, *args, **kwargs)
+        #Thread.__init__(self)
+
+        x = self.x - self.largeur / 2
+        y = self.y + self.hauteur / 2
+        z = self.z - self.longueur / 2
+
+        X = x + self.largeur
+        Y = y + self.longueur
+        Z = z + self.longueur
+
+        color = ('c3B', (self.r, self.g, self.b) * 4)
+
+        self.batch = pyglet.graphics.Batch()
+
+        self.batch.add(4, GL_QUADS, None, ('v3f', (x,y,z, x,y,Z, x,Y,Z, x,Y,z)), color)
+        self.batch.add(4, GL_QUADS, None, ('v3f', (X,y,Z, X,y,z, X,Y,z, X,Y,Z)), color)
+        self.batch.add(4, GL_QUADS, None, ('v3f', (x,y,z, X,y,z, X,y,Z, x,y,Z)), color)
+        self.batch.add(4, GL_QUADS, None, ('v3f', (x,Y,Z, X,Y,Z, X,Y,z, x,Y,z)), color)
+        self.batch.add(4, GL_QUADS, None, ('v3f', (X,y,z, x,y,z, x,Y,z, X,Y,z)), color)
+        self.batch.add(4, GL_QUADS, None, ('v3f', (x,y,Z, X,y,Z, X,Y,Z, x,Y,Z)), color)
+
+    def draw(self):
+        self.batch.draw()
+
+"""
 class Cube_tex(ObjetPhysique):
     def get_tex(self, file):
         tex = pyglet.image.load(file).texture
@@ -44,14 +73,23 @@ class Cube_tex(ObjetPhysique):
     def __init__(self):
         ObjetPhysique.__init__(self, 0, 0, -1)
 
-        self.side = self.get_tex('texture.png')
+        #self.side = self.get_tex('texture.png')
 
         self.batch = pyglet.graphics.Batch()
 
-        tex_coords = ('t2f', (0, 0, 1, 0, 1, 1, 0, 1))
+        #tex_coords = ('t2f', (0, 0, 1, 0, 1, 1, 0, 1))
 
         x, y, z = 0, 0, -1
         X, Y, Z = x + 1, y + 1, z + 1
+
+        color = ('c3B', (0, 0, 0) * 4)
+
+        self.batch.add(4, GL_QUADS, None, ('v3f', (x,y,z, x,y,Z, x,Y,Z, x,Y,z)), color)
+        self.batch.add(4, GL_QUADS, None, ('v3f', (X,y,Z, X,y,z, X,Y,z, X,Y,Z)), color)
+        self.batch.add(4, GL_QUADS, None, ('v3f', (x,y,z, X,y,z, X,y,Z, x,y,Z)), color)
+        self.batch.add(4, GL_QUADS, None, ('v3f', (x,Y,Z, X,Y,Z, X,Y,z, x,Y,z)), color)
+        self.batch.add(4, GL_QUADS, None, ('v3f', (X,y,z, x,y,z, x,Y,z, X,Y,z)), color)
+        self.batch.add(4, GL_QUADS, None, ('v3f', (x,y,Z, X,y,Z, X,Y,Z, x,Y,Z)), color)
 
         self.batch.add(4, GL_QUADS, self.side, ('v3f',(x,y,z, x,y,Z, x,Y,Z, x,Y,z)), tex_coords)
         self.batch.add(4, GL_QUADS, self.side, ('v3f',(X,y,Z, X,y,z, X,Y,z, X,Y,Z)), tex_coords)
@@ -62,10 +100,12 @@ class Cube_tex(ObjetPhysique):
 
     def draw(self):
         self.batch.draw()
+"""
 
 class Player(Robot):
     def __init__(self,pos=(0,0,0),rot=(0,0)):
-        Robot.__init__(self, 0, 0, 0)
+        Robot.__init__(self, x= pos[0] , y = pos[1], z = pos[2])
+        #Thread.__init__(self)
 
         self.pos = list(pos)
         self.rot = list(rot)
@@ -79,15 +119,30 @@ class Player(Robot):
         s = dt*10
         rotY = -self.rot[1]/180*math.pi
         dx,dz = s*math.sin(rotY),s*math.cos(rotY)
-        if keys[key.Z]: self.pos[0]+=dx; self.pos[2]-=dz
-        if keys[key.S]: self.pos[0]-=dx; self.pos[2]+=dz
-        if keys[key.Q]: self.pos[0]-=dz; self.pos[2]-=dx
-        if keys[key.D]: self.pos[0]+=dz; self.pos[2]+=dx
 
-        if keys[key.SPACE]: self.pos[1]+=s
-        if keys[key.LSHIFT]: self.pos[1]-=s
+        if (keys[key.Z]):
+            self.pos[0]+=dx
+            self.pos[2]-=dz
 
-class Window(pyglet.window.Window, Thread):
+        if (keys[key.S]):
+            self.pos[0]-=dx
+            self.pos[2]+=dz
+
+        if (keys[key.Q]):
+            self.pos[0]-=dz
+            self.pos[2]-=dx
+
+        if (keys[key.D]):
+            self.pos[0]+=dz
+            self.pos[2]+=dx
+
+        if (keys[key.SPACE]):
+            self.pos[1]+=s
+
+        if (keys[key.LSHIFT]):
+            self.pos[1]-=s
+
+class Window(pyglet.window.Window):
 
     toDraw = []
 
@@ -122,34 +177,24 @@ class Window(pyglet.window.Window, Thread):
     lock = False
     mouse_lock = property(lambda self:self.lock,setLock)
 
-    def setup(self):
-        glClearColor(0.8, 0.8, 0.8, 1) 
-        glEnable(GL_DEPTH_TEST)
-
     def __init__(self, arene = Terrain(), *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.keys = key.KeyStateHandler()
         self.push_handlers(self.keys)
         pyglet.clock.schedule(self.update)
+
         self.arene = arene
+        self.tps = 25
 
-        self.cube_tex = Cube_tex()
+        self.toDraw.append(Rectangle(x = 0, y = 0, z = -1, largeur = 1, longueur = 1, hauteur = 1, r = 0, g = 0, b = 0))
+        self.toDraw.append(Rectangle(x = 10, y = 10, z = -10, largeur = 10, longueur = 10, hauteur = 10, r = 0, g = 0, b = 0))
+
         self.player = Player((0.5, 1.5, 1.5), (0,0))
+        
+        glClearColor(0.8, 0.8, 0.8, 1) 
+        glEnable(GL_DEPTH_TEST)
 
-        self.toDraw.append(Cube(0, 0, 0, 10, 0, 0, 10, 10, 0, 0, 10, 0, \
-            0, 0, -10, 10, 0, -10, 10, 10, -10, 0, 10, -10))
-
-        self.toDraw.append(Ligne(0, 0, 1, 0, 1, 1))
-
-        """
-        self.toDraw.append(Carre(0, 100, 0, 50, 100, 0, 50, 50, 0, 0, 50, 0, red = 255))
-        self.toDraw.append(Carre(400, 400, 0, 500, 400, 0, 500, 500, 0, 400, 500, 0, blue = 255))
-        self.toDraw.append(Cube(100, 100, 0, 200, 100, 0, 200, 200, 0, 100, 200, 0, \
-            100, 100, -100, 200, 100, -100, 200, 200, -100, 100, 200, -100, red = 255))
-        self.toDraw.append(Ligne(600, 300, 0, 700, 300, 0))
-        """
-
-        self.setup()
+        pyglet.app.run()
 
     def on_mouse_motion(self,x,y,dx,dy):
         if self.mouse_lock: self.player.mouse_motion(dx,dy)
@@ -167,7 +212,10 @@ class Window(pyglet.window.Window, Thread):
         self.clear()
         self.set3d()
         self.push(self.player.pos,self.player.rot)
-        self.cube_tex.draw()
+
+        for c in self.toDraw:
+            c.draw()
+
         glPopMatrix()
 
     def on_text(self, text):
@@ -175,7 +223,9 @@ class Window(pyglet.window.Window, Thread):
             pyglet.image.get_buffer_manager().get_color_buffer().save('screenshot.png')
             print("Screenshot success !")
 
+"""
 if __name__ == '__main__':
     window = Window(width = 1000, height = 600, caption = 'Robot 2I013')
     #glEnable(GL_CULL_FACE)
     pyglet.app.run()
+"""
