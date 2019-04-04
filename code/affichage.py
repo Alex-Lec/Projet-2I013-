@@ -6,6 +6,7 @@ from composant import Robot, ObjetPhysique
 from diver import *
 import time
 from threading import Thread
+import sys
 
 # http://effbot.org/zone/tkinter-complex-canvas.htm
 # http://www.fil.univ-lille1.fr/~marvie/python/chapitre6.html
