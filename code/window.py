@@ -142,7 +142,7 @@ class Player(Robot):
         if (keys[key.LSHIFT]):
             self.pos[1]-=s
 
-class Window(pyglet.window.Window):
+class Window(pyglet.window.Window, Thread):
 
     toDraw = []
 
@@ -178,6 +178,31 @@ class Window(pyglet.window.Window):
     mouse_lock = property(lambda self:self.lock,setLock)
 
     def __init__(self, arene, *args, **kwargs):
+        pyglet.window.Window.__init__(self, *args, **kwargs)
+        Thread.__init__(self)
+
+        self.keys = key.KeyStateHandler()
+        self.push_handlers(self.keys)
+        pyglet.clock.schedule(self.update)
+
+        self.arene = arene
+        self.tps = 25
+
+        self.toDraw.append(Rectangle(x = 0, y = 0, z = -1, largeur = 1, longueur = 1, hauteur = 1, r = 0, g = 0, b = 0))
+        self.toDraw.append(Rectangle(x = 10, y = 10, z = -10, largeur = 10, longueur = 10, hauteur = 10, r = 0, g = 0, b = 0))
+
+        self.player = Player((self.arene.robot[0].x, self.arene.robot[0].y, self.arene.robot[0].z), \
+            (self.arene.robot[0].vd, self.arene.robot[0].vg))
+
+        glClearColor(0.8, 0.8, 0.8, 1) 
+        glEnable(GL_DEPTH_TEST)
+
+    def run(self):
+
+        pyglet.app.run()
+
+    """
+    def __init__(self, arene, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.keys = key.KeyStateHandler()
         self.push_handlers(self.keys)
@@ -190,12 +215,13 @@ class Window(pyglet.window.Window):
         self.toDraw.append(Rectangle(x = 10, y = 10, z = -10, largeur = 10, longueur = 10, hauteur = 10, r = 0, g = 0, b = 0))
 
         self.player = Player((self.arene.robot[0].x, self.arene.robot[0].y, self.arene.robot[0].z), \
-            (self.arene.robot[0].v_x, self.arene.robot[0].v_y))
+            (self.arene.robot[0].vd, self.arene.robot[0].vg))
         
         glClearColor(0.8, 0.8, 0.8, 1) 
         glEnable(GL_DEPTH_TEST)
 
         pyglet.app.run()
+    """
 
     def on_mouse_motion(self,x,y,dx,dy):
         if self.mouse_lock: self.player.mouse_motion(dx,dy)
@@ -220,7 +246,7 @@ class Window(pyglet.window.Window):
         glPopMatrix()
 
     def on_text(self, text):
-        if (text.find('p') > -1 or text.find('P') > - 1):
+        if (text.find('p') > -1 or text.find('P') > -1):
             pyglet.image.get_buffer_manager().get_color_buffer().save('screenshot.png')
             print("Screenshot success !")
 

@@ -137,4 +137,12 @@ class Robot(ObjetPhysique):
         """
         return self.detecteur.detecte()
 
+    def get_image(self):
+        stream = BytesIO()
+        self.camera.capture(stream,format="jpeg")
+        stream.seek(0)
+        img = Image.open(stream).copy()
+        stream.close()
+        return img
+
 

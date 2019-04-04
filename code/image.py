@@ -18,7 +18,7 @@ if __name__ == '__main__':
 """
 
 if __name__ == '__main__':
-    img = Image.open("screenshot.png")
+    img = Image.open("image.jpeg")
     print(img.size, img.format)
     data = list(img.getdata())
     r = [i[0] for i in data]
