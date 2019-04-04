@@ -126,7 +126,6 @@ class Robot(ObjetPhysique):
             self.y = y
             self.v_dir = v_d
         
-        
     def get_distance(self):
         """
         Mesure la distance entre le devant du robot et les objets devant.
@@ -144,5 +143,3 @@ class Robot(ObjetPhysique):
         img = Image.open(stream).copy()
         stream.close()
         return img
-
-

@@ -30,6 +30,12 @@ print("\n\
             #  Quit                     -> Q #")
 
 choix = input()
+
+if (choix == "1" or choix == "3"):
+    robot = Robot(x = 100, y = 100, z = 0, arene = arene)
+else:
+    robot = Robot(x = 100, y = 100, z = 0, largeur = 100, longueur = 100, hauteur = 10, arene = arene)
+
 if (choix == "1" or choix == "2"):
     ctrc = Controleur_carre(robot,500,500)
 elif (choix == "3" or choix == "4"):
@@ -41,12 +47,7 @@ else :
 
 ###################################################################
 
-if (choix == "1" or choix == "3"):
-    robot = Robot(x = 100, y = 100, z = 0, arene = arene)
-else:
-    robot = Robot(x = 0, y = 1, z = 1, largeur = 1, longueur = 1, hauteur = 1, arene = arene)
-
-if (not robot_irl and (choix == "1" or choix == "3" or choix == "5")):
+if (not robot_irl and (choix == "1" or choix == "3")):
     arene.robot.append(robot)
     affichage = Affichage(arene)
     affichage.start()
@@ -67,7 +68,7 @@ i = 0
 while ctrc.stop():
     ctrc.step()
     time.sleep(1/tps)
-    #print(robot.x, robot.y, robot.z, robot.vd, robot.vg)
+    print(robot.x, robot.y, robot.z, robot.vd, robot.vg)
 
 print("stop")
 

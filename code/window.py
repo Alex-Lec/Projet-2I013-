@@ -38,7 +38,6 @@ class Rectangle(ObjetPhysique):
     def __init__(self, *args, **kwargs):
 
         ObjetPhysique.__init__(self, *args, **kwargs)
-        #Thread.__init__(self)
 
         x = self.x - self.largeur / 2
         y = self.y + self.hauteur / 2
@@ -104,8 +103,7 @@ class Cube_tex(ObjetPhysique):
 
 class Player(Robot):
     def __init__(self,pos=(0,0,0),rot=(0,0)):
-        Robot.__init__(self, x= pos[0] , y = pos[1], z = pos[2])
-        #Thread.__init__(self)
+        Robot.__init__(self, x = pos[0] , y = pos[1], z = pos[0])
 
         self.pos = list(pos)
         self.rot = list(rot)
@@ -137,19 +135,29 @@ class Player(Robot):
             self.pos[2]+=dx
 
         if (keys[key.SPACE]):
-            self.pos[1]+=s
+            #self.pos[1]+=s
+            self.pos[2] -= s
 
         if (keys[key.LSHIFT]):
-            self.pos[1]-=s
+            #self.pos[1]-=s
+            self.pos[2] += s
 
 class Window(pyglet.window.Window, Thread):
 
     toDraw = []
 
+    """
     def push(self,pos,rot): 
         glPushMatrix()
         glRotatef(-rot[0],1,0,0)
         glRotatef(-rot[1],0,1,0)
+        glTranslatef(-pos[0],-pos[1],-pos[2])
+    """
+
+    def push(self, pos, rot):
+        glPushMatrix()
+        glRotatef(-rot[0],1,0,0)
+        glRotatef(-rot[1],0,0,1)
         glTranslatef(-pos[0],-pos[1],-pos[2])
 
     def Projection(self): 
@@ -183,45 +191,34 @@ class Window(pyglet.window.Window, Thread):
 
         self.keys = key.KeyStateHandler()
         self.push_handlers(self.keys)
-        pyglet.clock.schedule(self.update)
 
         self.arene = arene
+        rob = self.arene.robot[0]
         self.tps = 25
 
-        self.toDraw.append(Rectangle(x = 0, y = 0, z = -1, largeur = 1, longueur = 1, hauteur = 1, r = 0, g = 0, b = 0))
+        self.toDraw.append(Rectangle(x = 1, y = 1, z = -1, largeur = 1, longueur = 1, hauteur = 1, r = 0, g = 0, b = 0))
         self.toDraw.append(Rectangle(x = 10, y = 10, z = -10, largeur = 10, longueur = 10, hauteur = 10, r = 0, g = 0, b = 0))
 
+        """
+        self.toDraw.append(Rectangle(x = rob.x, y = rob.y, z = rob.z, largeur = rob.largeur, longueur = rob.longueur, \
+            hauteur = rob.hauteur, r = 0, g = 0, b = 0))
+        """
+
+        self.robToDraw = Rectangle(x = rob.x, y = rob.y, z = rob.z, largeur = rob.largeur, \
+            longueur = rob.longueur, hauteur = rob.hauteur, r = 255, g = 0, b = 0)
+        """
         self.player = Player((self.arene.robot[0].x, self.arene.robot[0].y, self.arene.robot[0].z), \
             (self.arene.robot[0].vd, self.arene.robot[0].vg))
+        """
+
+        self.player = Player((100, 100, 0), (0, 0))
 
         glClearColor(0.8, 0.8, 0.8, 1) 
         glEnable(GL_DEPTH_TEST)
 
     def run(self):
-
-        pyglet.app.run()
-
-    """
-    def __init__(self, arene, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.keys = key.KeyStateHandler()
-        self.push_handlers(self.keys)
         pyglet.clock.schedule(self.update)
-
-        self.arene = arene
-        self.tps = 25
-
-        self.toDraw.append(Rectangle(x = 0, y = 0, z = -1, largeur = 1, longueur = 1, hauteur = 1, r = 0, g = 0, b = 0))
-        self.toDraw.append(Rectangle(x = 10, y = 10, z = -10, largeur = 10, longueur = 10, hauteur = 10, r = 0, g = 0, b = 0))
-
-        self.player = Player((self.arene.robot[0].x, self.arene.robot[0].y, self.arene.robot[0].z), \
-            (self.arene.robot[0].vd, self.arene.robot[0].vg))
-        
-        glClearColor(0.8, 0.8, 0.8, 1) 
-        glEnable(GL_DEPTH_TEST)
-
         pyglet.app.run()
-    """
 
     def on_mouse_motion(self,x,y,dx,dy):
         if self.mouse_lock: self.player.mouse_motion(dx,dy)
@@ -234,6 +231,13 @@ class Window(pyglet.window.Window, Thread):
 
     def update(self,dt):
         self.player.update(dt,self.keys)
+        self.arene.update()
+
+        rob = self.arene.robot[0]
+        self.robToDraw = Rectangle(x = rob.x, y = rob.y, z = rob.z, largeur = rob.largeur, \
+            longueur = rob.longueur, hauteur = rob.hauteur, r = 255, g = 0, b = 0)
+
+        self.robToDraw.draw()
 
     def on_draw(self):
         self.clear()
@@ -242,6 +246,8 @@ class Window(pyglet.window.Window, Thread):
 
         for c in self.toDraw:
             c.draw()
+
+        self.robToDraw.draw()
 
         glPopMatrix()
 
