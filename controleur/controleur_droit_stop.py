@@ -25,14 +25,18 @@ class Controleur_droit_stop():
                 self.Go = StratStop(self.robot)
                 self.Go.start()
                 self.cnt = 0
-    
+        
         elif(self.robot.get_distance() <= (2*self.dst)):
-            if (self.cnt != 1):
+            if (self.cnt == 0):
                 self.Go = StratAvance(self.robot, 100, self.vitesse/2)
                 self.Go.start()
+                self.cnt = 2
+        
+            elif (self.cnt != 1):
+                self.Go.update(self.vitesse/2)
                 self.cnt = 1
         
-        elif(self != 2 ):
+        elif(self.cnt != 2 ):
             self.Go = StratAvance(self.robot, 100, self.vitesse)
             self.Go.start()
             self.cnt = 2

@@ -23,20 +23,17 @@ class StratTourne:
         pos2 = self.robot.get_motor_position()[1]
     
         if (pos1 < -pos2):
-            self.robot.set_motor_dps(1,  self.vit +  2*(pos1 + pos2))
+            self.robot.set_motor_dps(1,  self.vit +  (pos1 + pos2))
         
         elif (pos1 > -pos2):
-            self.robot.set_motor_dps(2, -self.vit + -2*(pos2 + pos1))
+            self.robot.set_motor_dps(2, -self.vit + -(pos2 + pos1))
             
         else :
             self.robot.set_motor_dps(1, self.vit)
             self.robot.set_motor_dps(2, -self.vit)
     
     def stop(self):
-        if((self.robot.get_motor_position()[0]*self.robot.WHEEL_CIRCUMFERENCE /self.robot.WHEEL_BASE_CIRCUMFERENCE) >= self.angle):
-            return True
-            
-        if((self.robot.get_motor_position()[1]*self.robot.WHEEL_CIRCUMFERENCE /self.robot.WHEEL_BASE_CIRCUMFERENCE) <= -self.angle):
+        if(((self.robot.get_motor_position()[0]*self.robot.WHEEL_CIRCUMFERENCE /self.robot.WHEEL_BASE_CIRCUMFERENCE) >= self.angle) and((self.robot.get_motor_position()[1]*self.robot.WHEEL_CIRCUMFERENCE /self.robot.WHEEL_BASE_CIRCUMFERENCE) <= -self.angle)):
             return True
         
         return False

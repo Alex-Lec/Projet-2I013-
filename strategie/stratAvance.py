@@ -26,6 +26,11 @@ class StratAvance:
             self.robot.set_motor_dps(2, self.vit)
             
     
+    def update(self, vitesse):
+        self.robot.set_motor_dps(1, vitesse)
+        self.robot.set_motor_dps(2, vitesse)
+        self.vit = vitesse
+    
     def stop(self):
             
         if((self.robot.get_motor_position()[0]*self.robot.WHEEL_CIRCUMFERENCE)
