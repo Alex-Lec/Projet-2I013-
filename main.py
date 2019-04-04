@@ -15,7 +15,7 @@ except(ModuleNotFoundError):
     from composant import *
     from code import *
     arene = Terrain()
-    robot = Robot(100, 100, 0, arene)
+    robot = Robot(x = 0, y = 1, z = 1, largeur = 1, longueur = 1, hauteur = 1, arene = arene)
     robot_irl = False
 
 ###################################################################

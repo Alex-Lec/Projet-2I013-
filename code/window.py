@@ -177,7 +177,7 @@ class Window(pyglet.window.Window):
     lock = False
     mouse_lock = property(lambda self:self.lock,setLock)
 
-    def __init__(self, arene = Terrain(), *args, **kwargs):
+    def __init__(self, arene, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.keys = key.KeyStateHandler()
         self.push_handlers(self.keys)
@@ -189,7 +189,8 @@ class Window(pyglet.window.Window):
         self.toDraw.append(Rectangle(x = 0, y = 0, z = -1, largeur = 1, longueur = 1, hauteur = 1, r = 0, g = 0, b = 0))
         self.toDraw.append(Rectangle(x = 10, y = 10, z = -10, largeur = 10, longueur = 10, hauteur = 10, r = 0, g = 0, b = 0))
 
-        self.player = Player((0.5, 1.5, 1.5), (0,0))
+        self.player = Player((self.arene.robot[0].x, self.arene.robot[0].y, self.arene.robot[0].z), \
+            (self.arene.robot[0].v_x, self.arene.robot[0].v_y))
         
         glClearColor(0.8, 0.8, 0.8, 1) 
         glEnable(GL_DEPTH_TEST)

@@ -11,11 +11,12 @@ from PIL import Image
 import random
 import numpy
 
+"""
 if __name__ == '__main__':
     img = Image.new("RGB", (10, 10), "black")
     img.save("texture.png", "png")
-
 """
+
 if __name__ == '__main__':
     img = Image.open("screenshot.png")
     print(img.size, img.format)
@@ -27,7 +28,7 @@ if __name__ == '__main__':
     imgNew = Image.new(img.mode, img.size)
     imgNew.putdata(data)
     imgNew.show()
-"""
+
 
 """
 if __name__ == '__main__':
