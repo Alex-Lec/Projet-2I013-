@@ -34,7 +34,7 @@ choix = input()
 if (choix == "1" or choix == "3"):
     robot = Robot(x = 100, y = 100, z = 0, arene = arene)
 else:
-    robot = Robot(x = 100, y = 100, z = 0, largeur = 100, longueur = 100, hauteur = 10, arene = arene)
+    robot = Robot(x = 100, y = 100, z = 0, largeur = 10, longueur = 10, hauteur = 10, arene = arene)
 
 if (choix == "1" or choix == "2"):
     ctrc = Controleur_carre(robot,500,500)
