@@ -1,7 +1,4 @@
-#from composant import Robot, ObjetPhysique
-#from code import Terrain, Affichage
 from strategie import StratAvance,StratStop
-from threading import Thread
 import time;
 
 class Controleur_droit_stop():
