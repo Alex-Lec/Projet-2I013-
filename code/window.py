@@ -236,5 +236,5 @@ class Window(pyglet.window.Window, Thread):
 
     def on_text(self, text):
         if (text.find('p') > -1 or text.find('P') > -1):
-            pyglet.image.get_buffer_manager().get_color_buffer().save('screenshot.png')
+            pyglet.image.get_buffer_manager().get_color_buffer().save('image.jpeg')
             print("Screenshot success !")

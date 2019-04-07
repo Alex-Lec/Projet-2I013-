@@ -11,14 +11,25 @@ from PIL import Image
 import random
 import numpy
 
-"""
-if __name__ == '__main__':
-    img = Image.new("RGB", (10, 10), "black")
-    img.save("texture.png", "png")
-"""
-
 if __name__ == '__main__':
     img = Image.open("image.jpeg")
+    print(img.size, img.format)
+    data = list(img.getdata())
+
+    r = [i[0] for i in data]
+    g = [i[1] for i in data]
+    b = [i[2] for i in data]
+
+    for i in range(len(b)):
+        if (b[i] >= 180 and r[i] <= 80 and g[i] <= 80):
+            data[i] = (255, 255, 255, 255)
+    new_image = Image.new(img.mode, img.size)
+    new_image.putdata(data)
+    new_image.show()
+
+"""
+if __name__ == '__main__':
+    img = Image.open("screenshot.jpeg")
     print(img.size, img.format)
     data = list(img.getdata())
     r = [i[0] for i in data]
@@ -28,7 +39,13 @@ if __name__ == '__main__':
     imgNew = Image.new(img.mode, img.size)
     imgNew.putdata(data)
     imgNew.show()
+"""
 
+"""
+if __name__ == '__main__':
+    img = Image.new("RGB", (10, 10), "black")
+    img.save("texture.png", "png")
+"""
 
 """
 if __name__ == '__main__':
