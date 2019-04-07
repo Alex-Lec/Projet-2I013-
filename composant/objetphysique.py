@@ -22,7 +22,8 @@ class ObjetPhysique:
         self.largeur = largeur
         self.hauteur = hauteur
         self.v_dir = Vecteur(1., 0., 0.)
-        
+        self.vector = Vecteur(self.x, self.y, self.z)
+
         self.r = r
         self.g = g
         self.b = b

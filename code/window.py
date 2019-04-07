@@ -175,14 +175,11 @@ class Window(pyglet.window.Window, Thread):
         r = 255, g = 255, b = 255))
 
         self.arene.objet.append(ObjetPhysique(x = 1000, y = 100, z = 0, largeur = 10, longueur = 10, hauteur = 10))
-        
-        print(self.vecteur_y.norme_vecteur(), rob.v_dir.norme_vecteur())
-        print(self.vecteur_y.produitScalaire_vectors(rob.v_dir))
-        print()
 
-        #self.player = Player((rob.x, rob.z + 1, rob.y), (0, self.vecteur_y.arcos(rob.v_dir)), rob.largeur, rob.longueur, rob.hauteur)
-
-        self.player = Player(pos = (750, 0, 450), rot = (0, 0))
+        if (rob.v_dir.x < 0 or rob.v_dir.y < 0):
+            self.player = Player((rob.x, rob.z + 1, rob.y), (0, 180 - self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)), rob.largeur, rob.longueur, rob.hauteur)
+        else:
+            self.player = Player((rob.x, rob.z + 1, rob.y), (0, 180 + self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)), rob.largeur, rob.longueur, rob.hauteur)
     
         glClearColor(0.8, 0.8, 0.8, 1) 
         glEnable(GL_DEPTH_TEST)
@@ -199,6 +196,15 @@ class Window(pyglet.window.Window, Thread):
             self.close()
         elif (KEY == key.E):
             self.mouse_lock = not self.mouse_lock
+            rob = self.arene.robot[0]
+            if (self.mouse_lock == False):
+                self.arene.update()
+                rob = self.arene.robot[0]
+                self.player.rot[0] = 0
+                if (rob.v_dir.x < 0 or rob.v_dir.y < 0):
+                    self.player.rot[1] = 180 - self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)
+                else:
+                    self.player.rot[1] = 180 + self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)
 
     def update(self,dt):
         self.player.update(dt,self.keys)
@@ -210,9 +216,11 @@ class Window(pyglet.window.Window, Thread):
         self.player.pos[1] = rob.z + 1
         self.player.pos[2] = rob.y
 
-        #self.player.rot[1] = self.vecteur_y.arcos(rob.v_dir)
-
-        #self.player.rot[1] = -self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)
+        if (self.mouse_lock == False):
+            if (rob.v_dir.x < 0 or rob.v_dir.y < 0):
+                self.player.rot[1] = 180 - self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)
+            else:
+                self.player.rot[1] = 180 + self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)
 
     def on_draw(self):
         self.clear()
