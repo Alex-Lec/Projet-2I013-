@@ -2,7 +2,7 @@
 #from code import Terrain, Affichage
 from strategie import StratAvance,StratStop,StratTourne
 from threading import Thread
-import time;
+import time
 
 class Controleur_carre():
     def __init__(self,rob,dst = 500,vit = 500):
@@ -30,7 +30,6 @@ class Controleur_carre():
         
             self.Go.start()
           
-        
     def stop(self):
         if (self.cnt >= 4):
             self.Go = StratStop(self.robot)

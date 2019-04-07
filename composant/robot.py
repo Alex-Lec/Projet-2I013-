@@ -12,11 +12,11 @@ class Robot(ObjetPhysique):
     WHEEL_BASE_WIDTH         = 117  # distance (mm) de la roue gauche a la roue droite.
     WHEEL_DIAMETER           = 66.5 #  diametre de la roue (mm)
     WHEEL_BASE_CIRCUMFERENCE = WHEEL_BASE_WIDTH * pi # perimetre du cercle de rotation (mm)
-    WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * pi # perimetre de la roue (mm)
+    WHEEL_CIRCUMFERENCE      = WHEEL_DIAMETER * pi # perimetre de la roue (mm)
 
-    def __init__(self, x, y, z, arene = None, id = 0): 
+    def __init__(self, x, y, z, largeur = 117/2, longueur = 100, hauteur = 25, arene = None, id = 0): 
         self.arene = arene
-        ObjetPhysique.__init__(self, x, y, z, largeur = 117/2, longueur = 100, hauteur = 25)
+        ObjetPhysique.__init__(self, x, y, z, largeur, longueur, hauteur)
         
         self.detecteur = Detecteur(self)
         self.MOTOR_LEFT = 1
@@ -27,20 +27,19 @@ class Robot(ObjetPhysique):
         
         self.OFFSET_LEFT = 0
         self.OFFSET_RIGHT = 0
-        
-        
+            
         self.last_up = time.time()
         
-    def set_led(self, led, red = 0, green = 0,blue = 0):
+    def set_led(self, led, red = 0, green = 0, blue = 0):
         """ Allume une led. """
         pass
     
-    def set_motor_dps(self,port ,dps):
+    def set_motor_dps(self, port, dps):
         """ Fixe la vitesse d'un moteur en nbr de degres par seconde
             :port: une constante moteur, MOTOR_LEFT ou MOTOR_RIGHT
-            :dps: la vitesse cible en nombre de degres par seconde
-        
+            :dps: la vitesse cible en nombre de degres par seconde        
         """
+
         if (port == 1):
             self.vg = dps
         elif (port == 2):
@@ -48,13 +47,11 @@ class Robot(ObjetPhysique):
         else :
             print("ERREUR ROBOT_set_motor_dps : moteur invalide")
     
-    
     def get_motor_position(self):
         """ Lit les etats des moteurs en degre.
         :return: couple du degre de rotation des moteurs
-        
         """
-        return (self.OFFSET_LEFT,self.OFFSET_RIGHT);
+        return (self.OFFSET_LEFT, self.OFFSET_RIGHT)
           
     def offset_motor_encoder(self, port, offset):
         """ Fixe l’offset des moteurs (en degres) (permet par exemple
@@ -64,12 +61,12 @@ class Robot(ObjetPhysique):
         Zero the encoder by offsetting it by the current position
         """
         if (port == 3):
-            self.OFFSET_LEFT  -= offset;
-            self.OFFSET_RIGHT -= offset;
+            self.OFFSET_LEFT  -= offset
+            self.OFFSET_RIGHT -= offset
         elif (port == 1):
-            self.OFFSET_LEFT  -= offset;
+            self.OFFSET_LEFT  -= offset
         elif (port == 2):
-            self.OFFSET_RIGHT -= offset;
+            self.OFFSET_RIGHT -= offset
         else :
             print("ERREUR ROBOT_motor_encoder : moteur invalide")  
             
@@ -129,7 +126,6 @@ class Robot(ObjetPhysique):
             self.y = y
             self.v_dir = v_d
         
-        
     def get_distance(self):
         """
         Mesure la distance entre le devant du robot et les objets devant.
@@ -140,4 +136,10 @@ class Robot(ObjetPhysique):
         """
         return self.detecteur.detecte()
 
-
+    def get_image(self):
+        stream = BytesIO()
+        self.camera.capture(stream,format="jpeg")
+        stream.seek(0)
+        img = Image.open(stream).copy()
+        stream.close()
+        return img

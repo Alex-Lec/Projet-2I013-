@@ -14,7 +14,7 @@ import sys
 class Affichage(Thread):
 
     def __init__(self, arene = Terrain()):
-        super(Affichage,self).__init__()
+        super(Affichage, self).__init__()
         self.arene = arene
         self.tps = 25
 
@@ -63,6 +63,7 @@ class Affichage(Thread):
         #self.update_robots()
         #time.sleep(1./self.tps)
         self.fenetre.mainloop()
+
     def select_robot(self):
         print(self.robot_selectionne.get())
 
@@ -90,6 +91,7 @@ class Affichage(Thread):
                                     r.v_dir.y * 40, fill = "black", tags = tag_robot)
         #self.fenetre.after(int(1000./self.tps),self.update_robots)
         self.fenetre.after(5,self.update_robots)
+        
     def ouvrir(self):
 
         def ok_button():
