@@ -104,3 +104,5 @@ def traitement_Moy(img):
     
     
     
+
+    return max
