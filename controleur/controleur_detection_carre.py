@@ -3,7 +3,9 @@
 
 from strategie import StratAvance, StratStop, StratTourne, StratGetImage
 from threading import Thread
+from composant import vecteur
 import time
+import math
 import numpy as np
 import cv2 as cv
 import sys
@@ -52,14 +54,13 @@ class Controleur_detection_carre():
 
             image = cv.imread('image.jpeg')
             gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
-            ret,thresh = cv.threshold(gray,200,255,cv.THRESH_BINARY_INV)
+            ret,thresh = cv.threshold(gray,180,255,cv.THRESH_BINARY_INV)
             contours,h = cv.findContours(thresh,cv.RETR_EXTERNAL,cv.CHAIN_APPROX_SIMPLE)
             shape = None
 
             for cnt in contours:
                 perimetre = cv.arcLength(cnt,True)
                 approx = cv.approxPolyDP(cnt,0.01*perimetre,True)
-                print(perimetre)
                 
                 M = cv.moments(cnt)
 
@@ -82,6 +83,13 @@ class Controleur_detection_carre():
 
                     cv.putText(image, shape, (cX, cY), cv.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255), 2)
 
+                    if (shape == 'carre' or shape == 'rectangle'):
+                        print(cX, cY)
+
+                        if (cX >= 500):
+                            print(cX - 500)
+                        else:
+                            print(500 - cX)
 
                 """
                 if len(approx)==3:

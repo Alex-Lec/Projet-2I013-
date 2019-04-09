@@ -3,7 +3,7 @@
 
 import time
 from diver import *
-from controleur import Controleur_carre, Controleur_droit_stop, Controleur_image, Controleur_detection_carre
+from controleur import Controleur_carre, Controleur_droit_stop, Controleur_image, Controleur_detection_carre, Controleur_balise
 import sys
 from PIL import Image
 
@@ -27,7 +27,7 @@ print("\n\
             #  Controleur_droit_stop 2D   -> 3 #\n\
             #  Controleur_droit_stop 3D   -> 4 #\n\
             #  Controleur_detection_carre -> 5 #\n\
-            #  get_image()                -> 6 #\n\
+            #  Controleur_balise          -> 6 #\n\
             #  Quit                       -> Q #")
 
 choix = input()
@@ -39,12 +39,16 @@ else:
 
 if (choix == "1" or choix == "2"):
     ctrc = Controleur_carre(robot,500,500)
+
 elif (choix == "3" or choix == "4"):
     ctrc = Controleur_droit_stop(robot)
+
 elif (choix == "5"):
     ctrc = Controleur_detection_carre(robot)
+
 elif (choix == "6"):
-    ctrc = Controleur_image(robot)
+    ctrc = Controleur_balise(robot)
+
 else :
     sys.exit()
 
@@ -57,7 +61,7 @@ if (not robot_irl and (choix == "1" or choix == "3")):
     arene.start()
     #img = Image.save(robot.get_image())
 
-elif (not robot_irl and (choix == "2" or choix == "4" or choix == "5")):
+elif (not robot_irl and (choix == "2" or choix == "4" or choix == "5" or choix == "6")):
     arene.robot.append(robot)
     window = Window(arene = arene, width = 1000, height = 600, caption = 'Robot 2I013')
     window.start()
