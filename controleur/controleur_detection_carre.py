@@ -54,10 +54,12 @@ class Controleur_detection_carre():
             gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
             ret,thresh = cv.threshold(gray,200,255,cv.THRESH_BINARY_INV)
             contours,h = cv.findContours(thresh,cv.RETR_EXTERNAL,cv.CHAIN_APPROX_SIMPLE)
+            shape = None
 
             for cnt in contours:
                 perimetre = cv.arcLength(cnt,True)
                 approx = cv.approxPolyDP(cnt,0.01*perimetre,True)
+                print(perimetre)
                 
                 M = cv.moments(cnt)
 
@@ -67,8 +69,21 @@ class Controleur_detection_carre():
                 else:
                     cX = int(M["m10"] / M["m00"])
                     cY = int(M["m01"] / M["m00"])
+
                 cv.drawContours(image,[cnt],-1,(0,255,0),2)
 
+                if len(approx)==4 and perimetre > 20:
+                    (x, y, w, h) = cv.boundingRect(approx)
+                    ratio = w / float(h)
+                    if ratio >= 0.95 and ratio <= 1.05:
+                        shape = "carre"
+                    else:
+                        shape = "rectangle"
+
+                    cv.putText(image, shape, (cX, cY), cv.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255), 2)
+
+
+                """
                 if len(approx)==3:
                     shape = "triangle"
                 elif len(approx)==4:
@@ -84,8 +99,7 @@ class Controleur_detection_carre():
                     shape = "hexagone"
                 else:
                     shape= "circle"
-
-                cv.putText(image, shape, (cX, cY), cv.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255), 2)
+                """
 
                 """
                 cv.imshow('image.jpeg', image)
