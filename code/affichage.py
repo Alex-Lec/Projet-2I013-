@@ -99,7 +99,6 @@ class Affichage(Thread):
             self.arene.ouvrir_arene(nom_fichier.get())
             self.canvas.addtag_enclosed("del", 0, 0,2000, 1000)
             self.canvas.delete("del")
-            self.initialise_arene()
         
         fen = Toplevel(self.fenetre)
         fen.resizable(0, 0)

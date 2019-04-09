@@ -11,8 +11,10 @@ class Controleur_image(Thread):
         self.robot = robot
 
     def start(self):
-        img = self.robot.get_image().rotate(180)
-        img.save("image.jpeg", "jpeg")
+        self.robot.get_image()
+        img = Image.open("test.jpeg")
+        img.rotate(180)
+        img.save("test_final.jpeg", "jpeg")
 
     def step(self):
         pass

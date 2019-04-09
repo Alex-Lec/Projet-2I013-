@@ -6,11 +6,16 @@ from .detecteur import Detecteur
 from math import radians,sqrt, cos, sin, pi
 from .vecteur import Vecteur
 import time
+import pyglet
+from PIL import Image
+from pyglet.image.codecs.pil import PILImageDecoder
+import numpy as np
+from pyglet import image
 
 class Robot(ObjetPhysique):
 
     WHEEL_BASE_WIDTH         = 117  # distance (mm) de la roue gauche a la roue droite.
-    WHEEL_DIAMETER           = 66.5 #  diametre de la roue (mm)
+    WHEEL_DIAMETER           = 66.5 # diametre de la roue (mm)
     WHEEL_BASE_CIRCUMFERENCE = WHEEL_BASE_WIDTH * pi # perimetre du cercle de rotation (mm)
     WHEEL_CIRCUMFERENCE      = WHEEL_DIAMETER * pi # perimetre de la roue (mm)
 
@@ -136,6 +141,7 @@ class Robot(ObjetPhysique):
         """
         return self.detecteur.detecte()
 
+    """
     def get_image(self):
         stream = BytesIO()
         self.camera.capture(stream,format="jpeg")
@@ -143,3 +149,11 @@ class Robot(ObjetPhysique):
         img = Image.open(stream).copy()
         stream.close()
         return img
+    """
+
+    def get_image(self):
+        
+        pyglet.image.get_buffer_manager().get_color_buffer().save('image.png')
+        img = Image.open('image.png')
+        rbg_img = img.convert('RGB')
+        rbg_img.save('image.jpeg')
