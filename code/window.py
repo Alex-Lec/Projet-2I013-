@@ -10,12 +10,13 @@ from pyglet.image.codecs.png import PNGImageDecoder
 import math
 import random
 import numpy
-from composant import Robot, ObjetPhysique, Vecteur
+from composant import ObjetPhysique, Vecteur
 from .terrain import Terrain
 import time
 from threading import Thread
 import numpy as np
 import vg
+from PIL import Image
 
 class Rectangle():
     def __init__(self, x, y, z, largeur, longueur, hauteur, r, g, b):
@@ -237,4 +238,13 @@ class Window(pyglet.window.Window, Thread):
     def on_text(self, text):
         if (text.find('p') > -1 or text.find('P') > -1):
             pyglet.image.get_buffer_manager().get_color_buffer().save('image.jpeg')
+            img = Image.open('image.jpeg')
+            rbg_img = img.convert('RGB')
+            rbg_img.save('image.jpeg')
             print("Screenshot success !")
+
+    def screenshot(self):
+        pyglet.image.get_buffer_manager().get_color_buffer().save('image.jpeg')
+        img = Image.open('image.jpeg')
+        rbg_img = img.convert('RGB')
+        rbg_img.save('image.jpeg')

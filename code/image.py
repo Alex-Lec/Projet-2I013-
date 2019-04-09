@@ -8,63 +8,47 @@ from OpenGL.GLUT import *
 from OpenGL.GL import glLight
 from pyglet.image.codecs.png import PNGImageDecoder
 from PIL import Image
+from pyglet import image
 import random
-import numpy
+import numpy as np
+import cv2
 
-if __name__ == '__main__':
-    img = Image.open("image.jpeg")
-    print(img.size, img.format)
-    data = list(img.getdata())
-
-    r = [i[0] for i in data]
-    g = [i[1] for i in data]
-    b = [i[2] for i in data]
-
-    for i in range(len(b)):
-        if (b[i] >= 180 and r[i] <= 80 and g[i] <= 80):
-            data[i] = (255, 255, 255, 255)
-    new_image = Image.new(img.mode, img.size)
-    new_image.putdata(data)
-    new_image.show()
+img = Image.open('image.jpeg')
+rbg_img = img.convert('RGB')
+rbg_img.save('image.jpeg')
 
 """
-if __name__ == '__main__':
-    img = Image.open("screenshot.jpeg")
-    print(img.size, img.format)
-    data = list(img.getdata())
-    r = [i[0] for i in data]
-    for i in range(len(r)):
-        if (r[i] == 255):
-            data[i] = (0, 0, 0, 255)
-    imgNew = Image.new(img.mode, img.size)
-    imgNew.putdata(data)
-    imgNew.show()
-"""
+image = cv2.imread('screenshot.jpeg')
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+ret,thresh = cv2.threshold(gray,200,255,cv2.THRESH_BINARY_INV)
+contours,h = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 
-"""
-if __name__ == '__main__':
-    img = Image.new("RGB", (10, 10), "black")
-    img.save("texture.png", "png")
-"""
+for cnt in contours:
+    perimetre=cv2.arcLength(cnt,True)
+    approx = cv2.approxPolyDP(cnt,0.01*perimetre,True)
+    
+    M = cv2.moments(cnt)
+    cX = int(M["m10"] / M["m00"])
+    cY = int(M["m01"] / M["m00"])
+    cv2.drawContours(image,[cnt],-1,(0,255,0),2)
+    if len(approx)==3:
+        shape = "triangle"
+    elif len(approx)==4:
+        (x, y, w, h) = cv2.boundingRect(approx)
+        ratio = w / float(h)
+        if ratio >= 0.95 and ratio <= 1.05:
+            shape = "carre"
+        else:
+            shape = "rectangle"
+    elif len(approx)==5:
+        shape = "pentagone"
+    elif len(approx)==6:
+        shape = "hexagone"
+    else:
+        shape= "circle"
+    cv2.putText(image, shape, (cX, cY), cv2.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255), 2)
 
-"""
-if __name__ == '__main__':
-    d = 512
-    img = Image.new("RGB", (d, d), "white")
-
-    for i in range(d):
-        for j in range(d):
-            img.putpixel((i, j), (0, 255, 0))
-
-    for i in range(15000):
-        img.putpixel((random.randint(0, d - 1), random.randint(0, d - 1)), \
-            (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
-
-    for i in range(50):
-        for j in range(50):
-            img.putpixel((i + 50, j + 50), (255, 0, 0))
-
-    img.save("matexture.png", "png")
-    print(img.getpixel((10, 10)))
-    numpy.array(img)
+cv2.imshow('image',image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 """

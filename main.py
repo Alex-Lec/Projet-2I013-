@@ -3,7 +3,7 @@
 
 import time
 from diver import *
-from controleur import Controleur_carre, Controleur_droit_stop, Controleur_image
+from controleur import Controleur_carre, Controleur_droit_stop, Controleur_image, Controleur_detection_carre
 import sys
 from PIL import Image
 
@@ -22,12 +22,13 @@ except(ModuleNotFoundError):
 print("\n\
                Bienvenue dans la matrice\n\
                Selectionnez votre choix\n\n\
-            #  Controleur_carre 2D      -> 1 #\n\
-            #  Controleur_carre 3D      -> 2 #\n\
-            #  Controleur_droit_stop 2D -> 3 #\n\
-            #  Controleur_droit_stop 3D -> 4 #\n\
-            #  get_image()              -> 5 #\n\
-            #  Quit                     -> Q #")
+            #  Controleur_carre 2D        -> 1 #\n\
+            #  Controleur_carre 3D        -> 2 #\n\
+            #  Controleur_droit_stop 2D   -> 3 #\n\
+            #  Controleur_droit_stop 3D   -> 4 #\n\
+            #  Controleur_detection_carre -> 5 #\n\
+            #  get_image()                -> 6 #\n\
+            #  Quit                       -> Q #")
 
 choix = input()
 
@@ -41,6 +42,8 @@ if (choix == "1" or choix == "2"):
 elif (choix == "3" or choix == "4"):
     ctrc = Controleur_droit_stop(robot)
 elif (choix == "5"):
+    ctrc = Controleur_detection_carre(robot)
+elif (choix == "6"):
     ctrc = Controleur_image(robot)
 else :
     sys.exit()
@@ -54,7 +57,7 @@ if (not robot_irl and (choix == "1" or choix == "3")):
     arene.start()
     #img = Image.save(robot.get_image())
 
-elif (not robot_irl and (choix == "2" or choix == "4")):
+elif (not robot_irl and (choix == "2" or choix == "4" or choix == "5")):
     arene.robot.append(robot)
     window = Window(arene = arene, width = 1000, height = 600, caption = 'Robot 2I013')
     window.start()
@@ -71,4 +74,4 @@ while ctrc.stop():
     #print(robot.x, robot.y, robot.z, robot.v_dir.x, robot.v_dir.y)
     
 print("stop")
-
+sys.exit()
