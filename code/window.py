@@ -170,12 +170,16 @@ class Window(pyglet.window.Window, Thread):
         self.vecteur_y = Vecteur(0., 1., 0.)
 
         self.toDraw.append(Sol())
-        self.toDraw.append(Rectangle(x = 1000, y = 0, z = 100, largeur = 10, longueur = 10, hauteur = 10, r = 0, g = 0, b = 255))
+        #self.toDraw.append(Rectangle(x = 1000, y = 0, z = 100, largeur = 10, longueur = 10, hauteur = 10, r = 0, g = 0, b = 255))
+        self.toDraw.append(Rectangle(x = 500, y = 0, z = 200, largeur = 10, longueur = 10, hauteur = 10, r = 0, g = 0, b = 255))
+
 
         self.arene.objet.append(ObjetPhysique(x = 750, y = 450, z = 0, largeur = 5000, longueur = 5000, hauteur = 1, \
         r = 255, g = 255, b = 255))
 
-        self.arene.objet.append(ObjetPhysique(x = 1000, y = 100, z = 0, largeur = 10, longueur = 10, hauteur = 10))
+        #self.arene.objet.append(ObjetPhysique(x = 1000, y = 100, z = 0, largeur = 10, longueur = 10, hauteur = 10))
+        self.arene.objet.append(ObjetPhysique(x = 500, y = 200, z = 0, largeur = 10, longueur = 10, hauteur = 10))
+
 
         if (rob.v_dir.x < 0 or rob.v_dir.y < 0):
             self.player = Player((rob.x, rob.z + 1, rob.y), (0, 180 - self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)), rob.largeur, rob.longueur, rob.hauteur)

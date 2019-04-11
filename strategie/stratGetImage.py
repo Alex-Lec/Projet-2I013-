@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 -
-
 import time
 import numpy as np
-import cv2 as cv
 import sys
 
 class StratGetImage():
