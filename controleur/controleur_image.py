@@ -20,4 +20,4 @@ class Controleur_image(Thread):
         pass
 
     def stop(self):
-        sys.exit()
+        False 

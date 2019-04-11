@@ -3,7 +3,7 @@
 
 import time
 from diver import *
-from controleur import Controleur_carre, Controleur_droit_stop
+from controleur import Controleur_carre, Controleur_droit_stop, Controleur_image
 import sys
 from PIL import Image
 
@@ -15,7 +15,7 @@ choix = "0"
 try:
     from robot2I013.robot2I013 import Robot2I013
     robot = Robot2I013()
-except(ImportError or ModuleNotFoundError):
+except(ImportError):
     from composant import *
     from code import *
     arene = Terrain()
@@ -30,6 +30,7 @@ print("\n\
             #  Controleur_droit_stop      -> 2 #\n\
             #  Controleur_detection_carre -> 3 #\n\
             #  Controleur_balise          -> 4 #\n\
+            #  Controleur_image           -> 5 #\n\
             #  Quit                       -> Q #")
 
 choix = input()
@@ -55,6 +56,9 @@ if (choix == "1"):
 
 elif (choix == "2"):
     ctrc = Controleur_droit_stop(robot)
+    
+elif (choix == "5"):
+    ctrc = Controleur_image(robot)
 
 else :
     sys.exit()
@@ -66,17 +70,14 @@ if (not robot_irl and dim == "1"):
     affichage = Affichage(arene)
     affichage.start()
     arene.start()
-    #img = Image.save(robot.get_image())
 
 elif (not robot_irl and dim == "2"):
     arene.robot.append(robot)
     window = Window(arene = arene, width = 1000, height = 600, caption = 'Robot 2I013')
     window.start()
     arene.start()
-    #img = Image.open(robot.get_image())
-
+    
 tps = 100
-
 ctrc.start()
 while ctrc.stop():
     ctrc.step()
