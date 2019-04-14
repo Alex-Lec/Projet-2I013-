@@ -82,7 +82,6 @@ ctrc.start()
 while ctrc.stop():
     ctrc.step()
     time.sleep(1/tps)
-    #print(robot.x, robot.y, robot.z, robot.v_dir.x, robot.v_dir.y)
     
 print("stop")
 sys.exit()

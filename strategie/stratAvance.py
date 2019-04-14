@@ -24,21 +24,15 @@ class StratAvance:
         else :
             self.robot.set_motor_dps(1, self.vit)
             self.robot.set_motor_dps(2, self.vit)
-            
-    
-    def update(self, vitesse):
-        self.robot.set_motor_dps(1, vitesse)
-        self.robot.set_motor_dps(2, vitesse)
-        self.vit = vitesse
     
     def stop(self):
+        angleg = (self.robot.get_motor_position()[0]*self.robot.WHEEL_CIRCUMFERENCE)/360
+        angled = (self.robot.get_motor_position()[1]*self.robot.WHEEL_CIRCUMFERENCE)/360
             
-        if((self.robot.get_motor_position()[0]*self.robot.WHEEL_CIRCUMFERENCE)
-            /360 > self.dst):
+        if(angleg > self.dst):
             return True
             
-        if((self.robot.get_motor_position()[1]*self.robot.WHEEL_CIRCUMFERENCE)
-            /360 > self.dst):
+        if(angled > self.dst):
             return True
         
         return False

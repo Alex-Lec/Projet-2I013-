@@ -1,4 +1,4 @@
-from strategie import StratAvance,StratStop
+from strategie import StratAvanceplus,StratStop
 import time;
 
 class Controleur_droit_stop():
@@ -10,7 +10,7 @@ class Controleur_droit_stop():
         self.vitesse = vit
     
     def start(self):
-        self.Go = StratAvance(self.robot, 100, self.vitesse)
+        self.Go = StratAvanceplus(self.robot, 100, self.vitesse)
         self.Go.start()
         self.cnt = 2
         
@@ -25,7 +25,7 @@ class Controleur_droit_stop():
         
         elif(self.robot.get_distance() <= (2*self.dst)):
             if (self.cnt == 0):
-                self.Go = StratAvance(self.robot, 100, self.vitesse/2)
+                self.Go = StratAvanceplus(self.robot, 100, self.vitesse/2)
                 self.Go.start()
                 self.cnt = 2
         
@@ -34,7 +34,7 @@ class Controleur_droit_stop():
                 self.cnt = 1
         
         elif(self.cnt != 2 ):
-            self.Go = StratAvance(self.robot, 100, self.vitesse)
+            self.Go = StratAvanceplus(self.robot, 100, self.vitesse)
             self.Go.start()
             self.cnt = 2
         
