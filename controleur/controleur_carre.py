@@ -1,6 +1,6 @@
 #from composant import Robot, ObjetPhysique
 #from code import Terrain, Affichage
-from strategie import StratAvance,StratStop,StratTourneplus
+from strategie import StratAvanceplus,StratStop,StratTourneplus
 from threading import Thread
 import time
 
@@ -13,7 +13,7 @@ class Controleur_carre():
         self.dst = dst
 
     def start(self):    
-        self.Go = StratAvance(self.robot,self.dst,self.vitesse)
+        self.Go = StratAvanceplus(self.robot,self.dst,self.vitesse)
         self.Go.start()
         self.cnt = 0
         
@@ -22,12 +22,12 @@ class Controleur_carre():
         
         if (self.Go.stop()):
             print(type(self.Go).__name__)
-            if (type(self.Go).__name__ == "StratAvance") :#switch strategie
+            if (type(self.Go).__name__ == "StratAvanceplus") :#switch strategie
                 self.Go = StratTourneplus(self.robot,90,100)
                 self.cnt +=1
                 
             elif (type(self.Go).__name__ == 'StratTourneplus') :#switch strategie
-                self.Go = StratAvance(self.robot,self.dst,self.vitesse)
+                self.Go = StratAvanceplus(self.robot,self.dst,self.vitesse)
         
             self.Go.start()
           

@@ -9,3 +9,6 @@ class StratStop:
     def start(self):
         self.robot.set_motor_dps(1 , 0)
         self.robot.set_motor_dps(2 , 0)
+        
+    def stop(self):
+        return True

@@ -1,5 +1,6 @@
 from .stratAvance import StratAvance
 from .stratAvanceplus import StratAvanceplus
+from .stratAvanceprud import StratAvanceprud
 from .stratStop import StratStop
 from .stratTourne import StratTourne
 from .stratTourneplus import StratTourneplus

@@ -1,6 +1,6 @@
 import time
 class StratAvance:
-    def __init__(self, robot, distance, vitesse, diff = 0):
+    def __init__(self, robot, distance, vitesse):
         self.robot = robot
         self.dst = distance
         self.vit = vitesse

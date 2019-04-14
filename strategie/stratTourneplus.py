@@ -23,5 +23,3 @@ class StratTourneplus(StratTourne):
             self.vit = (self.vit/2)
             self.ralenti = 2
             
-    def update(self):
-        pass
