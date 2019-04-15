@@ -3,7 +3,7 @@
 
 import time
 from diver import *
-from controleur import Controleur_carre, Controleur_droit_stop, Controleur_image
+from controleur import Controleur_carre, Controleur_droit_stop, Controleur_image,Controleur_triangle,Controleur_polygone,Controleur_arene
 import sys
 from PIL import Image
 
@@ -20,9 +20,7 @@ except(ImportError):
     from code import *
     arene = Terrain()
     robot_irl = False
-    arene.objet.append(ObjetPhysique(1300, 100, 100, 80, 70, 100))
-    arene.objet.append(ObjetPhysique(500, 500, 10, 100, 100, 10))
-    arene.objet.append(ObjetPhysique(780, 250, 0, 100, 50, 100))
+
 
 ###################################################################
 
@@ -34,6 +32,9 @@ print("\n\
             #  Controleur_detection_carre -> 3 #\n\
             #  Controleur_balise          -> 4 #\n\
             #  Controleur_image           -> 5 #\n\
+            #  Controleur_triangle        -> 6 #\n\
+            #  Controleur_polygone        -> 7 #\n\
+            #  Controleur_arene           -> 8 #\n\
             #  Quit                       -> Q #")
 
 choix = input()
@@ -44,12 +45,12 @@ if not robot_irl :
                    Controleur 2D ou 3D :            \n\n\
                 #              2D   -> 1           #\n\
                 #              3D   -> 2           #\n")
-                
+
     dim = input()
 
 if (dim == "1"):
     robot = Robot(x = 100, y = 100, z = 0, arene = arene)
-    
+
 elif (dim == "2"):
     robot = Robot(x = 100, y = 100, z = 0, \
     largeur = 10, longueur = 10, hauteur = 10, arene = arene)
@@ -59,10 +60,21 @@ if (choix == "1"):
 
 elif (choix == "2"):
     ctrc = Controleur_droit_stop(robot, dst = 100)
-    
+
 elif (choix == "5"):
     ctrc = Controleur_image(robot)
 
+elif (choix == "6"):
+    ctrc = Controleur_triangle(robot,500,500)
+elif (choix == "7"):
+    print("\n\
+                  Saisir le nombre de côtés :            \n\n\
+")
+    nb = int(input())
+
+    ctrc = Controleur_polygone(robot,nb,500,500)
+elif (choix == "8"):
+    ctrc = Controleur_arene(robot,250,500)
 else :
     sys.exit()
 
@@ -79,12 +91,12 @@ elif (not robot_irl and dim == "2"):
     window = Window(arene = arene, width = 1000, height = 600, caption = 'Robot 2I013')
     window.start()
     arene.start()
-    
+
 tps = 100
 ctrc.start()
 while ctrc.stop():
     ctrc.step()
     time.sleep(1/tps)
-    
+
 print("stop")
 sys.exit()

@@ -21,7 +21,7 @@ class Affichage(Thread):
     def init_run(self):
         self.fenetre = Tk()
         self.fenetre.title("Simulateur")
-        self.fenetre.geometry("1500x900")
+        self.fenetre.geometry("1300x700")
         self.fenetre.resizable(0, 0)
         self.robot_selectionne = IntVar()
 
@@ -54,7 +54,7 @@ class Affichage(Thread):
         self.canvas.pack()
         self.update_robots()
         self.update_objets()
-        
+
     def run(self):
         self.init_run()
         self.fenetre.after(int(1000./self.tps),self.update_robots)
@@ -68,17 +68,17 @@ class Affichage(Thread):
             if (self.arene.objet.index(o) > 3):
                 tag_objet = "objet_" + str(self.arene.objet.index(o))
                 self.canvas.delete(tag_objet)
-                
+
                 self.canvas.create_polygon(o.get_points(), fill = "blue", tags = tag_objet)
                 self.canvas.create_text(o.x, o.y, text = self.arene.objet.index(o) - 3, \
                     fill = "black", tags = tag_objet)
-        
+
     def update_robots(self):
         for r in self.arene.robot:
             tag_robot = "robot_" + str(self.arene.robot.index(r))
             self.canvas.delete(tag_robot)
-            
-            self.canvas.create_polygon(r.get_points(), fill = "red", tags = tag_robot)
+
+            self.canvas.create_polygon(r.get_points(), fill = "pink", tags = tag_robot)
             self.canvas.create_text(r.x, r.y, text = self.arene.robot.index(r) + 1, \
                                     fill = "black", tags = tag_robot)
 
@@ -87,7 +87,7 @@ class Affichage(Thread):
                                     r.v_dir.y * 40, fill = "black", tags = tag_robot)
         #self.fenetre.after(int(1000./self.tps),self.update_robots)
         self.fenetre.after(5,self.update_robots)
-        
+
     def ouvrir(self):
 
         def ok_button():
@@ -95,7 +95,7 @@ class Affichage(Thread):
             self.arene.ouvrir_arene(nom_fichier.get())
             self.canvas.addtag_enclosed("del", 0, 0,2000, 1000)
             self.canvas.delete("del")
-        
+
         fen = Toplevel(self.fenetre)
         fen.resizable(0, 0)
         fen.title("Ouvrir une sauvegarde")
@@ -136,9 +136,9 @@ class Affichage(Thread):
         def ok_button():
 
             fen.destroy()
-            obj = ObjetPhysique(posx.get(), posy.get(), posz.get(), 
+            obj = ObjetPhysique(posx.get(), posy.get(), posz.get(),
                                 largeur.get(),longueur.get(), hauteur.get())
-                                
+
             self.arene.objet.append(obj)
             self.update_objets()
 
@@ -171,17 +171,17 @@ class Affichage(Thread):
         annuler = Button(fen,text ="Exit",command = fen.destroy)
         annuler.grid(row = 3, column = 3)
 
-    def creerRobot(self):   
-        
+    def creerRobot(self):
+
         def ok_button():
             fen.destroy()
             r = Robot(posx.get(), posy.get(), posz.get())
             self.arene.robot.append(r)
-            
+
             self.update_robots()
 
             self.menu3.add_separator()
-            self.menu3.add_radiobutton(label = len(self.arene.robot), 
+            self.menu3.add_radiobutton(label = len(self.arene.robot),
                             variable = self.robot_selectionne, \
                 value = len(self.arene.robot), command = self.select_robot)
 
@@ -205,22 +205,22 @@ class Affichage(Thread):
         annuler = Button(fen, text = "Exit", command = fen.destroy)
         ok.grid(row = 3, column = 2)
         annuler.grid(row = 3,column = 3)
-        
-        
+
+
     def deplacement(self, event):
 
-        if ((event.keycode == 111 or event.keycode == 116 or event.keycode == 114 or  
+        if ((event.keycode == 111 or event.keycode == 116 or event.keycode == 114 or
              event.keycode == 113) and self.robot_selectionne.get() != 0):
 
             tag_robot = "robot_" + str(self.robot_selectionne.get() - 1)
-            r = self.arene.robot[self.robot_selectionne.get() - 1]   
+            r = self.arene.robot[self.robot_selectionne.get() - 1]
 
-            if (event.keycode == 111): #UP    
+            if (event.keycode == 111): #UP
 
                 self.arene.avancer_robot(r)
                 self.update_robots()
 
-            elif (event.keycode == 116): #DOWN    
+            elif (event.keycode == 116): #DOWN
 
                 self.arene.reculer_robot(r)
                 self.update_robots()
@@ -231,9 +231,6 @@ class Affichage(Thread):
                 self.update_robots()
 
             elif (event.keycode == 113): #LEFT
-                
+
                 self.arene.tourner_robot_g(r)
                 self.update_robots()
-
-
-
