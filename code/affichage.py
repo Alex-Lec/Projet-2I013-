@@ -52,8 +52,11 @@ class Affichage(Thread):
         self.canvas = Canvas(self.fenetre, width = 2000, height = 1000)
         self.fenetre.bind("<Key>", self.deplacement)
         self.canvas.pack()
+        
+        self.update_zones()
         self.update_robots()
         self.update_objets()
+        
         
     def run(self):
         self.init_run()
@@ -73,12 +76,17 @@ class Affichage(Thread):
                 self.canvas.create_text(o.x, o.y, text = self.arene.objet.index(o) - 3, \
                     fill = "black", tags = tag_objet)
         
+    def update_zones(self):
+        for o in self.arene.zone:
+            self.canvas.create_polygon(o.get_points(), fill = "grey")
+            
+        
     def update_robots(self):
         for r in self.arene.robot:
             tag_robot = "robot_" + str(self.arene.robot.index(r))
             self.canvas.delete(tag_robot)
-            
-            self.canvas.create_polygon(r.get_points(), fill = "red", tags = tag_robot)
+            self.canvas.create_line(r.x,r.y,r.x+1,r.y+1, fill = "grey")
+            self.canvas.create_polygon(r.get_points(), fill = "pink", tags = tag_robot)
             self.canvas.create_text(r.x, r.y, text = self.arene.robot.index(r) + 1, \
                                     fill = "black", tags = tag_robot)
 
@@ -87,6 +95,7 @@ class Affichage(Thread):
                                     r.v_dir.y * 40, fill = "black", tags = tag_robot)
         #self.fenetre.after(int(1000./self.tps),self.update_robots)
         self.fenetre.after(5,self.update_robots)
+        
         
     def ouvrir(self):
 

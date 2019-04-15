@@ -19,6 +19,7 @@ class Terrain(Thread):
                       ObjetPhysique(dimx+1, dimy/2, 0, dimy, 1, 100)]#droite
         
         self.robot = []
+        self.zone = []
         self.tps = 30
         self.last_up = time.time()
         

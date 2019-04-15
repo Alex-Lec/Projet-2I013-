@@ -3,6 +3,7 @@
 
 from .objetphysique import ObjetPhysique
 from .detecteur import Detecteur
+from .detecteur_zone import Detecteur_zone
 from math import radians,sqrt, cos, sin, pi
 from .vecteur import Vecteur
 import time
@@ -24,6 +25,7 @@ class Robot(ObjetPhysique):
         ObjetPhysique.__init__(self, x, y, z, largeur, longueur, hauteur)
         
         self.detecteur = Detecteur(self)
+        self.detecteur_zone = Detecteur_zone(self)
         self.MOTOR_LEFT = 1
         self.MOTOR_RIGHT = 2
         
@@ -90,10 +92,21 @@ class Robot(ObjetPhysique):
         
         rot = 25
         t = time.time()
+        vitg = self.vg
+        vitd = self.vd
         ################################
+        if (self.arene != None):
+            for o in self.arene.zone:
+                if ((self.x <= o.x + (o.longueur/2)) and
+                    (self.x >= o.x - (o.longueur/2)) and \
+                    (self.y <= o.y + (o.largeur/2))  and \
+                    (self.y >= o.y - (o.largeur/2))):
+                    vitg = (self.vg/2)
+                    vitd = (self.vd/2)
+                
         for i in range(rot):
-            omega1 = ((self.vg *(t - self.last_up)/rot)*self.WHEEL_CIRCUMFERENCE) /(2*self.WHEEL_BASE_CIRCUMFERENCE)
-            omega2 = ((self.vd*(t - self.last_up)/rot)*self.WHEEL_CIRCUMFERENCE) /(2*self.WHEEL_BASE_CIRCUMFERENCE)
+            omega1 = ((vitg *(t - self.last_up)/rot)*self.WHEEL_CIRCUMFERENCE) /(2*self.WHEEL_BASE_CIRCUMFERENCE)
+            omega2 = ((vitd*(t - self.last_up)/rot)*self.WHEEL_CIRCUMFERENCE) /(2*self.WHEEL_BASE_CIRCUMFERENCE)
             
             cos_val = cos(-radians(omega2))
             sin_val = sin(-radians(omega2))
@@ -120,8 +133,8 @@ class Robot(ObjetPhysique):
         robTest = Robot(x,y,0)
         robTest.v_dir = v_d
 
-        self.OFFSET_LEFT  += self.vg*(t - self.last_up)
-        self.OFFSET_RIGHT += self.vd*(t - self.last_up)
+        self.OFFSET_LEFT  += vitg*(t - self.last_up)
+        self.OFFSET_RIGHT += vitd*(t - self.last_up)
 
         #print(self.get_distance())
         self.last_up = time.time()
@@ -140,6 +153,10 @@ class Robot(ObjetPhysique):
         NE MARCHE QUE SI ROBOT A UNE ARENE !!!
         """
         return self.detecteur.detecte()
+
+    def get_distance_zone(self):
+        return self.detecteur_zone.detecte()
+        
 
     """
     def get_image(self):
