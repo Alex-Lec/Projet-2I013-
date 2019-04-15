@@ -21,6 +21,13 @@ except(ImportError):
     arene = Terrain()
     robot_irl = False
 
+    """arene.objet.append(ObjetPhysique(300, 25, 0, 50, 50, 50))
+    arene.objet.append(ObjetPhysique(300, 95, 0, 50, 50, 50))
+    arene.objet.append(ObjetPhysique(300, 165, 0, 50, 50, 50))
+
+    arene.objet.append(ObjetPhysique(300, 265, 0, 50, 50, 50))
+    arene.objet.append(ObjetPhysique(300, 325, 0, 50, 50, 50))
+    arene.objet.append(ObjetPhysique(300, 385, 0, 50, 50, 50))"""
 
 ###################################################################
 
