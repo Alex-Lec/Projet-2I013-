@@ -3,7 +3,7 @@
 
 import time
 from diver import *
-from controleur import Controleur_carre, Controleur_droit_stop, Controleur_image
+from controleur import Controleur_carre, Controleur_droit_stop, Controleur_image, Controleur_tour, Controleur_polygone
 import sys
 from PIL import Image
 
@@ -20,12 +20,13 @@ except(ImportError):
     from code import *
     arene = Terrain()
     robot_irl = False
+    """
     arene.objet.append(ObjetPhysique(100, 20, 0, 50, 100, 100))
     arene.objet.append(ObjetPhysique(20, 100, 0, 100, 50, 100))
     arene.objet.append(ObjetPhysique(1300, 100, 15, 80, 70, 100))
     arene.objet.append(ObjetPhysique(500, 500, 10, 100, 100, 10))
     arene.objet.append(ObjetPhysique(780, 250, 0, 100, 50, 100))
-
+    """
 ###################################################################
 
 print("\n\
@@ -33,8 +34,8 @@ print("\n\
                Selectionnez votre choix\n\n\
             #  Controleur_carre           -> 1 #\n\
             #  Controleur_droit_stop      -> 2 #\n\
-            #  Controleur_detection_carre -> 3 #\n\
-            #  Controleur_balise          -> 4 #\n\
+            #  Controleur_tour            -> 3 #\n\
+            #  Controleur_polygone        -> 4 #\n\
             #  Controleur_image           -> 5 #\n\
             #  Quit                       -> Q #")
 
@@ -61,6 +62,15 @@ if (choix == "1"):
 
 elif (choix == "2"):
     ctrc = Controleur_droit_stop(robot, dst = 100)
+    
+elif (choix == "3"):
+    ctrc = Controleur_tour(robot)
+    
+elif (choix == "4"):
+    print("\n\
+                Nombre de côté :")
+    cote = input()
+    ctrc = Controleur_polygone(robot, int(cote))
     
 elif (choix == "5"):
     ctrc = Controleur_image(robot)
