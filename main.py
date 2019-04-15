@@ -20,6 +20,9 @@ except(ImportError):
     from code import *
     arene = Terrain()
     robot_irl = False
+    arene.objet.append(ObjetPhysique(1300, 100, 0, 80, 70, 100))
+    arene.objet.append(ObjetPhysique(500, 500, 10, 100, 100, 10))
+    arene.objet.append(ObjetPhysique(780, 250, 0, 100, 50, 100))
 
 ###################################################################
 
@@ -55,7 +58,7 @@ if (choix == "1"):
     ctrc = Controleur_carre(robot,500,500)
 
 elif (choix == "2"):
-    ctrc = Controleur_droit_stop(robot)
+    ctrc = Controleur_droit_stop(robot, dst = 100)
     
 elif (choix == "5"):
     ctrc = Controleur_image(robot)

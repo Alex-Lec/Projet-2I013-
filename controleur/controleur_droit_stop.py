@@ -9,7 +9,7 @@ class Controleur_droit_stop():
         self.vitesse = vit
     
     def start(self):
-        self.Go = StratAvanceprud(self.robot, 100, self.vitesse)
+        self.Go = StratAvanceprud(self.robot, self.dst, self.vitesse)
         self.Go.start()
         
     def step(self):
@@ -21,7 +21,7 @@ class Controleur_droit_stop():
                 self.Go.start()
                 
             if(self.robot.get_distance() >= self.dst):
-                self.Go = StratAvanceprud(self.robot, 100, self.vitesse)
+                self.Go = StratAvanceprud(self.robot, self.dst, self.vitesse)
                 self.Go.start()
                 
         

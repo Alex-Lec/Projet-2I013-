@@ -85,6 +85,7 @@ class Terrain(Thread):
             for o in obj:
                 if (o == rob or o == projection ):
                     continue
+                    
                 opts = o.get_points()
                 for j in range(len(opts)):
                     p3 = opts[j]
@@ -118,7 +119,14 @@ class Terrain(Thread):
                         min(p1[0],p2[0])<=x<=max(p1[0],p2[0]) and 
                         min(p1[1],p2[1])<=y<=max(p1[1],p2[1])):
                         
-                        return True
+                        #On vérifie à présent si les objets sont à la même hauteur
+                        brob = min(rob.z, rob.z + rob.hauteur)
+                        hrob = max(rob.z, rob.z + rob.hauteur)
+                        
+                        bobj = min(o.z, o.z + o.hauteur)
+                        hobj = max(o.z, o.z + o.hauteur)
+                        if (brob <= hobj and bobj <= hrob):
+                            return True
                     
         return False
         

@@ -42,10 +42,10 @@ class Detecteur:
             if (o == self.robot):
                 continue
                 
-            o = o.get_points()
-            for j in range(len(o)):
-                p3 = o[j]
-                p4 = o[(j+1)%len(o)]#Marche avec un polygone à n cotées
+            opt = o.get_points()
+            for j in range(len(opt)):
+                p3 = opt[j]
+                p4 = opt[(j+1)%len(opt)]#Marche avec un polygone à n cotées
                 
                 if (round(p3[0]-p4[0],12) !=0):
                     a2 = (p3[1] - p4[1])/(p3[0]- p4[0]) 
@@ -76,8 +76,16 @@ class Detecteur:
                     
                     if (min(p3[0],p4[0])<=x<=max(p3[0],p4[0]) and 
                         min(p3[1],p4[1])<=y<=max(p3[1],p4[1])):
-                        if (mini > res):
-                            mini = res
+                        
+                        brob = min(self.robot.z, self.robot.z + self.robot.hauteur)
+                        hrob = max(self.robot.z, self.robot.z + self.robot.hauteur)
+                        
+                        bobj = min(o.z, o.z + o.hauteur)
+                        hobj = max(o.z, o.z + o.hauteur)
+                        
+                        if (brob <= hobj and bobj <= hrob):
+                            if (mini > res):
+                                mini = res
 
         return mini
              
