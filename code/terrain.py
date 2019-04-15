@@ -17,6 +17,8 @@ class Terrain(Thread):
                       ObjetPhysique(-1, dimy/2, 0, dimy, 1, 100),# gauche
                       ObjetPhysique(dimx/2, dimy+1, 0, 1, dimx, 100),#bas
                       ObjetPhysique(dimx+1, dimy/2, 0, dimy, 1, 100)]#droite
+
+        self.zones_grises = []
         
         self.robot = []
         self.tps = 30

@@ -1,20 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
 
-#import pyglet
-import time
-#from OpenGL.GL import glLight
-#from pyglet.gl import *
-#from pyglet.window import key
-#from OpenGL.GLUT import *
-#from pyglet.image.codecs.png import PNGImageDecoder
-
 from .vecteur import Vecteur
 import numpy as np
 from math import radians,sqrt, cos, sin, pi
-class ObjetPhysique:
+class Zones_Grises():
 
-    def __init__(self, x = 0, y = 0, z = 0, largeur = 50, longueur = 100, hauteur = 20, r = 50, g = 50, b = 0):
+    def __init__(self, x = 0, y = 0, z = 0, largeur = 50, longueur = 100, hauteur = 20):
        
         self.x = x
         self.y = y
@@ -24,14 +16,11 @@ class ObjetPhysique:
         self.hauteur = hauteur
         self.v_dir = Vecteur(1., 0., 0.)
         self.vector = Vecteur(self.x, self.y, self.z)
-
-        self.r = r
-        self.g = g
-        self.b = b
+        self.color = 'grey'
 
     def get_points(self):
     
-        points = [[self.x - self.longueur//2, self.y - self.largeur//2],\
+        points = [[self.x -self.longueur//2, self.y - self.largeur//2],\
             [self.x + self.longueur//2, self.y - self.largeur//2],\
             [self.x + self.longueur//2, self.y + self.largeur//2],\
             [self.x - self.longueur//2, self.y + self.largeur//2]]
@@ -62,4 +51,14 @@ class ObjetPhysique:
         
         return new_points         
                    
-                   
+    def check_robot_zone(self, robot):
+        if ((robot.x - robot.longueur//2, robot.y - robot.largeur//2 >= self.x -self.longueur//2, self.y - self.largeur//2 and \
+            robot.x + robot.longueur//2, robot.y - robot.largeur//2 <= self.x + self.longueur//2, self.y - self.largeur//2) or \
+                (robot.x + robot.longueur//2, robot.y + robot.largeur//2 >= self.x + self.longueur//2, self.y + self.largeur//2 and \
+                    robot.x - robot.longueur//2, robot.y + robot.largeur//2 <= self.x - self.longueur//2, self.y + self.largeur//2)):
+            
+            robot.vd /= 2
+            robot.vg /= 2
+            return True
+        return False
+

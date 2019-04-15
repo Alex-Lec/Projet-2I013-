@@ -181,7 +181,7 @@ class Window(pyglet.window.Window, Thread):
             self.player = Player((rob.x, rob.z + 1, rob.y), (0, 180 - self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)), rob.largeur, rob.longueur, rob.hauteur)
         else:
             self.player = Player((rob.x, rob.z + 1, rob.y), (0, 180 + self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)), rob.largeur, rob.longueur, rob.hauteur)
-    
+
         glClearColor(0.8, 0.8, 0.8, 1) 
         glEnable(GL_DEPTH_TEST)
 

@@ -3,3 +3,7 @@ from .controleur_droit_stop import Controleur_droit_stop
 from .controleur_image import Controleur_image
 #from .controleur_detection_carre import Controleur_detection_carre
 #from .controleur_balise import Controleur_balise
+from .controleur_triangle import Controleur_triangle
+from .controleur_cercle import Controleur_cercle
+from .controleur_polygone_n_cotes import Controleur_polygone_n_cotes
+from .controleur_zones_grises import Controleur_zones_grises

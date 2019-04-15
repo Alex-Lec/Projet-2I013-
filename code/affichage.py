@@ -2,7 +2,7 @@
 # -- coding: utf-8 -
 
 from .terrain import Terrain
-from composant import Robot, ObjetPhysique
+from composant import Robot, ObjetPhysique, Zones_Grises
 from diver import *
 import time
 from threading import Thread
@@ -54,6 +54,7 @@ class Affichage(Thread):
         self.canvas.pack()
         self.update_robots()
         self.update_objets()
+        self.update_zones_grises()
         
     def run(self):
         self.init_run()
@@ -62,6 +63,10 @@ class Affichage(Thread):
 
     def select_robot(self):
         print(self.robot_selectionne.get())
+
+    def update_zones_grises(self):
+        for z in self.arene.zones_grises:
+            self.canvas.create_polygon(z.get_points(), fill = z.color)
 
     def update_objets(self):
         for o in self.arene.objet:
@@ -77,15 +82,16 @@ class Affichage(Thread):
         for r in self.arene.robot:
             tag_robot = "robot_" + str(self.arene.robot.index(r))
             self.canvas.delete(tag_robot)
-            
-            self.canvas.create_polygon(r.get_points(), fill = "red", tags = tag_robot)
+
+            self.canvas.create_polygon(r.get_points(), fill = "grey")
+
+            self.canvas.create_polygon(r.get_points(), fill = "pink", tags = tag_robot)
             self.canvas.create_text(r.x, r.y, text = self.arene.robot.index(r) + 1, \
                                     fill = "black", tags = tag_robot)
 
             self.canvas.create_line(r.x + r.v_dir.x * 20, r.y + \
                                     r.v_dir.y * 20, r.x + r.v_dir.x * 40, r.y + \
                                     r.v_dir.y * 40, fill = "black", tags = tag_robot)
-        #self.fenetre.after(int(1000./self.tps),self.update_robots)
         self.fenetre.after(5,self.update_robots)
         
     def ouvrir(self):
