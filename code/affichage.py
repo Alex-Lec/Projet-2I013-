@@ -56,12 +56,8 @@ class Affichage(Thread):
         self.update_objets()
         
     def run(self):
-        #   while True:
         self.init_run()
-        #self.fenetre.after(int(1000./self.tps),self.update_robots)
-        self.fenetre.after(5,self.update_robots)
-        #self.update_robots()
-        #time.sleep(1./self.tps)
+        self.fenetre.after(int(1000./self.tps),self.update_robots)
         self.fenetre.mainloop()
 
     def select_robot(self):
