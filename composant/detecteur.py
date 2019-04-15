@@ -77,13 +77,12 @@ class Detecteur:
                     if (min(p3[0],p4[0])<=x<=max(p3[0],p4[0]) and 
                         min(p3[1],p4[1])<=y<=max(p3[1],p4[1])):
                         
-                        brob = min(self.robot.z, self.robot.z + self.robot.hauteur)
-                        hrob = max(self.robot.z, self.robot.z + self.robot.hauteur)
+                        h = self.robot.z + (self.robot.hauteur/2)
                         
                         bobj = min(o.z, o.z + o.hauteur)
                         hobj = max(o.z, o.z + o.hauteur)
                         
-                        if (brob <= hobj and bobj <= hrob):
+                        if (h <= hobj and h >= bobj):
                             if (mini > res):
                                 mini = res
 
