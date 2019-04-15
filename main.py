@@ -88,7 +88,7 @@ if (not robot_irl and dim == "1"):
 
 elif (not robot_irl and dim == "2"):
     arene.robot.append(robot)
-    window = Window(arene = arene, width = 1000, height = 600, caption = 'Robot 2I013')
+    window = Affichage_3D(arene = arene, width = 1000, height = 600, caption = 'Robot 2I013')
     window.start()
     arene.start()
     

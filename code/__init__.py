@@ -3,5 +3,5 @@
 
 from .affichage import Affichage
 from .terrain import Terrain
-from .window import Window
+from .affichage_3D import Affichage_3D
 

@@ -113,7 +113,7 @@ class Player():
         if (keys[key.LSHIFT]):
             self.pos[1]-=s
 
-class Window(pyglet.window.Window, Thread):
+class Affichage_3D(pyglet.window.Window, Thread):
 
     toDraw = []
 
