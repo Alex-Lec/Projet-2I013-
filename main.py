@@ -20,13 +20,12 @@ except(ImportError):
     from code import *
     arene = Terrain()
     robot_irl = False
-    """
     arene.objet.append(ObjetPhysique(100, 20, 0, 50, 100, 100))
     arene.objet.append(ObjetPhysique(20, 100, 0, 100, 50, 100))
     arene.objet.append(ObjetPhysique(1300, 100, 15, 80, 70, 100))
     arene.objet.append(ObjetPhysique(500, 500, 10, 100, 100, 10))
     arene.objet.append(ObjetPhysique(780, 250, 0, 100, 50, 100))
-    """
+
 ###################################################################
 
 print("\n\

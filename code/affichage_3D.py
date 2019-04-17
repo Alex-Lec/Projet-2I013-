@@ -62,12 +62,15 @@ class Sol():
         hauteur = 150
 
         self.batch.add(4, GL_QUADS, None, ('v3f', (0,0,0, 0,0,900, 1500,0,900, 1500,0,0)), color)
+
+        """
         self.batch.add(2, GL_LINES, None, ('v3f', (0,hauteur,0, 1500,hauteur,900)), color_lines)
         self.batch.add(2, GL_LINES, None, ('v3f', (0,hauteur,900, 1500,hauteur,0)), color_lines)
         self.batch.add(2, GL_LINES, None, ('v3f', (0,hauteur,0, 1500,hauteur,0)), color_lines)
         self.batch.add(2, GL_LINES, None, ('v3f', (0,hauteur,0, 0,hauteur,900)), color_lines)
         self.batch.add(2, GL_LINES, None, ('v3f', (1500,hauteur,0, 1500,hauteur,900)), color_lines)
         self.batch.add(2, GL_LINES, None, ('v3f', (0,hauteur,900, 1500,hauteur,900)), color_lines)
+        """
    
     def draw(self):
         self.batch.draw()
