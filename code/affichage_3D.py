@@ -174,8 +174,8 @@ class Affichage_3D(pyglet.window.Window, Thread):
 
         self.toDraw.append(Sol())
         for i in self.arene.objet[4:]:
-            self.toDraw.append(Rectangle(i.x, i.z, i.y, i.largeur,\
-            i.longueur, i.hauteur, 0, 0, 255))
+            self.toDraw.append(Rectangle(i.x, i.z, i.y, i.longueur,\
+            i.largeur, i.hauteur, 0, 0, 255))
 
         self.arene.objet.append(ObjetPhysique(x = 750, y = 450, z = 0, largeur = 5000, longueur = 5000, hauteur = 1, \
         r = 255, g = 255, b = 255))

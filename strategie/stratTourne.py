@@ -36,7 +36,7 @@ class StratTourne:
         angleg = (self.robot.get_motor_position()[0]*self.robot.WHEEL_CIRCUMFERENCE) /(self.robot.WHEEL_BASE_CIRCUMFERENCE)
         angled = (self.robot.get_motor_position()[1]*self.robot.WHEEL_CIRCUMFERENCE) /(self.robot.WHEEL_BASE_CIRCUMFERENCE)
         
-        if((angleg >= self.angle) or (angled <= -self.angle)):
+        if((angleg >= self.angle) and (angled <= -self.angle)):
             print(angled, angleg)
             return True
         

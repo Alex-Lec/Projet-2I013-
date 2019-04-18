@@ -6,7 +6,7 @@ from PIL import Image
 import sys
 import time
 import numpy as np
-import cv2 as cv
+#import cv2 as cv
 
 class Controleur_image(Thread):
     def __init__(self, robot):
