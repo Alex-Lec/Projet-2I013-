@@ -85,9 +85,9 @@ class Robot(ObjetPhysique):
         ################################################################
         x = self.x
         y = self.y
-        v_x = self.v_dir.x
-        v_y = self.v_dir.y
-        
+        v_x = self.v_dir.vector[0]
+        v_y = self.v_dir.vector[1]
+                
         rot = 25
         t = time.time()
         ################################
