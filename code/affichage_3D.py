@@ -223,6 +223,8 @@ class Affichage_3D(pyglet.window.Window, Thread):
             else:
                 self.player.rot[1] = 180 + self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)
 
+        print(rob.v_dir.vector)
+
     def on_draw(self):
         self.clear()
         self.set3d()
