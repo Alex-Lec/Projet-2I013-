@@ -13,10 +13,10 @@ class Terrain(Thread):
         super(Terrain,self).__init__()
         self.dimx = dimx
         self.dimy = dimy
-        self.objet = [ObjetPhysique(dimx/2, -1, 0, 1, dimx, 100),# haut
-                      ObjetPhysique(-1, dimy/2, 0, dimy, 1, 100),# gauche
-                      ObjetPhysique(dimx/2, dimy+1, 0, 1, dimx, 100),#bas
-                      ObjetPhysique(dimx+1, dimy/2, 0, dimy, 1, 100)]#droite
+        self.objet = [Rectangle(dimx/2, -1, 0, 1, dimx, 100),# haut
+                      Rectangle(-1, dimy/2, 0, dimy, 1, 100),# gauche
+                      Rectangle(dimx/2, dimy+1, 0, 1, dimx, 100),#bas
+                      Rectangle(dimx+1, dimy/2, 0, dimy, 1, 100)]#droite
         
         self.robot = []
         self.tps = 30
@@ -66,6 +66,7 @@ class Terrain(Thread):
         Renvoie true s'il y a collision, false sinon.
         Projection sert à tester la position suivante du robot.
         """
+        
         obj = self.objet + self.robot
         
         robpts = rob.get_points()
@@ -85,6 +86,7 @@ class Terrain(Thread):
             for o in obj:
                 if (o == rob or o == projection ):
                     continue
+                    
                     
                 opts = o.get_points()
                 for j in range(len(opts)):

@@ -2,7 +2,7 @@
 # -- coding: utf-8 -
 
 from .terrain import Terrain
-from composant import Robot, ObjetPhysique
+from composant import Robot, Rectangle
 from diver import *
 import time
 from threading import Thread
@@ -136,7 +136,7 @@ class Affichage(Thread):
         def ok_button():
 
             fen.destroy()
-            obj = ObjetPhysique(posx.get(), posy.get(), posz.get(), 
+            obj = Rectangle(posx.get(), posy.get(), posz.get(), 
                                 largeur.get(),longueur.get(), hauteur.get())
                                 
             self.arene.objet.append(obj)

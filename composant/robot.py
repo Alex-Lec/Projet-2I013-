@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
 
-from .objetphysique import ObjetPhysique
+from .rectangle import Rectangle
 from .detecteur import Detecteur
 from math import radians,sqrt, cos, sin, pi
 from .vecteur import Vecteur
@@ -12,7 +12,7 @@ from pyglet.image.codecs.pil import PILImageDecoder
 import numpy as np
 from pyglet import image
 
-class Robot(ObjetPhysique):
+class Robot(Rectangle):
 
     WHEEL_BASE_WIDTH         = 117  # distance (mm) de la roue gauche a la roue droite.
     WHEEL_DIAMETER           = 66.5 # diametre de la roue (mm)
@@ -21,7 +21,7 @@ class Robot(ObjetPhysique):
 
     def __init__(self, x, y, z, largeur = 117/2, longueur = 100, hauteur = 25, arene = None, id = 0): 
         self.arene = arene
-        ObjetPhysique.__init__(self, x, y, z, largeur, longueur, hauteur)
+        Rectangle.__init__(self, x, y, z, largeur, longueur, hauteur)
         
         self.detecteur = Detecteur(self)
         self.MOTOR_LEFT = 1
@@ -97,19 +97,25 @@ class Robot(ObjetPhysique):
             
             cos_val = cos(-radians(omega2))
             sin_val = sin(-radians(omega2))
+            
             xo =  x + v_y * (self.WHEEL_BASE_WIDTH/2)
             yo =  y - v_x * (self.WHEEL_BASE_WIDTH/2)
+            
             x = (x-xo)*cos_val - (y-yo)*sin_val + xo
             y = (x-xo)*sin_val + (y-yo)*cos_val + yo
+            
             v_x = v_x*cos_val - v_y*sin_val
             v_y = v_x*sin_val + v_y*cos_val
             
             cos_val = cos(radians(omega1))
             sin_val = sin(radians(omega1))
+            
             xo = x - v_y * (self.WHEEL_BASE_WIDTH/2) 
             yo = y + v_x * (self.WHEEL_BASE_WIDTH/2)
+            
             x = (x-xo)*cos_val - (y-yo)*sin_val + xo
             y = (x-xo)*sin_val + (y-yo)*cos_val + yo
+            
             v_x = v_x*cos_val - v_y*sin_val
             v_y = v_x*sin_val + v_y*cos_val
             

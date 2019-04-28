@@ -1,4 +1,5 @@
 from math import sqrt
+from .rectangle import Rectangle
 
 class Detecteur:
     
@@ -41,8 +42,9 @@ class Detecteur:
         for o in obj:
             if (o == self.robot):
                 continue
-                
+            
             opt = o.get_points()
+            
             for j in range(len(opt)):
                 p3 = opt[j]
                 p4 = opt[(j+1)%len(opt)]#Marche avec un polygone à n cotées

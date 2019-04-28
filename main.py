@@ -105,12 +105,12 @@ try:
     simu = Simulation(Robot2I013())
     
 except(ImportError):
-    from composant import Robot, ObjetPhysique
+    from composant import Robot, Rectangle
     from code import Affichage, Affichage_3D, Terrain
     arene = Terrain()
-    arene.objet.append(ObjetPhysique(25, 100, 0, 100, 50, 20))
-    arene.objet.append(ObjetPhysique(500, 300, 50, 100, 100, 10))
-    #arene.objet.append(ObjetPhysique(745, 145, 0, 10, 10, 99))
+    arene.objet.append(Rectangle(25, 100, 0, 100, 50, 20))
+    arene.objet.append(Rectangle(500, 300, 50, 100, 100, 10))
+    #arene.objet.append(Rectangle(745, 145, 0, 10, 10, 99))
     
     simu = Simulation(None,arene)
     

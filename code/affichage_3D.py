@@ -10,8 +10,8 @@ from pyglet.image.codecs.png import PNGImageDecoder
 import math
 import random
 import numpy
-from composant import ObjetPhysique, Vecteur
 from .terrain import Terrain
+from composant import Rectangle, Vecteur
 import time
 from threading import Thread
 import numpy as np
@@ -176,9 +176,6 @@ class Affichage_3D(pyglet.window.Window, Thread):
         for i in self.arene.objet[4:]:
             self.toDraw.append(Rectangle(i.x, i.z, i.y, i.longueur,\
             i.largeur, i.hauteur, 0, 0, 255))
-
-        self.arene.objet.append(ObjetPhysique(x = 750, y = 450, z = 0, largeur = 5000, longueur = 5000, hauteur = 1, \
-        r = 255, g = 255, b = 255))
 
         if (rob.v_dir.x < 0 or rob.v_dir.y < 0):
             self.player = Player((rob.x, rob.z + 1, rob.y), (0, 180 - self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)), rob.largeur, rob.longueur, rob.hauteur)
