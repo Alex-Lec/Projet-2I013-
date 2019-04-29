@@ -50,7 +50,7 @@ class Simulation():
             self.affichage = Affichage(self.arene)
             
         elif (dim == "2"):
-            self.robot = Robot(x = 100, y = 150, z = 0,\
+            self.robot = Robot(x = 100, y = 100, z = 0,\
                          largeur = 10, longueur = 10, hauteur = 10, arene = self.arene)
             self.arene.robot.append(self.robot)
             self.affichage = Affichage_3D(arene = self.arene, width = 1000, height = 600,\
