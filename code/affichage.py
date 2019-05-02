@@ -38,19 +38,8 @@ class Affichage(Thread):
         menu1.add_command(label = "Créer robot", command = self.creerRobot)
         menu1.add_command(label = "Créer objet", command = self.creerObjet)
         menubar.add_cascade(label = "Création", menu = menu1)
-
-        self.menu3 = Menu(menubar, tearoff = 0)
-
-        for i in range(1, len(self.arene.robot) + 1):
-            self.menu3.add_radiobutton(label = i, variable = self.robot_selectionne,
-                                       value = i, command = self.select_robot)
-            if (i != 1):
-                self.menu3.add_separator()
-
-        menubar.add_cascade(label = "Sélectionner robot", menu = self.menu3)
-        self.fenetre.config(menu = menubar)
+        
         self.canvas = Canvas(self.fenetre, width = 2000, height = 1000)
-        self.fenetre.bind("<Key>", self.deplacement)
         self.canvas.pack()
         self.update_robots()
         self.update_objets()
@@ -207,33 +196,5 @@ class Affichage(Thread):
         annuler.grid(row = 3,column = 3)
         
         
-    def deplacement(self, event):
-
-        if ((event.keycode == 111 or event.keycode == 116 or event.keycode == 114 or  
-             event.keycode == 113) and self.robot_selectionne.get() != 0):
-
-            tag_robot = "robot_" + str(self.robot_selectionne.get() - 1)
-            r = self.arene.robot[self.robot_selectionne.get() - 1]   
-
-            if (event.keycode == 111): #UP    
-
-                self.arene.avancer_robot(r)
-                self.update_robots()
-
-            elif (event.keycode == 116): #DOWN    
-
-                self.arene.reculer_robot(r)
-                self.update_robots()
-
-            elif (event.keycode == 114): #RIGHT
-
-                self.arene.tourner_robot_d(r)
-                self.update_robots()
-
-            elif (event.keycode == 113): #LEFT
-                
-                self.arene.tourner_robot_g(r)
-                self.update_robots()
-
 
 

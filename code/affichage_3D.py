@@ -28,13 +28,13 @@ class Rectangle():
         self.longueur = longueur
         self.hauteur = hauteur
 
-        x = self.x - self.largeur / 2
+        x = self.x - (self.largeur / 2)
         y = self.y
-        z = self.z - self.longueur / 2
+        z = self.z - (self.longueur / 2)
 
-        X = x + self.largeur
+        X = x + (self.largeur)
         Y = y + self.hauteur
-        Z = z + self.longueur
+        Z = z + (self.longueur)
 
         color = ('c3B', (r, g, b) * 4)
 

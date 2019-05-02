@@ -5,33 +5,25 @@ from math import radians,sqrt, cos, sin, pi
 class Rectangle(ObjetPhysique):
     
     def get_points(self):
-        points = [[self.x -self.longueur//2, self.y - self.largeur//2],\
-            [self.x + self.longueur//2, self.y - self.largeur//2],\
-            [self.x + self.longueur//2, self.y + self.largeur//2],\
-            [self.x - self.longueur//2, self.y + self.largeur//2]]
-
-        VecteurDirection = (self.v_dir.x,self.v_dir.y,self.v_dir.z)
-        v_direction = VecteurDirection / np.linalg.norm(VecteurDirection)
+    
+        v_x = self.v_dir.x*(self.longueur//2)
+        v_y = self.v_dir.y*(self.longueur//2)
         
-        VecteurDefaut = (1,0,0)
-        v_defaut = VecteurDefaut/np.linalg.norm(VecteurDefaut)
-
-        if (self.v_dir.y > 0):
-            angle = np.arccos(np.clip(np.dot(v_direction, v_defaut), -1.0, 1.0))
-        else :
-            angle = 2*pi-np.arccos(np.clip(np.dot(v_direction, v_defaut), -1.0, 1.0))
-
-        cos_val = cos(angle)
-        sin_val = sin(angle)
-
-        new_points = []
-        for x_old, y_old in points:
-            x_old -= self.x
-            y_old -= self.y
-            x_new  = x_old * cos_val - y_old * sin_val
-            y_new  = x_old * sin_val + y_old * cos_val
-            new_points.append([x_new + self.x, y_new + self.y])
+        v_xg = -self.v_dir.y*(self.largeur//2)
+        v_yg =  self.v_dir.x*(self.largeur//2)
         
-        return new_points
+        v_xd =  self.v_dir.y*(self.largeur//2)
+        v_yd = -self.v_dir.x*(self.largeur//2)
+        
+        v_xb = -self.v_dir.x*(self.longueur//2)
+        v_yb = -self.v_dir.y*(self.longueur//2)
+    
+    
+        pts=[[self.x + v_x  + v_xg, self.y + v_y  + v_yg],\
+             [self.x + v_x  + v_xd, self.y + v_y  + v_yd],\
+             [self.x + v_xb + v_xd, self.y + v_yb + v_yd],\
+             [self.x + v_xb + v_xg, self.y + v_yb + v_yg]]
+        
+        return pts
 
 

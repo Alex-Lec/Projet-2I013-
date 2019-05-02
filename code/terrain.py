@@ -27,34 +27,6 @@ class Terrain(Thread):
             self.update()
             time.sleep(1./self.tps)
 
-    def avancer_robot(self, robot):
-        robot.arene = self
-        robot.MOTOR_LEFT = 15
-        robot.MOTOR_RIGHT = 15
-        robot.last_up = time.time()-1
-        self.update()
-            
-    def reculer_robot(self, robot):
-        robot.arene = self
-        robot.MOTOR_LEFT = -15
-        robot.MOTOR_RIGHT = -15
-        robot.last_up = time.time()-1
-        self.update()
-
-    def tourner_robot_d(self, robot):
-        robot.arene = self
-        robot.MOTOR_LEFT = 15
-        robot.MOTOR_RIGHT = 0
-        robot.last_up = time.time()-1
-        self.update()
-            
-    def tourner_robot_g(self, robot):
-        robot.arene = self
-        robot.MOTOR_LEFT = 0
-        robot.MOTOR_RIGHT = 15
-        robot.last_up = time.time()-1
-        self.update()
-
     def update(self):
         for rob in self.robot:
             rob.arene = self
