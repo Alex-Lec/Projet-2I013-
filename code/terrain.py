@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*
 
-from composant import *
+from composant import Rectangle, Robot
 import pickle
 from math import radians,sqrt, cos, sin, pi
 from threading import Thread
@@ -13,14 +13,15 @@ class Terrain(Thread):
         super(Terrain,self).__init__()
         self.dimx = dimx
         self.dimy = dimy
-        self.objet = [Rectangle(dimx/2, -1, 0, 1, dimx, 100),# haut
-                      Rectangle(-1, dimy/2, 0, dimy, 1, 100),# gauche
-                      Rectangle(dimx/2, dimy+1, 0, 1, dimx, 100),#bas
-                      Rectangle(dimx+1, dimy/2, 0, dimy, 1, 100)]#droite
         
-        self.robot = []
-        self.tps = 30
-        self.last_up = time.time()
+        # Bords de l'arène
+        self.objet = [Rectangle(dimx/2, -1, 0, 1, dimx, 100),# Mur haut
+                      Rectangle(-1, dimy/2, 0, dimy, 1, 100),# Mur gauche
+                      Rectangle(dimx/2, dimy+1, 0, 1, dimx, 100),# Mur bas
+                      Rectangle(dimx+1, dimy/2, 0, dimy, 1, 100)]# Mur droite
+        
+        self.robot = [] # Liste des robots contenus dans l'arène
+        self.tps = 30   # Temps de refraichissement de l'arène
         
     def run(self):
         while True :
@@ -42,17 +43,22 @@ class Terrain(Thread):
         obj = self.objet + self.robot
         
         robpts = rob.get_points()
-        for i in range(len(robpts)):
-        
+        for i in range(len(robpts)): # On iter sur les points du robots
+            #On transforme chaques pts en segment avec le pts suivant dans la liste
+            
             p1 = robpts[i]
             p2 = robpts[(i+1)%len(robpts)]
             
+            # Si le segment n'est pas vertical
+            # On crée la droite passant par le segment
             if (round(p1[0]-p2[0],12) != 0): 
                 a1 = (p1[1] - p2[1]) /(p1[0]- p2[0])
                 b1 = p1[1] - a1*p1[0]
                 
+            # Si le segment est dans l'axe x
+            # On note l'information dans a1
             else :
-                a1 = None # Cas ou le robot est dans l'axe x
+                a1 = None
                 b1 = p1[0]
                 
             for o in obj:
@@ -61,33 +67,40 @@ class Terrain(Thread):
                     
                     
                 opts = o.get_points()
-                for j in range(len(opts)):
+                for j in range(len(opts)):# On iter sur les points du robots
+                    #On transforme chaques pts en segment avec le pts suivant dans la liste
                     p3 = opts[j]
                     p4 = opts[(j+1)%len(opts)]#Marche avec un polygone à n cotées
                     
+                    
+                    # Si le segment n'est pas vertical
+                    # On crée la droite passant par le segment
                     if (round(p3[0]-p4[0],12) !=0):
                         a2 = (p3[1] - p4[1])/(p3[0]- p4[0]) 
                         b2 = p3[1] - a2*p3[0]
                     
+                    # Si le segment est dans l'axe x
+                    # On note l'information dans a2
                     else :
-                        a2 = None # Cas ou le segment est dans l'axe x
+                        a2 = None
                         b2 = p4[0]
                     
-                    if (a1 == a2) :
+                    if (a1 == a2) :# Les droites sont parallèles, pas d'intersection, fin
                         continue
                     
+                    # On trouve le pts d'intersection des droites
                     if (a1 == None) :
                         x = b1
                         y = a2*x + b2
-                    
                     elif (a2 == None):
                         x = b2
                         y = a1*x + b1
-                    
                     else :
                         x = (b2 - b1) / (a1 - a2)
                         y = a1*x + b1
                      
+                    # On vérifie que le point d'interswection des droites ce trouve sur le
+                    # segment de l'objet ET le segment du robot
                     if (min(p3[0],p4[0])<=x<=max(p3[0],p4[0]) and 
                         min(p3[1],p4[1])<=y<=max(p3[1],p4[1]) and 
                         min(p1[0],p2[0])<=x<=max(p1[0],p2[0]) and 
