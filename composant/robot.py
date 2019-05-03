@@ -157,3 +157,9 @@ class Robot(ObjetPhysique):
         img = Image.open('image.png')
         rbg_img = img.convert('RGB')
         rbg_img.save('image.jpeg')
+
+    def get_angle(self):
+        angleg = (self.get_motor_position()[0]*self.WHEEL_CIRCUMFERENCE) /(self.WHEEL_BASE_CIRCUMFERENCE)
+        angled = (self.get_motor_position()[1]*self.WHEEL_CIRCUMFERENCE) /(self.WHEEL_BASE_CIRCUMFERENCE)
+
+        return (angleg, angled)

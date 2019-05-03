@@ -155,24 +155,9 @@ class Affichage_3D(pyglet.window.Window, Thread):
         v1_u = self.unit_vector(v1)
         v2_u = self.unit_vector(v2)
 
-        """
         print(v1_u, v2_u)
+        print(np.rad2deg(np.arccos(np.clip(np.dot(v1_u, v2_u), -1.0, 1.0))))
         return np.rad2deg(np.arccos(np.clip(np.dot(v1_u, v2_u), -1.0, 1.0)))
-        """
-
-        """
-        produit_scalaire = v1_u[0] * v2_u[0] + v1_u[1] * v2_u[1] + v1_u[2] * v2_u[2]
-        print(np.rad2deg(np.arccos(produit_scalaire)))
-        return np.rad2deg(np.arccos(produit_scalaire))
-        """
-
-        print(math.degrees(math.acos(v1_u[0] * v2_u[0] + v1_u[1] * v2_u[1] + v1_u[2] * v2_u[2])))
-        return math.degrees(math.acos(v1_u[0] * v2_u[0] + v1_u[1] * v2_u[1] + v1_u[2] * v2_u[2]))
-
-        """
-        print(np.rad2deg(np.arccos(np.cos(np.array([v1_u[0], v2_u[0]])))))
-        return np.rad2deg(np.arccos(np.cos(np.array([v1_u[0], v2_u[0]]))))
-        """
 
     lock = False
     mouse_lock = property(lambda self:self.lock,setLock)
@@ -244,7 +229,7 @@ class Affichage_3D(pyglet.window.Window, Thread):
             else:
                 self.player.rot[1] = 180 + self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)
 
-        print(self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector))
+        #print(self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector))
         #print(rob.v_dir.vector)
 
     def on_draw(self):
