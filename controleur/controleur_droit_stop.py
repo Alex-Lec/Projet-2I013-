@@ -1,7 +1,7 @@
 from strategie import StratAvanceprud, StratStop
-import time;
 
 class Controleur_droit_stop():
+
     def __init__(self,rob, dst = 100, vit = 1000):
         self.robot = rob
         self.Go = None
@@ -25,5 +25,5 @@ class Controleur_droit_stop():
                 self.Go.start()
                 
         
-    def stop(self):
+    def stop(self): # Ne stop jamais
         return True

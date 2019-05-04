@@ -85,7 +85,7 @@ class Simulation():
                 print("Nom de fichier à charger :")
                 nom_fichier = input()
                 self.arene.objet[4:] = []
-                self.arene.ouvrir_arene(nom_fichier)
+                self.arene.ouvrir_arene("arenes/"+nom_fichier)
             
             self.choix_controleur(self.menu())
         

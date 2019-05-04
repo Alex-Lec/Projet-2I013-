@@ -1,5 +1,5 @@
-from code import Terrain
 from composant import Rectangle
+from code import Terrain
 
 arene = Terrain()
 arene.objet.append(Rectangle(700, 100, 100, 100, 100, 2))#plateau

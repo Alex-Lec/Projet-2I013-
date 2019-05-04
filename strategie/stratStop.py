@@ -1,5 +1,8 @@
-import time
 class StratStop:
+    """
+    Cette stratégie met simplement la vitesse des deux roues à 0
+    """
+
     def __init__(self, robot):
         self.robot = robot
         
