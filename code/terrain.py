@@ -119,6 +119,10 @@ class Terrain(Thread):
         
     def sauvegarder_arene(self, fichier):
 
+        """
+        Sauvegarde une arène dans un fichier à l'aide de Pickle
+        """
+
         try :
             with open(fichier, 'wb') as fichier:
                 arene = pickle.Pickler(fichier)
@@ -132,6 +136,10 @@ class Terrain(Thread):
             pass
 
     def ouvrir_arene(self, fichier):
+
+        """
+        Charge une arène à partir d'un fichier à l'aide de Pickle
+        """
 
         try:
             with open(fichier, 'rb') as fichier:
