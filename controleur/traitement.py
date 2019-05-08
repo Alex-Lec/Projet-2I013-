@@ -5,8 +5,6 @@ import time
 img = cv2.imread('screen_8.jpeg')
 (dimy, dimx,unused) = img.shape
 
-
-
 def trait_red(img,x,y):
     cpt = 0
     if (x+2<dimx):
