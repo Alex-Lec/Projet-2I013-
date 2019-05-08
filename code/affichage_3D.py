@@ -76,6 +76,12 @@ class Sol():
         self.batch.draw()
 
 class Player():
+
+    """
+    Cette classe correspond à la caméra
+    Elle est définie par sa position et son orientation
+    """
+
     def __init__(self,pos=(0,0,0),rot=(0,0), largeur = 1, longueur = 1, hauteur = 1):
 
         self.pos = list(pos)
@@ -121,6 +127,11 @@ class Affichage_3D(pyglet.window.Window, Thread):
     toDraw = []
 
     def push(self, pos, rot):
+
+        """
+        Définie la matrice de translation
+        """
+
         glPushMatrix()
         glRotatef(-rot[0],1,0,0)
         glRotatef(-rot[1],0,1,0)
@@ -134,12 +145,13 @@ class Affichage_3D(pyglet.window.Window, Thread):
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
 
-    def set2d(self): 
-        self.Projection()
-        gluOrtho2D(0, self.width, 0, self.height)
-        self.Model()
-
     def set3d(self): 
+
+        """
+        Définie la 3D souhaitée
+        Perspective, ratio, distance de rendu minimal et maximal
+        """
+
         self.Projection()
         gluPerspective(70, self.width / self.height, 0.05, 5000)
         self.Model()
@@ -152,6 +164,11 @@ class Affichage_3D(pyglet.window.Window, Thread):
         return vector / np.linalg.norm(vector)
       
     def angle_between_2_vectors(self, v1, v2):
+
+        """
+        Permet de calculer l'angle en degré entre le vecteur fixe y = (0, 1, 0) et le vecteur direction du robot
+        """
+
         v1_u = self.unit_vector(v1)
         v2_u = self.unit_vector(v2)
         return np.rad2deg(np.arccos(np.clip(np.dot(v1_u, v2_u), -1.0, 1.0)))
@@ -172,6 +189,7 @@ class Affichage_3D(pyglet.window.Window, Thread):
 
         self.vecteur_y = Vecteur(0., 1., 0.)
 
+        # Ajoute la représentation graphique représentant le sol de l'arène
         self.toDraw.append(Sol())
         for i in self.arene.objet[4:]:
             self.toDraw.append(Rectangle(i.x, i.z, i.y, i.longueur,\
@@ -182,6 +200,7 @@ class Affichage_3D(pyglet.window.Window, Thread):
         else:
             self.player = Player((rob.x, rob.z + 1, rob.y), (0, 180 + self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)), rob.largeur, rob.longueur, rob.hauteur)
     
+        # Définie la couleur de fond de la fenêtre
         glClearColor(0.8, 0.8, 0.8, 1) 
         glEnable(GL_DEPTH_TEST)
 
@@ -193,6 +212,11 @@ class Affichage_3D(pyglet.window.Window, Thread):
         if self.mouse_lock: self.player.mouse_motion(dx,dy)
 
     def on_key_press(self,KEY,MOD):
+
+        """
+        Permet lorsque l'on presse la touche 'E' de passer en caméra libre ou de revenir en caméra fixe
+        """
+
         if (KEY == key.ESCAPE):
             self.close()
         elif (KEY == key.E):
@@ -208,6 +232,11 @@ class Affichage_3D(pyglet.window.Window, Thread):
                     self.player.rot[1] = 180 + self.angle_between_2_vectors(self.vecteur_y.vector, rob.v_dir.vector)
 
     def update(self,dt):
+
+        """
+        Permet de mettre à jour la position et l'orientation de la caméra
+        """
+
         self.player.update(dt,self.keys)
         self.arene.update()
 
@@ -226,6 +255,11 @@ class Affichage_3D(pyglet.window.Window, Thread):
         print(rob.v_dir.vector)
 
     def on_draw(self):
+
+        """
+        Affiche les éléments de l'arène
+        """
+
         self.clear()
         self.set3d()
         self.push(self.player.pos,self.player.rot)
@@ -233,11 +267,14 @@ class Affichage_3D(pyglet.window.Window, Thread):
         for c in self.toDraw:
             c.draw()
 
-        #self.robToDraw.draw()
-
         glPopMatrix()
 
     def on_text(self, text):
+
+        """
+        Permet de prendre un screenshot de la fenêtre à la volée
+        """
+
         if (text.find('p') > -1 or text.find('P') > -1):
             pyglet.image.get_buffer_manager().get_color_buffer().save('image.jpeg')
             img = Image.open('image.jpeg')
@@ -246,6 +283,13 @@ class Affichage_3D(pyglet.window.Window, Thread):
             print("Screenshot success !")
 
     def screenshot(self):
+
+        """
+        Permet de prendre un screenshot de la fenêtre
+        Peut être appelée depuis un controleur
+        Utile pour la simulation de traitement d'image
+        """
+
         pyglet.image.get_buffer_manager().get_color_buffer().save('image.jpeg')
         img = Image.open('image.jpeg')
         rbg_img = img.convert('RGB')

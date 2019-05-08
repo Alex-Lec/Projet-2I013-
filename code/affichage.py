@@ -8,17 +8,20 @@ import time
 from threading import Thread
 import sys
 
-# http://effbot.org/zone/tkinter-complex-canvas.htm
-# http://www.fil.univ-lille1.fr/~marvie/python/chapitre6.html
-
 class Affichage(Thread):
 
     def __init__(self, arene = Terrain()):
+
         super(Affichage, self).__init__()
         self.arene = arene
         self.tps = 25
 
     def init_run(self):
+
+        """
+        Création de la fenêtre avec ses différents menus
+        """
+
         self.fenetre = Tk()
         self.fenetre.title("Simulateur")
         self.fenetre.geometry("1500x900")
@@ -53,6 +56,12 @@ class Affichage(Thread):
         print(self.robot_selectionne.get())
 
     def update_objets(self):
+
+        """
+        Met à jour le positionnement des objets dans l'arène
+        Efface l'ancienne représentation des objets et en recréer une nouvelle
+        """
+
         for o in self.arene.objet:
             if (self.arene.objet.index(o) > 3):
                 tag_objet = "objet_" + str(self.arene.objet.index(o))
@@ -63,6 +72,12 @@ class Affichage(Thread):
                     fill = "black", tags = tag_objet)
         
     def update_robots(self):
+
+        """
+        Met à jour le positionnement des robots dans l'arène
+        Efface l'ancienne représentation des robots et en recréer une nouvelle
+        """
+
         for r in self.arene.robot:
             tag_robot = "robot_" + str(self.arene.robot.index(r))
             self.canvas.delete(tag_robot)
@@ -78,6 +93,11 @@ class Affichage(Thread):
         self.fenetre.after(5,self.update_robots)
         
     def ouvrir(self):
+
+        """
+        Charge une arène à partir d'un fichier
+        Appelle la fonction ouvri_arene de la classe Terrain
+        """
 
         def ok_button():
             fen.destroy()
@@ -101,6 +121,11 @@ class Affichage(Thread):
 
     def enregistrer(self):
 
+        """
+        Sauvegarde une arène dans un fichier
+        Appelle la fonction sauvergarder_arene de la classe Terrain
+        """
+
         def ok_button():
             fen.destroy()
             self.arene.sauvegarder_arene(nom_fichier.get())
@@ -121,6 +146,10 @@ class Affichage(Thread):
 
 
     def creerObjet(self):
+
+        """
+        Créer un objet dans l'arène
+        """
 
         def ok_button():
 
@@ -161,6 +190,10 @@ class Affichage(Thread):
         annuler.grid(row = 3, column = 3)
 
     def creerRobot(self):   
+
+        """
+        Créer un robot dans l'arène
+        """
         
         def ok_button():
             fen.destroy()
