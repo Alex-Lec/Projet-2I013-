@@ -11,116 +11,13 @@ import math
 import random
 import numpy
 from .terrain import Terrain
-from composant import Rectangle, Vecteur
+from composant import Rectangle, Vecteur, Sol, Player
 import time
 from threading import Thread
 import numpy as np
 import vg
 from PIL import Image
 
-class Rectangle():
-    def __init__(self, x, y, z, largeur, longueur, hauteur, r, g, b):
-
-        self.x = x
-        self.y = y
-        self.z = z
-        self.largeur = largeur
-        self.longueur = longueur
-        self.hauteur = hauteur
-
-        x = self.x - (self.largeur / 2)
-        y = self.y
-        z = self.z - (self.longueur / 2)
-
-        X = x + (self.largeur)
-        Y = y + self.hauteur
-        Z = z + (self.longueur)
-
-        color = ('c3B', (r, g, b) * 4)
-
-        self.batch = pyglet.graphics.Batch()
-
-        self.batch.add(4, GL_QUADS, None, ('v3f', (x,y,z, x,y,Z, x,Y,Z, x,Y,z)), color)
-        self.batch.add(4, GL_QUADS, None, ('v3f', (X,y,Z, X,y,z, X,Y,z, X,Y,Z)), color)
-        self.batch.add(4, GL_QUADS, None, ('v3f', (x,y,z, X,y,z, X,y,Z, x,y,Z)), color)
-        self.batch.add(4, GL_QUADS, None, ('v3f', (x,Y,Z, X,Y,Z, X,Y,z, x,Y,z)), color)
-        self.batch.add(4, GL_QUADS, None, ('v3f', (X,y,z, x,y,z, x,Y,z, X,Y,z)), color)
-        self.batch.add(4, GL_QUADS, None, ('v3f', (x,y,Z, X,y,Z, X,Y,Z, x,Y,Z)), color)
-
-    def draw(self):
-        self.batch.draw()
-
-class Sol():
-    def __init__(self, x = 750, y = 450, z = 0, largeur = 5000, longueur = 5000, hauteur = 1, \
-        r = 255, g = 255, b = 255):
-
-        color = ('c3B', (r, g, b) * 4)
-        color_lines = ('c3B', (0, 0, 0) * 2)
-
-        self.batch = pyglet.graphics.Batch()
-
-        hauteur = 150
-
-        self.batch.add(4, GL_QUADS, None, ('v3f', (0,0,0, 0,0,900, 1500,0,900, 1500,0,0)), color)
-
-        """
-        self.batch.add(2, GL_LINES, None, ('v3f', (0,hauteur,0, 1500,hauteur,900)), color_lines)
-        self.batch.add(2, GL_LINES, None, ('v3f', (0,hauteur,900, 1500,hauteur,0)), color_lines)
-        self.batch.add(2, GL_LINES, None, ('v3f', (0,hauteur,0, 1500,hauteur,0)), color_lines)
-        self.batch.add(2, GL_LINES, None, ('v3f', (0,hauteur,0, 0,hauteur,900)), color_lines)
-        self.batch.add(2, GL_LINES, None, ('v3f', (1500,hauteur,0, 1500,hauteur,900)), color_lines)
-        self.batch.add(2, GL_LINES, None, ('v3f', (0,hauteur,900, 1500,hauteur,900)), color_lines)
-        """
-   
-    def draw(self):
-        self.batch.draw()
-
-class Player():
-
-    """
-    Cette classe correspond à la caméra
-    Elle est définie par sa position et son orientation
-    """
-
-    def __init__(self,pos=(0,0,0),rot=(0,0), largeur = 1, longueur = 1, hauteur = 1):
-
-        self.pos = list(pos)
-        self.rot = list(rot)
-        self.largueur = largeur
-        self.longueur = hauteur
-        self.hauteur = longueur
-        
-    def mouse_motion(self,dx,dy):
-        dx /= 8; dy /= 8; self.rot[0] += dy; self.rot[1] -= dx
-        if self.rot[0] > 90: self.rot[0] = 90
-        elif self.rot[0]<-90: self.rot[0] = -90
-
-    def update(self,dt,keys):
-        s = dt*20
-        rotY = -self.rot[1]/180*math.pi
-        dx,dz = s*math.sin(rotY),s*math.cos(rotY)
-
-        if (keys[key.Z]):
-            self.pos[0]+=dx*10
-            self.pos[2]-=dz*10
-
-        if (keys[key.S]):
-            self.pos[0]-=dx*10
-            self.pos[2]+=dz*10
-
-        if (keys[key.Q]):
-            self.pos[0]-=dz*10
-            self.pos[2]-=dx*10
-
-        if (keys[key.D]):
-            self.pos[0]+=dz*10
-            self.pos[2]+=dx*10
-
-        if (keys[key.SPACE]):
-            self.pos[1]+=s
-
-        if (keys[key.LSHIFT]):
-            self.pos[1]-=s
 
 class Affichage_3D(pyglet.window.Window, Thread):
 

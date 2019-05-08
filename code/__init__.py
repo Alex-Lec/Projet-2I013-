@@ -4,4 +4,3 @@
 from .affichage import Affichage
 from .terrain import Terrain
 from .affichage_3D import Affichage_3D
-

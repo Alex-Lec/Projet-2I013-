@@ -3,7 +3,7 @@
 
 import time
 from diver import *
-from controleur import Controleur_carre, Controleur_droit_stop, Controleur_image, Controleur_tour, Controleur_polygone
+from controleur import Controleur_carre, Controleur_droit_stop, Controleur_tour, Controleur_polygone
 import sys
 from PIL import Image
 import os 
