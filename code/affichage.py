@@ -25,7 +25,6 @@ class Affichage(Thread):
         self.fenetre = Tk()
         self.fenetre.title("Simulateur")
         self.fenetre.geometry("1500x900")
-        self.fenetre.resizable(0, 0)
         self.robot_selectionne = IntVar()
 
         menubar = Menu(self.fenetre)
@@ -42,7 +41,7 @@ class Affichage(Thread):
         menu1.add_command(label = "Créer objet", command = self.creerObjet)
         menubar.add_cascade(label = "Création", menu = menu1)
         
-        self.canvas = Canvas(self.fenetre, width = 2000, height = 1000)
+        self.canvas = Canvas(self.fenetre, width = 1500, height = 900)
         self.canvas.pack()
         self.update_robots()
         self.update_objets()
